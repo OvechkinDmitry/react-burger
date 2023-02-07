@@ -34,9 +34,6 @@ html,
 body {
   height: 100%;
   width: 100%;
-  /*font-size: 100%;*/
-  /*line-height: 1;*/
-  /*font-size: 16px;*/
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -91,7 +88,8 @@ h6 {
 a.text:active,
 a.text:hover,
 a:visited,
-a.text {
+a.text,
+a:link{
   text-decoration: none;
   color: inherit;
 }
