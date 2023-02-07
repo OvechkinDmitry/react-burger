@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './App.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import {data} from "../../utils/data";
 
 function App() {
+    const ingredients = useMemo(() => data.reduce((acc: any, el) => {
+        if (el.type in acc)
+            acc[el.type].push(el)
+        else
+            acc[el.type] = [el]
+        return acc
+    },{}),[data])
 
-  return (
+    return (
     <div>
         <AppHeader/>
-        <div className={"container"}>
-            <BurgerIngredients rolls={[]} sauces={[]}/>
-        </div>
+        <main className={"container"}>
+            <BurgerIngredients data={ingredients}/>
+            <BurgerConstructor data={ingredients}/>
+        </main>
     </div>
-  );
+    );
 }
 
 export default App;
