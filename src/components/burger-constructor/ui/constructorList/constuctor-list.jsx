@@ -8,7 +8,8 @@ const ConstuctorList = ({data}) => {
             <div className={"ml-4"}>
                 <DragIcon type="primary"/>
             </div>
-            <ConstructorElement extraClass={`${style.constructorElement} ml-2`} text={el.name} price={el.price} thumbnail={el.image}/>
+            <ConstructorElement extraClass={`${style.constructorElement} ml-2`} text={el.name} price={el.price}
+                                thumbnail={el.image}/>
         </li>)}
     </ul>)
 };

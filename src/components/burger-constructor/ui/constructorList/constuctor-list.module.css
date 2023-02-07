@@ -1,4 +1,4 @@
-.constructorList{
+.constructorList {
     max-width: 568px;
     composes: container from '../../burger-constructor.module.css';
     row-gap: 16px;
@@ -6,18 +6,21 @@
     overflow-y: auto;
     scrollbar-gutter: stable;
 }
-.constructorElement{
+
+.constructorElement {
 }
-.constructorList li{
+
+.constructorList li {
     width: 100%;
     display: flex;
     align-items: center;
 }
 
-.constructorList::-webkit-scrollbar{
+.constructorList::-webkit-scrollbar {
     width: 8px;
     background: #2F2F37;
 }
-.constructorList::-webkit-scrollbar-thumb{
+
+.constructorList::-webkit-scrollbar-thumb {
     background: #8585AD;
 }

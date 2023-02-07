@@ -1,14 +1,17 @@
-.container{
+.container {
     max-width: 600px;
 }
-.ingredients{
+
+.ingredients {
     max-height: 726px;
     overflow-y: auto;
 }
-.ingredients::-webkit-scrollbar{
+
+.ingredients::-webkit-scrollbar {
     width: 8px;
     background: #2F2F37;
 }
-.ingredients::-webkit-scrollbar-thumb{
+
+.ingredients::-webkit-scrollbar-thumb {
     background: #8585AD;
 }

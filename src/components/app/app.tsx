@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import './app.css';
+import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -12,16 +12,16 @@ function App() {
         else
             acc[el.type] = [el]
         return acc
-    },{}),[data])
+    }, {}), [data])
 
     return (
-    <div>
-        <AppHeader/>
-        <main className={"container"}>
-            <BurgerIngredients data={ingredients}/>
-            <BurgerConstructor data={ingredients}/>
-        </main>
-    </div>
+        <div>
+            <AppHeader/>
+            <main className={styles.container}>
+                <BurgerIngredients data={ingredients}/>
+                <BurgerConstructor data={ingredients}/>
+            </main>
+        </div>
     );
 }
 

@@ -7,16 +7,15 @@ import {dataType} from "../../utils/global-prop-types";
 
 
 const BurgerConstructor = ({data}) => {
-    console.log(data)
     const {bun, main, sauce} = data
-    return <div>
+    return (<div>
         <div className={`${styles.container} mt-25`}>
             <ConstructorElement extraClass={"mb-4 mr-4"}
                                 type="top" isLocked={true}
                                 text={bun[0].name}
                                 price={bun[0].price}
                                 thumbnail={bun[0].image}/>
-            <ConstuctorList data={[...main,...sauce]}/>
+            <ConstuctorList data={[...main, ...sauce]}/>
             <ConstructorElement extraClass={"mt-4 mr-4"}
                                 type="bottom"
                                 isLocked={true}
@@ -30,10 +29,10 @@ const BurgerConstructor = ({data}) => {
                 </Button>
             </div>
         </div>
-    </div>
+    </div>)
 }
 
-BurgerConstructor.propTypes= {
+BurgerConstructor.propTypes = {
     data: dataType
 }
 export default BurgerConstructor;
