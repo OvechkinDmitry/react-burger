@@ -1,18 +1,16 @@
 import React from 'react';
 import styles from './ingredient-cart.module.css'
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import Price from "../../../ui/price/price";
 
-const IngredientCart = () => {
+const IngredientCart = ({price, description, count, image}) => {
     return (
         <>
-            <li className={styles.cart + " "}>
-                <img src={"https://code.s3.yandex.net/react/code/bun-02.png"} className="pr-4 pb-1 pl-4"/>
-                <Counter count={1} size="default" extraClass="m-1" />
-                <span className={styles.price}>
-                    <span className="text text_type_digits-default">20</span>
-                    <CurrencyIcon type="primary" />
-                </span>
-                <span className={styles.description + " text text_type_main-small mt-1"}>Краторная булка N-200i</span>
+            <li className={styles.cart}>
+                <img alt={'ingredient'} src={image} className="pr-4 pb-1 pl-4"/>
+                <Counter count={count} size="default" extraClass="m-1" />
+                <Price text={price} size={"default"}/>
+                <span className={`${styles.description} text text_type_main-small mt-1`}>{description}</span>
             </li>
         </>
     );
