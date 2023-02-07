@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import './App.css';
+import './app.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
