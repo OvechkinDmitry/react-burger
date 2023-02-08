@@ -5,6 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {URL} from '../../utils/constants'
 import {fetchIngredients} from "../../utils/fetch-ingredients";
+import Modal from "../modal/modal";
 
 function App() {
     const [ingredients, setIngredients] = useState({
@@ -21,15 +22,16 @@ function App() {
 
     return (
         <div>
-            <AppHeader/>
-            <main className={styles.container}>
-                {isLoading && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ЗАГРУЗКА...</div>}
-                {hasError && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ОШИБКА</div>}
-                {!hasError && !isLoading && Object.keys(data).length && (<>
-                    <BurgerIngredients data={data}/>
-                    <BurgerConstructor data={data}/>
-                </>)}
-            </main>
+            <Modal/>
+            {/*<AppHeader/>*/}
+            {/*<main className={styles.container}>*/}
+            {/*    {isLoading && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ЗАГРУЗКА...</div>}*/}
+            {/*    {hasError && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ОШИБКА</div>}*/}
+            {/*    {!hasError && !isLoading && Object.keys(data).length && (<>*/}
+            {/*        <BurgerIngredients data={data}/>*/}
+            {/*        <BurgerConstructor data={data}/>*/}
+            {/*    </>)}*/}
+            {/*</main>*/}
         </div>
     );
 }

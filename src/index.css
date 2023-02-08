@@ -1,4 +1,9 @@
 /*normalize*/
+:root{
+    --background: #131316;
+    --modalBackground:#1C1C21;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -97,6 +102,8 @@ a:link {
 /*normalize*/
 
 body {
+    background: var(--background);
+    color: white;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
