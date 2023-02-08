@@ -16,7 +16,7 @@ const ConstuctorList = ({data}) => {
 };
 
 ConstuctorList.propType = {
-    data : ingredientArray
+    data : ingredientArray.isRequired
 }
 
 export default ConstuctorList;

@@ -14,7 +14,7 @@ const IngredientCart = ({price, description, count, image}) => {
     );
 };
 
-IngredientCart.propType={
+IngredientCart.propType = {
     price: number.isRequired,
     description: string.isRequired,
     count: number.isRequired,

@@ -15,6 +15,6 @@ function Tabs({names}) {
 }
 
 Tabs.propType = {
-    names: arrayOf(string)
+    names: arrayOf(string).isRequired
 }
 export default Tabs;
