@@ -1,25 +1,31 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {data} from "../../utils/data";
+import {URL} from '../../utils/constants'
+import {fetchIngredients} from "../../utils/fetch-ingredients";
 
 function App() {
-    const ingredients = useMemo(() => data.reduce((acc: any, el) => {
-        if (el.type in acc)
-            acc[el.type].push(el)
-        else
-            acc[el.type] = [el]
-        return acc
-    }, {}), [data])
+    const [ingredients, setIngredients] = useState({
+        isLoading: false,
+        data: {}
+    })
+
+    useEffect(() => {
+        fetchIngredients(URL, ingredients, setIngredients)
+    }, [URL])
+
+    const {isLoading, data} = ingredients
 
     return (
         <div>
             <AppHeader/>
             <main className={styles.container}>
-                <BurgerIngredients data={ingredients}/>
-                <BurgerConstructor data={ingredients}/>
+                {!isLoading && Object.keys(data).length && (<>
+                    <BurgerIngredients data={data}/>
+                    <BurgerConstructor data={data}/>
+                </>)}
             </main>
         </div>
     );
