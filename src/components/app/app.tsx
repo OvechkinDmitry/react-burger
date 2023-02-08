@@ -8,21 +8,24 @@ import {fetchIngredients} from "../../utils/fetch-ingredients";
 
 function App() {
     const [ingredients, setIngredients] = useState({
+        hasError: false,
         isLoading: false,
-        data: {}
+        data: {},
     })
 
     useEffect(() => {
         fetchIngredients(URL, ingredients, setIngredients)
     }, [URL])
 
-    const {isLoading, data} = ingredients
+    const {hasError, isLoading, data} = ingredients
 
     return (
         <div>
             <AppHeader/>
             <main className={styles.container}>
-                {!isLoading && Object.keys(data).length && (<>
+                {isLoading && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ЗАГРУЗКА...</div>}
+                {hasError && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ОШИБКА</div>}
+                {!hasError && !isLoading && Object.keys(data).length && (<>
                     <BurgerIngredients data={data}/>
                     <BurgerConstructor data={data}/>
                 </>)}
