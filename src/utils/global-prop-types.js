@@ -13,10 +13,10 @@ export const ingredientType = shape({
     type: PropTypes.string.isRequired,
     __v: PropTypes.number.isRequired,
     _id: PropTypes.string.isRequired,
-}).isRequired
+})
 
-export const ingredientArray = arrayOf(ingredientType).isRequired
+export const ingredientArray = arrayOf(ingredientType)
 
-export const dataType = objectOf(ingredientArray).isRequired
+export const dataType = objectOf(ingredientArray)
 
 

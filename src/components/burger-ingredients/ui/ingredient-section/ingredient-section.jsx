@@ -21,6 +21,6 @@ const IngredientSection = ({title, data}) => {
 
 IngredientSection.propType = {
     title: string.isRequired,
-    data: ingredientArray,
+    data: ingredientArray.isRequired,
 }
 export default IngredientSection;

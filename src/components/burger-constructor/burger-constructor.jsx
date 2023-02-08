@@ -33,6 +33,6 @@ const BurgerConstructor = ({data}) => {
 }
 
 BurgerConstructor.propTypes = {
-    data: dataType
+    data: dataType.isRequired
 }
 export default BurgerConstructor;
