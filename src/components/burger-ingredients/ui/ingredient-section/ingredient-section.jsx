@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './ingredient-section.module.css'
 import IngredientCart from "../indredient-cart/ingredient-cart";
+import {string} from "prop-types";
+import {ingredientArray} from "../../../../utils/global-prop-types";
 
 const IngredientSection = ({title, data}) => {
     return (<section>
@@ -17,4 +19,8 @@ const IngredientSection = ({title, data}) => {
     )
 }
 
+IngredientSection.propType = {
+    title: string.isRequired,
+    data: ingredientArray,
+}
 export default IngredientSection;

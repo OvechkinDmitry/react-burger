@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './constuctor-list.module.css'
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ingredientArray} from "../../../../utils/global-prop-types";
 
 const ConstuctorList = ({data}) => {
     return (<ul className={style.constructorList}>
@@ -13,5 +14,9 @@ const ConstuctorList = ({data}) => {
         </li>)}
     </ul>)
 };
+
+ConstuctorList.propType = {
+    data : ingredientArray
+}
 
 export default ConstuctorList;

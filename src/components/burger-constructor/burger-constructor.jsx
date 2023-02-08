@@ -12,14 +12,14 @@ const BurgerConstructor = ({data}) => {
         <div className={`${styles.container} mt-25`}>
             <ConstructorElement extraClass={"mb-4 mr-4"}
                                 type="top" isLocked={true}
-                                text={bun[0].name}
+                                text={`${bun[0].name} (верх)`}
                                 price={bun[0].price}
                                 thumbnail={bun[0].image}/>
             <ConstuctorList data={[...main, ...sauce]}/>
             <ConstructorElement extraClass={"mt-4 mr-4"}
                                 type="bottom"
                                 isLocked={true}
-                                text={bun[1].name}
+                                text={`${bun[1].name} (низ)`}
                                 price={bun[1].price}
                                 thumbnail={bun[1].image}/>
             <div className={`${styles.submit} mt-10 mr-8`}>

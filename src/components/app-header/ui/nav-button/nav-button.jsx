@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './nav-button.module.css'
+import PropTypes from "prop-types";
 
 export const NavButton = ({text, active, children}) => {
     const isActive = active ? "" : "text_color_inactive"
@@ -11,3 +12,9 @@ export const NavButton = ({text, active, children}) => {
         </a>
     );
 };
+
+NavButton.propType = {
+    text: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
+    children : PropTypes.elementType.isRequired,
+}
