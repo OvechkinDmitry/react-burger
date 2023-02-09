@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ingredient-info.module.css'
+import PropTypes from "prop-types";
 
 const IngredientInfo = ({title, amount}) => {
     return (<div className={styles.infoCart}>
@@ -10,5 +11,10 @@ const IngredientInfo = ({title, amount}) => {
         </div>
     );
 };
+
+IngredientInfo.propTypes={
+    title: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+}
 
 export default IngredientInfo;

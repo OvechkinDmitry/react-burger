@@ -22,7 +22,7 @@ function App() {
     const {hasError, isLoading, data} = ingredients
     const [isOpen, setOpen] = useState(false)
 
-    const handleOpen = (data: any,) => {
+    const handleOpen = (data: any) => {
         setOpen(true)
         setModalContent(data)
     }
