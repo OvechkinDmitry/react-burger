@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ingredient-details.module.css'
 import image from '../../images/modal/done.png'
+import PropTypes from "prop-types";
 
 const IngredientDetails = ({id}) => {
     return (<>
@@ -12,5 +13,9 @@ const IngredientDetails = ({id}) => {
         </>
     );
 };
+
+IngredientDetails.propTypes = {
+    id: PropTypes.string.isRequired
+}
 
 export default IngredientDetails;

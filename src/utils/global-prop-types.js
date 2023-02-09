@@ -19,4 +19,8 @@ export const ingredientArray = arrayOf(ingredientType)
 
 export const dataType = objectOf(ingredientArray)
 
-
+export const constructorType = {
+    data: dataType.isRequired,
+    handleOpen: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
+}

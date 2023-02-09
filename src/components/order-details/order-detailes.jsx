@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './order-detailes.module.css'
 import IngredientInfo from "./ui/ingredient-info/ingredient-info";
+import {ingredientType} from "../../utils/global-prop-types";
 
 function OrderDetailes({data}) {
     const {calories, carbohydrates, fat, name, proteins} = data
@@ -17,6 +18,10 @@ function OrderDetailes({data}) {
             </div>
         </>
     );
+}
+
+OrderDetailes.propTypes = {
+    data: ingredientType.isRequired
 }
 
 export default OrderDetailes;

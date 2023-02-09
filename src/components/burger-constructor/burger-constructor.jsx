@@ -3,7 +3,7 @@ import styles from "./burger-constructor.module.css"
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstuctorList from "./ui/constructorList/constuctor-list";
 import Price from "../ui/price/price";
-import {dataType} from "../../utils/global-prop-types";
+import {constructorType} from "../../utils/global-prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
@@ -13,7 +13,6 @@ const BurgerConstructor = ({data, handleOpen, handleClose}) => {
     const modalContent = (<Modal optionalTitle={""} handleClose={handleClose}>
         <IngredientDetails id={'0345232'}/>
     </Modal>)
-    // const modalContent = <IngredientDetails id={'0345232'} />
     return (<div>
         <div className={`${styles.container} mt-25`}>
             <ConstructorElement extraClass={"mb-4 mr-4"}
@@ -38,7 +37,5 @@ const BurgerConstructor = ({data, handleOpen, handleClose}) => {
     </div>)
 }
 
-BurgerConstructor.propTypes = {
-    data: dataType.isRequired
-}
+BurgerConstructor.propTypes = constructorType
 export default BurgerConstructor;

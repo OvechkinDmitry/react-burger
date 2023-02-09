@@ -2,11 +2,12 @@ import React, {useEffect} from 'react';
 import {createPortal} from "react-dom";
 import styles from './modal.module.css'
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 const portal = document.getElementById("modal-portal")
 
 
-function Modal({isOpen, handleClose, optionalTitle, children}) {
+function Modal({handleClose, optionalTitle, children}) {
     useEffect(() => {
         const escClosing = e => e.key === 'Escape' ? handleClose() : null
         document.body.addEventListener("keydown", escClosing);
@@ -29,6 +30,12 @@ function Modal({isOpen, handleClose, optionalTitle, children}) {
             </div>
         </div>
         , portal);
+}
+
+Modal.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    optionalTitle: PropTypes.string,
+    children: PropTypes.element.isRequired,
 }
 
 export default Modal;

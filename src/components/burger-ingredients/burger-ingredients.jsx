@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './burger-ingredients.module.css'
 import IngredientSection from "./ui/ingredient-section/ingredient-section";
 import Tabs from "./ui/tabs/tabs";
-import {dataType} from "../../utils/global-prop-types";
+import {constructorType} from "../../utils/global-prop-types";
 
 
 const BurgerIngredients = ({data, handleOpen, handleClose}) => {
@@ -19,7 +19,5 @@ const BurgerIngredients = ({data, handleOpen, handleClose}) => {
     );
 }
 
-BurgerIngredients.propTypes = {
-    data: dataType.isRequired
-}
+BurgerIngredients.propTypes = constructorType
 export default BurgerIngredients;

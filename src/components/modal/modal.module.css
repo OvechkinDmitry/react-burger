@@ -10,7 +10,7 @@
     max-width: 720px;
     border-radius: 40px;
     animation-name: changeOpacity;
-    animation-duration: 0.68s;
+    animation-duration: 0.7s;
 }
 .closeBtn{
     cursor: pointer;

@@ -5,6 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {URL} from '../../utils/constants'
 import {fetchIngredients} from "../../utils/fetch-ingredients";
+import WarnLog from "../ui/warn-log/warn-log";
 
 function App() {
     const [ingredients, setIngredients] = useState({
@@ -30,8 +31,8 @@ function App() {
         <div>
             <AppHeader/>
             <main className={styles.container}>
-                {isLoading && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ЗАГРУЗКА...</div>}
-                {hasError && <div className={"text_type_main-large"} style={{margin: "10px auto"}}>ОШИБКА</div>}
+                {isLoading && <WarnLog>Загрузка...</WarnLog>}
+                {hasError && <WarnLog>Ошибка</WarnLog>}
                 {!hasError && !isLoading && Object.keys(data).length && (<>
                     <BurgerIngredients data={data} handleOpen={handleOpen} handleClose={handleClose}/>
                     <BurgerConstructor data={data} handleOpen={handleOpen} handleClose={handleClose}/>
