@@ -4,8 +4,8 @@ import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import Price from "../../../ui/price/price";
 import {string, number} from "prop-types";
 
-const IngredientCart = ({price, description, count, image}) => {
-    return (<li className={styles.cart}>
+const IngredientCart = ({price, description, count, image, handleOpen}) => {
+    return (<li onClick={handleOpen} className={styles.cart}>
             <img alt={'ingredient'} src={image} className="pr-4 pb-1 pl-4"/>
             <Counter count={count} size="default" extraClass="m-1"/>
             <Price text={price} size={"default"}/>
