@@ -4,7 +4,7 @@ import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-u
 import ConstuctorList from "./ui/constructorList/constuctor-list";
 import Price from "../ui/price/price";
 import {constructorType} from "../../utils/global-prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDetails from "../orderr-details/order-details";
 import Modal from "../modal/modal";
 
 
@@ -35,7 +35,7 @@ const BurgerConstructor = React.memo(({data}) => {
             </div>
             {
                 isOpen && (<Modal handleClose={handleClose}>
-                    <IngredientDetails id={"012131"}/>
+                    <OrderDetails id={"012131"}/>
                 </Modal>)
             }
         </div>

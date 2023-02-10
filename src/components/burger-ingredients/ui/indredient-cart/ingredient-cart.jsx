@@ -3,7 +3,7 @@ import styles from './ingredient-cart.module.css'
 import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import Price from "../../../ui/price/price";
 import {string, number} from "prop-types";
-import OrderDetailes from "../../../order-details/order-detailes";
+import IngredientDetails from "../../../ingredient-details/ingredient-details";
 import Modal from "../../../modal/modal";
 
 const IngredientCart = (props) => {
@@ -20,7 +20,7 @@ const IngredientCart = (props) => {
             </li>
             {
                 isOpen && (<Modal optionalTitle={"Детали ингредиента"} handleClose={handleClose}>
-                    <OrderDetailes data={ing}/>
+                    <IngredientDetails data={ing}/>
                 </Modal>)
             }
         </>

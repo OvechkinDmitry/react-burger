@@ -1,22 +1,27 @@
 import React from 'react';
-import styles from './ingredient-details.module.css'
-import PropTypes from "prop-types";
-import Done from "../ui/done/done";
+import styles from './ingredient-detailes.module.css'
+import IngredientInfo from "./ui/ingredient-info/ingredient-info";
+import {ingredientType} from "../../utils/global-prop-types";
 
-const IngredientDetails = ({id}) => {
+function IngredientDetails({data}) {
+    const {calories, carbohydrates, fat, name, proteins} = data
     return (<>
-            <p className={`${styles.id} text text_type_digits-large`}>{id}</p>
-            <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
-            <Done extraClass={"mt-15"}/>
-            <p className="text text_type_main-small mt-15">Ваш заказ начали готовить</p>
-            <p className="text text_type_main-small text_color_inactive mt-2 pb-30">Дождитесь готовности на орбитальной
-                станции</p>
+            <img className={'mb-4'} src={data["image_large"]} alt={'Ингредиент'}/>
+            <p className={`${styles.name} text text_type_main-medium mb-8`}>
+                {name}
+            </p>
+            <div className={`${styles.info} pb-15`}>
+                <IngredientInfo title={"Калории,ккал"} amount={calories}/>
+                <IngredientInfo title={"Белки, г"} amount={proteins}/>
+                <IngredientInfo title={"Жиры, г"} amount={fat}/>
+                <IngredientInfo title={"Углеводы, г"} amount={carbohydrates}/>
+            </div>
         </>
     );
-};
+}
 
 IngredientDetails.propTypes = {
-    id: PropTypes.string.isRequired
+    data: ingredientType.isRequired
 }
 
 export default IngredientDetails;
