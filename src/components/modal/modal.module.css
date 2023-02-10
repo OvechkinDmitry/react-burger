@@ -7,7 +7,7 @@
     background: var(--modalBackground);
     display: flex;
     flex-direction: column;
-    max-width: 720px;
+    width: 720px;
     border-radius: 40px;
     animation-name: changeOpacity;
     animation-duration: 0.7s;
