@@ -4,7 +4,7 @@ import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-u
 import ConstuctorList from "./ui/constructorList/constuctor-list";
 import Price from "../ui/price/price";
 import {constructorType} from "../../utils/global-prop-types";
-import OrderDetails from "../orderr-details/order-details";
+import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 
 
