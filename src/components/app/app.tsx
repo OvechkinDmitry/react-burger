@@ -7,7 +7,7 @@ import withFetch from "../../hocs/with-fetch/with-fetch";
 import Constructor from "../constructor/constructor";
 
 function App() {
-    const WithFetchConstructor = () => withFetch(Constructor,URL)
+    const WithFetchConstructor = () => withFetch(Constructor, URL)
     return (
         <ErrorBoundary>
             <AppHeader/>

@@ -12,7 +12,7 @@ const IngredientInfo = ({title, amount}) => {
     );
 };
 
-IngredientInfo.propTypes={
+IngredientInfo.propTypes = {
     title: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
 }

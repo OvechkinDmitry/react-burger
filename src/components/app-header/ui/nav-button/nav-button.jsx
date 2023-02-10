@@ -16,5 +16,5 @@ export const NavButton = ({text, active, children}) => {
 NavButton.propType = {
     text: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,
-    children : PropTypes.elementType.isRequired,
+    children: PropTypes.elementType.isRequired,
 }

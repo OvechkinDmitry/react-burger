@@ -10,12 +10,12 @@ const BurgerIngredients = ({data}) => {
     const refBun = useRef()
     const refSouces = useRef()
     const refMain = useRef()
-    const names = [{"title": "Булки", "ref": refBun},
-                    {"title": "Соусы", "ref": refSouces},
-                    {"title": "Начинки", "ref": refMain}]
+    const tabsData = [{"title": "Булки", "ref": refBun},
+        {"title": "Соусы", "ref": refSouces},
+        {"title": "Начинки", "ref": refMain}]
     return (<div className={styles.container}>
             <p className="text text_type_main-large mt-10 mb-5">Соберите бургер</p>
-            <Tabs names={names}/>
+            <Tabs names={tabsData}/>
             <div className={`${styles.ingredients} mt-10`}>
                 <IngredientSection ref={refBun} title={"Булки"} data={bun}/>
                 <IngredientSection ref={refSouces} title={"Соусы"} data={sauce}/>
