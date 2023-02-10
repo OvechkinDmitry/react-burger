@@ -6,40 +6,28 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {URL} from '../../utils/constants'
 import {fetchIngredients} from "../../utils/fetch-ingredients";
 import WarnLog from "../ui/warn-log/warn-log";
+import ErrorBoundary from "../../hocs/error-boundary/error-boundary";
 
 function App() {
     const [ingredients, setIngredients] = useState({
-        hasError: false,
-        isLoading: false,
-        data: {},
+        hasError: false, isLoading: false, data: {},
     })
-    const [modalContent, setModalContent] = useState(null)
-
     useEffect(() => {
         fetchIngredients(URL, ingredients, setIngredients)
     }, [URL])
-
     const {hasError, isLoading, data} = ingredients
-    const [isOpen, setOpen] = useState(false)
-
-    const handleOpen = (data: any) => {
-        setOpen(true)
-        setModalContent(data)
-    }
-    const handleClose = () => setOpen(false)
     return (
-        <div>
+        <ErrorBoundary>
             <AppHeader/>
             <main className={styles.container}>
                 {isLoading && <WarnLog>Загрузка...</WarnLog>}
                 {hasError && <WarnLog>Ошибка</WarnLog>}
                 {!hasError && !isLoading && Object.keys(data).length && (<>
-                    <BurgerIngredients data={data} handleOpen={handleOpen} handleClose={handleClose}/>
-                    <BurgerConstructor data={data} handleOpen={handleOpen} handleClose={handleClose}/>
+                    <BurgerIngredients data={data}/>
+                    <BurgerConstructor data={data}/>
                 </>)}
             </main>
-            {isOpen && modalContent}
-        </div>
+        </ErrorBoundary>
     );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "./burger-constructor.module.css"
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstuctorList from "./ui/constructorList/constuctor-list";
@@ -8,11 +8,11 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
 
-const BurgerConstructor = ({data, handleOpen, handleClose}) => {
+const BurgerConstructor = ({data}) => {
     const {bun, main, sauce} = data
-    const modalContent = (<Modal optionalTitle={""} handleClose={handleClose}>
-        <IngredientDetails id={'0345232'}/>
-    </Modal>)
+    const [isOpen, setOpen] = useState(false)
+    const handleCloseS = () => setOpen(false)
+    const handleOpenS = () => setOpen(true)
     return (<div>
         <div className={`${styles.container} mt-25`}>
             <ConstructorElement extraClass={"mb-4 mr-4"}
@@ -29,10 +29,15 @@ const BurgerConstructor = ({data, handleOpen, handleClose}) => {
                                 thumbnail={bun[1].image}/>
             <div className={`${styles.submit} mt-10 mr-8`}>
                 <Price text={610} size={'medium'} extraClass={"mr-10"}/>
-                <Button onClick={() => handleOpen(modalContent)} htmlType="button" type="primary" size="medium">
+                <Button onClick={handleOpenS} htmlType="button" type="primary" size="medium">
                     Оформить заказ
                 </Button>
             </div>
+            {
+                isOpen && (<Modal handleClose={handleCloseS}>
+                    <IngredientDetails id={"012131"}/>
+                </Modal>)
+            }
         </div>
     </div>)
 }
