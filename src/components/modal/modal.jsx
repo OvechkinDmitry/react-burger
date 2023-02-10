@@ -10,9 +10,12 @@ const portal = document.getElementById("modal-portal")
 function Modal({handleClose, optionalTitle, children}) {
     useEffect(() => {
         const escClosing = e => e.key === 'Escape' ? handleClose() : null
-        document.body.addEventListener("keydown", escClosing);
+        const body = document.body
+        body.addEventListener("keydown", escClosing);
+        body.style.overflow = 'hidden'
         return () => {
-            document.body.removeEventListener('keydown', escClosing)
+            body.removeEventListener('keydown', escClosing)
+            body.style.overflow = 'auto'
         }
     }, [handleClose])
     return createPortal(<div>
