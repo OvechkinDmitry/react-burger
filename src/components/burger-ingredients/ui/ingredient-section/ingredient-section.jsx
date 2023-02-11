@@ -4,7 +4,7 @@ import IngredientCart from "../indredient-cart/ingredient-cart";
 import {string} from "prop-types";
 import {ingredientArray} from "../../../../utils/global-prop-types";
 
-const IngredientSection = ({title, data}, ref) => {
+const IngredientSection = ({title, data, handleOpen}, ref) => {
     return (<section ref={ref}>
             <p className="text text_type_main-medium mb-6">
                 {title}
@@ -14,6 +14,7 @@ const IngredientSection = ({title, data}, ref) => {
                         return (<IngredientCart key={ing["_id"]} ing={ing}
                                                 description={ing.name}
                                                 count={0} image={ing.image}
+                                                handleOpen={handleOpen}
                                                 price={ing.price}/>)
                     }
                 )}
