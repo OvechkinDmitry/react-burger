@@ -2,6 +2,7 @@
     max-width: 272px;
     min-height: 208px;
     position: relative;
+    cursor: pointer;
 }
 
 .price {

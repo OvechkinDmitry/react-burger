@@ -1,27 +1,20 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {data} from "../../utils/data";
+import {URL} from '../../utils/constants'
+import ErrorBoundary from "../../hocs/error-boundary/error-boundary";
+import withFetch from "../../hocs/with-fetch/with-fetch";
+import Constructor from "../constructor/constructor";
 
 function App() {
-    const ingredients = useMemo(() => data.reduce((acc: any, el) => {
-        if (el.type in acc)
-            acc[el.type].push(el)
-        else
-            acc[el.type] = [el]
-        return acc
-    }, {}), [data])
-
+    const WithFetchConstructor = () => withFetch(Constructor, URL)
     return (
-        <div>
+        <ErrorBoundary>
             <AppHeader/>
             <main className={styles.container}>
-                <BurgerIngredients data={ingredients}/>
-                <BurgerConstructor data={ingredients}/>
+                <WithFetchConstructor/>
             </main>
-        </div>
+        </ErrorBoundary>
     );
 }
 
