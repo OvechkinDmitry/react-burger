@@ -13,7 +13,7 @@ const IngredientCart = (props) => {
     const handleOpen = useCallback(() => setOpen(true),[])
     return (<>
             <li onClick={handleOpen} className={styles.cart}>
-                <img alt={'ingredient'} src={image} className="pr-4 pb-1 pl-4"/>
+                <img alt={`изображение ${description}`} src={image} className="pr-4 pb-1 pl-4"/>
                 <Counter count={count} size="default" extraClass="m-1"/>
                 <Price text={price} size={"default"}/>
                 <span className={`${styles.description} text text_type_main-small mt-1`}>{description}</span>
