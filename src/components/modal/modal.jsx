@@ -3,6 +3,7 @@ import {createPortal} from "react-dom";
 import styles from './modal.module.css'
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import ModalOvrelay from "../modal-overlay/modal-ovrelay";
 
 const portal = document.getElementById("modal-portal")
 
@@ -19,7 +20,7 @@ function Modal({handleClose, optionalTitle, children}) {
         }
     }, [handleClose])
     return createPortal(<div>
-            <div className={styles.overlay} onClick={() => handleClose()}></div>
+            <ModalOvrelay handleClose={handleClose}/>
             <div className={`${styles.modal} pt-10 pl-10 pr-10`}>
                 <div className={styles.header}>
                     <p className="text text_type_main-large">
