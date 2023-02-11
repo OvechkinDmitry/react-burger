@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 function Price({text, size, extraClass}) {
     return (<div className={`${styles.price} ${extraClass}`}>
-            <span className={`text text_type_digits-${size}`}>{text}</span>
-            <CurrencyIcon type="primary-medium"/>
+                <span className={`text text_type_digits-${size}`}>{text}</span>
+                <CurrencyIcon type="primary-medium"/>
         </div>
     );
 }

@@ -23,18 +23,18 @@ const BurgerIngredients = ({data}) => {
         {"title": "Соусы", "ref": refSouces},
         {"title": "Начинки", "ref": refMain}]
     return (<div className={styles.container}>
-            <p className="text text_type_main-large mt-10 mb-5">Соберите бургер</p>
-            <Tabs names={tabsData}/>
-            <div className={`${styles.ingredients} mt-10`}>
-                <IngredientSection ref={refBun} title={"Булки"} data={bun} handleOpen={handleOpen}/>
-                <IngredientSection ref={refSouces} title={"Соусы"} data={sauce} handleOpen={handleOpen}/>
-                <IngredientSection ref={refMain} title={"Начинки"} data={main} handleOpen={handleOpen}/>
-            </div>
-            {
-                isOpen && (<Modal optionalTitle={"Детали ингредиента"} handleClose={handleClose}>
-                    <IngredientDetails data={modalData}/>
-                </Modal>)
-            }
+                <p className="text text_type_main-large mt-10 mb-5">Соберите бургер</p>
+                <Tabs names={tabsData}/>
+                <div className={`${styles.ingredients} mt-10`}>
+                    <IngredientSection ref={refBun} title={"Булки"} data={bun} handleOpen={handleOpen}/>
+                    <IngredientSection ref={refSouces} title={"Соусы"} data={sauce} handleOpen={handleOpen}/>
+                    <IngredientSection ref={refMain} title={"Начинки"} data={main} handleOpen={handleOpen}/>
+                </div>
+                {
+                    isOpen && (<Modal optionalTitle={"Детали ингредиента"} handleClose={handleClose}>
+                        <IngredientDetails data={modalData}/>
+                    </Modal>)
+                }
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import WarnLog from "../../components/ui/warn-log/warn-log";
+import PropTypes from "prop-types";
 
 
 class ErrorBoundary extends React.Component {
@@ -21,6 +22,10 @@ class ErrorBoundary extends React.Component {
             return <WarnLog>Ошибка</WarnLog>;
         return this.props.children;
     }
+}
+
+ErrorBoundary.propTypes = {
+    children: PropTypes.node.isRequired
 }
 
 export default ErrorBoundary;
