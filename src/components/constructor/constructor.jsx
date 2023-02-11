@@ -7,12 +7,14 @@ import {ingredientArray} from "../../utils/global-prop-types";
 const Constructor = ({data}) => {
     const ingredientsData = useMemo(() => processData(data), [data])
     return (<>
-            <BurgerIngredients data={ingredientsData}/>
-            <BurgerConstructor data={ingredientsData}/>
-        </>
+                <BurgerIngredients data={ingredientsData}/>
+                <BurgerConstructor data={ingredientsData}/>
+           </>
     );
 };
 
-Constructor.propTypes = ingredientArray.isRequired
+Constructor.propTypes = {
+    data: ingredientArray.isRequired
+}
 
 export default Constructor;

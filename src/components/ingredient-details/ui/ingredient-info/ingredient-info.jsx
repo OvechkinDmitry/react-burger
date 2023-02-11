@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 const IngredientInfo = ({title, amount}) => {
     return (<div className={styles.infoCart}>
-            <p className="text text_type_main-default text_color_inactive">
-                {title}
-            </p>
-            <p className="text text_type_digits-default text_color_inactive">{amount}</p>
-        </div>
+                <p className="text text_type_main-default text_color_inactive">
+                    {title}
+                </p>
+                <p className="text text_type_digits-default text_color_inactive">{amount}</p>
+            </div>
     );
 };
 
