@@ -6,7 +6,7 @@ import {ingredientType} from "../../utils/global-prop-types";
 function IngredientDetails({data}) {
     const {calories, carbohydrates, fat, name, proteins} = data
     return (<>
-            <img className={'mb-4'} src={data["image_large"]} alt={'Ингредиент'}/>
+            <img className={'mb-4'} src={data["image_large"]} alt={`изображение ${name}`}/>
             <p className={`${styles.name} text text_type_main-medium mb-8`}>
                 {name}
             </p>
