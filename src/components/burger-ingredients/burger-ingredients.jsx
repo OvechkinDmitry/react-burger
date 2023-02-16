@@ -1,14 +1,14 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
 import IngredientSection from "./ui/ingredient-section/ingredient-section";
 import Tabs from "./ui/tabs/tabs";
-import {constructorType} from "../../utils/global-prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {ConstructorContext} from "../../services/constructor-context";
 
 
-const BurgerIngredients = ({data}) => {
-    const {bun, main, sauce} = data
+const BurgerIngredients = () => {
+    const {bun, main, sauce} = useContext(ConstructorContext)
     const [isOpen, setOpen] = useState(false)
     const [modalData, setModalData] = useState({})
     const handleClose = useCallback(() => setOpen(false), [])
@@ -39,5 +39,4 @@ const BurgerIngredients = ({data}) => {
     );
 }
 
-BurgerIngredients.propTypes = constructorType
 export default BurgerIngredients;
