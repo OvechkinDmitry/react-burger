@@ -5,17 +5,20 @@ import Tabs from "./ui/tabs/tabs";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {ConstructorContext} from "../../services/constructor-context";
+import {useDispatch, useSelector} from "react-redux";
+import {setModalData} from "../../services/reducers/ingredient-details-slice";
 
 
 const BurgerIngredients = () => {
     const {bun, main, sauce} = useContext(ConstructorContext)
     const [isOpen, setOpen] = useState(false)
-    const [modalData, setModalData] = useState({})
     const handleClose = useCallback(() => setOpen(false), [])
+    const dispath = useDispatch()
+    const {data} = useSelector(state => state.ingredientDetailsReducer)
     const handleOpen = useCallback((data) => {
-        setModalData(data)
+        dispath(setModalData(data))
         setOpen(true)
-    }, [])
+    }, [data])
     const refBun = useRef()
     const refSouces = useRef()
     const refMain = useRef()
@@ -32,7 +35,7 @@ const BurgerIngredients = () => {
                 </div>
                 {
                     isOpen && (<Modal optionalTitle={"Детали ингредиента"} handleClose={handleClose}>
-                        <IngredientDetails data={modalData}/>
+                            <IngredientDetails/>
                     </Modal>)
                 }
         </div>
