@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 const SubmitOreder = ({totalPrice, ingredients}) => {
     const [isOpen, setOpen] = useState(false)
-    const [orderId, setOrderId] = useState(null)
+    const [orderId, setOrderId] = useState("")
     const handleClose = useCallback(() => setOpen(false), [])
     const idS = useMemo(() => ingredients.map(el => el["_id"]), [...ingredients])
     const handleClick = useCallback(() => {
@@ -26,7 +26,7 @@ const SubmitOreder = ({totalPrice, ingredients}) => {
                 </div>
                 {
                     isOpen && (<Modal handleClose={handleClose}>
-                        <OrderDetails id={`${orderId ? orderId : "..."}`}/>
+                        <OrderDetails id={`${orderId}`}/>
                     </Modal>)
                 }
         </>
