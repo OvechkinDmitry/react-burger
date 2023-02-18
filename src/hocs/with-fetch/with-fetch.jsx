@@ -10,12 +10,12 @@ const WithFetch = (WrappedComponent, callback) => {
         dispatch(callback)
     }, [callback])
     return (<>
-            {isLoading && <WarnLog>Загрузка...</WarnLog>}
-            {isError && <WarnLog>Ошибка</WarnLog>}
-            {!isError && !isLoading && Object.keys(data).length && (<>
-                <WrappedComponent info={data}/>
-            </>)}
-        </>
+                {isLoading && <WarnLog>Загрузка...</WarnLog>}
+                {isError && <WarnLog>Ошибка</WarnLog>}
+                {!isError && !isLoading && Object.keys(data).length && (<>
+                    <WrappedComponent info={data}/>
+                </>)}
+            </>
     );
 };
 

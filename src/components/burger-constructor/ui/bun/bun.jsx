@@ -6,11 +6,11 @@ import {ingredientType} from "../../../../utils/global-prop-types";
 const Bun = ({type, data, isLocked}) => {
     const place = type === "top" ? "верх" : "низ";
     const extraClass = type === "top" ? "mb-4 mr-4" : "mt-4 mr-4"
-    return <ConstructorElement extraClass={extraClass}
+    return (Object.keys(data).length ? <ConstructorElement extraClass={extraClass}
                         type={type} isLocked={isLocked}
                         text={`${data.name} (${place})`}
                         price={data.price}
-                        thumbnail={data.image}/>
+                        thumbnail={data.image}/> : null)
 }
 
 Bun.propTypes={
