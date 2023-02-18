@@ -7,15 +7,22 @@ import OrderDetails from "../../order-details/order-details";
 import {postOrder} from "../../../utils/post-order";
 import Bun from "../ui/bun/bun";
 import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+import {deleteId, updateId} from "../../../services/reducers/order-details-slice";
 
 const SubmitOreder = ({totalPrice, ingredients}) => {
+    const dispatch = useDispatch()
     const [isOpen, setOpen] = useState(false)
-    const [orderId, setOrderId] = useState("")
-    const handleClose = useCallback(() => setOpen(false), [])
-    const idS = useMemo(() => ingredients.map(el => el["_id"]), [...ingredients])
+    const handleClose = useCallback(() => {
+        dispatch(deleteId())
+        setOpen(false)
+    }, [])
+    const idS = useMemo(() => ingredients.map(el => el["_id"]), [ingredients])
     const handleClick = useCallback(() => {
         setOpen(true)
-        postOrder(idS).then(res => setOrderId(res?.id)).catch(e => console.log(e))
+        postOrder(idS).then(res =>
+            dispatch(updateId({id : res?.id})))
+            .catch(e => console.log(e.message))
     }, [idS])
     return (<>
                 <div className={`${styles.submit} mt-10 mr-8`}>
@@ -26,7 +33,7 @@ const SubmitOreder = ({totalPrice, ingredients}) => {
                 </div>
                 {
                     isOpen && (<Modal handleClose={handleClose}>
-                        <OrderDetails id={`${orderId}`}/>
+                        <OrderDetails/>
                     </Modal>)
                 }
         </>

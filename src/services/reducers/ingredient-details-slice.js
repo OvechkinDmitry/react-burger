@@ -11,9 +11,12 @@ export const ingredientDetailsSlice = createSlice({
     reducers: {
         setModalData(state, action){
             state.data = action.payload
+        },
+        deleteModalData(state, action){
+            state.data = {}
         }
     }
 })
 
 export default ingredientDetailsSlice.reducer
-export const {setModalData} = ingredientDetailsSlice.actions
+export const {setModalData, deleteModalData} = ingredientDetailsSlice.actions

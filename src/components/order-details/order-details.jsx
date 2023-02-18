@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './order-details.module.css'
-import PropTypes from "prop-types";
 import Done from "../ui/done/done";
 import Loader from "../ui/loader/loader";
+import {useSelector} from "react-redux";
 
-const OrderDetails = ({id}) => {
+const OrderDetails = () => {
+    const {id} = useSelector(state => state.orderDetailsReducer)
     return (<>
             {id ?
                 <p className={`${styles.id} text text_type_digits-large`}>{id}</p> :
@@ -19,8 +20,5 @@ const OrderDetails = ({id}) => {
     );
 };
 
-OrderDetails.propTypes = {
-    id: PropTypes.string.isRequired
-}
 
 export default OrderDetails;

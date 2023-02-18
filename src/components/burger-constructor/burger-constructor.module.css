@@ -1,17 +1,24 @@
 .container {
     min-width: 600px;
+    /*height: 100%;*/
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
 }
-
+.resultList{
+    min-height: 696px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
 .submit {
     display: flex;
     align-items: center;
 }
 
-.container > * {
+.resultList > * {
     flex-grow: 0;
 }
 

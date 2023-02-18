@@ -1,25 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {fetchIngredients} from "../../utils/fetch-ingredients";
+import React, {useEffect} from 'react';
 import WarnLog from "../../components/ui/warn-log/warn-log";
 import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
 
-const WithFetch = (WrappedComponent, url) => {
-    const [state, setState] = useState({
-        isLoading: false,
-        hasError: false,
-        data: []
-    })
-
+const WithFetch = (WrappedComponent, callback) => {
+    const dispatch = useDispatch()
+    const {isLoading, isError, data} = useSelector(state => state.ingredientsReducer)
     useEffect(() => {
-        fetchIngredients(url, state, setState)
-    }, [url])
-
-    const {isLoading, hasError, data} = state
+        dispatch(callback)
+    }, [callback])
     return (<>
             {isLoading && <WarnLog>Загрузка...</WarnLog>}
-            {hasError && <WarnLog>Ошибка</WarnLog>}
-            {!hasError && !isLoading && Object.keys(data).length && (<>
-                <WrappedComponent data={data}/>
+            {isError && <WarnLog>Ошибка</WarnLog>}
+            {!isError && !isLoading && Object.keys(data).length && (<>
+                <WrappedComponent info={data}/>
             </>)}
         </>
     );
@@ -27,7 +21,7 @@ const WithFetch = (WrappedComponent, url) => {
 
 WithFetch.propTypes = {
     WrappedComponent: PropTypes.element.isRequired,
-    url: PropTypes.string.isRequired,
+    callback: PropTypes.func.isRequired
 }
 
 export default WithFetch;

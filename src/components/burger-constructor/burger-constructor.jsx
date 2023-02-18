@@ -1,48 +1,40 @@
-import React, { useContext, useEffect, useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from "./burger-constructor.module.css"
 import ConstuctorList from "./ui/constructorList/constuctor-list";
-import {ConstructorContext} from "../../services/constructor-context";
 import Bun from "./ui/bun/bun";
 import SubmitOreder from "./submit-order/submit-oreder";
+import {processData} from "../../utils/process-data";
+import {useDispatch, useSelector} from "react-redux";
+import  {calculateTotalPrice} from "../../services/reducers/burger-constructor-slice";
+import WarnLog from "../ui/warn-log/warn-log";
 
-const initialState = {totalPrice: 0};
 
-function reducer(state, action) {
-    switch (action.type) {
-        case "calculatePrice": {
-            const indgredients = action.payload
-            const totalPrice = indgredients.reduce((acc, el) => {
-                if (el.type === "bun")
-                    return acc + el?.price * 2
-                return acc + el?.price
-            }, 0)
-            return {...state, totalPrice}
-        }
-        default:
-            throw new Error(`Wrong type of action: ${action.type}`);
-    }
-}
-
-const BurgerConstructor = React.memo(() => {
-    const data = useContext(ConstructorContext)
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const constructorData = useMemo(() => {
-        return {
-            "main": data.main.slice(3),
-            "bun": data.bun[0],
-            "sauce": data.sauce.slice(8)
-        }
-    }, [data])
-    const {bun, main, sauce} = constructorData
-    useEffect(() => dispatch({type: "calculatePrice", payload: [...main, ...sauce, bun]}),
-        [...main, ...sauce, bun])
-    return (<div>
-                <div className={`${styles.container} mt-25`}>
-                    <Bun isLocked={true} type={"top"} data={bun}/>
-                    <ConstuctorList data={[...main, ...sauce]}/>
-                    <Bun isLocked={true} type={"bottom"} data={bun}/>
-                    <SubmitOreder totalPrice={state.totalPrice} ingredients={[bun, ...main, ...sauce]}/>
-                </div>
+const BurgerConstructor = React.memo(({info = []}) => {
+    const {isLoading, data} = useSelector(state => state.ingredientsReducer)
+    const {totalPrice} = useSelector(state => state.burgerConstructorReducer)
+    const dispatch = useDispatch()
+    if (!isLoading)
+        info = data
+    const ingredientsData = useMemo(() => processData(info), [info])
+    const {main, bun, sauce} = info.length ? ingredientsData :
+        {'main': [], 'bun': [], 'sauce': [] }
+    useEffect(() => {
+            dispatch(calculateTotalPrice({'indgredients': [...main, ...bun.slice(1,1), ...sauce]}))
+        },
+        [main, bun, sauce])
+    return( <div className={`${styles.container} mt-25`}>
+                    <div className={`${styles.resultList}`}>
+                        {
+                            info.length ? (
+                                <>
+                                    <Bun isLocked={true} type={"top"} data={bun[0]}/>
+                                    <ConstuctorList data={[...main, ...sauce]}/>
+                                    <Bun isLocked={true} type={"bottom"} data={bun[0]}/>
+                                </>
+                            ) : <WarnLog>Положите ингредиенты сюда</WarnLog>
+                        }
+                    </div>
+                <SubmitOreder totalPrice={totalPrice} ingredients={[bun, ...main, ...sauce]}/>
             </div>)
 })
 
