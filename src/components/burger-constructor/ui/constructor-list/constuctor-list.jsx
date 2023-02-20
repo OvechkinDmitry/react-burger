@@ -5,13 +5,15 @@ import {ingredientArray} from "../../../../utils/global-prop-types";
 
 const ConstuctorList = ({data}) => {
     return (<ul className={style.constructorList}>
-                {data.map(el => <li key={el["_id"]}>
+            {data && data.length ?data.map((el, index) => <li key={el["_id"] + index}>
                     <div className={"ml-4"}>
                         <DragIcon type="primary"/>
                     </div>
-                    <ConstructorElement extraClass={`${style.constructorElement} ml-2`} text={el.name} price={el.price}
+                    <ConstructorElement extraClass={`${style.constructorElement} ml-2`}
+                                        text={el.name}
+                                        price={el.price}
                                         thumbnail={el.image}/>
-                </li>)}
+                </li>) : null}
         </ul>
     )
 };

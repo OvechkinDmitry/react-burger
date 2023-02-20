@@ -21,9 +21,12 @@ const ingredientsSlice = createSlice({
         dataFetchingError(state){
             state.isLoading = false
             state.isError = true
+        },
+        updateIngerdients(state, action){
+            state.data = state.data.filter(el => el.id !== action.payload.itemId)
         }
     }
 })
 
 export default ingredientsSlice.reducer
-export const {dataFetching, dataFetchingError, dataFetchingSuccess} = ingredientsSlice.actions
+export const {dataFetching, dataFetchingError, dataFetchingSuccess, updateIngerdients} = ingredientsSlice.actions

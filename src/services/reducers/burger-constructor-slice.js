@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {calculatePrice} from "../../utils/calculate-price";
 
 const initialState = {
-    data: [],
+    constructorElements: [],
     totalPrice : 0
 }
 
@@ -9,19 +10,14 @@ const burgerConstructorSlice = createSlice({
     name: 'burgerConstructorSlice',
     initialState,
     reducers:{
-        calculateTotalPrice(state, action){
-            const {indgredients} = action.payload
-            state.totalPrice = indgredients && indgredients.length &&
-            indgredients.every(el => el !== undefined) ? indgredients.reduce((acc, el) => {
-                if(!el.price)
-                    return acc + 0
-                if (el.type === "bun")
-                    return acc + el?.price * 2
-                return acc + el?.price
-            }, 0) : 0
+        updateConstructorElements(state, action){
+            const {itemId, data} = action.payload
+            state.constructorElements = [...state.constructorElements,
+                ...data.filter(el => el["_id"] === itemId.id)]
+            state.totalPrice = calculatePrice(state.constructorElements)
         }
     }
 })
 
 export default burgerConstructorSlice.reducer
-export const {calculateTotalPrice} = burgerConstructorSlice.actions
+export const {updateConstructorElements} = burgerConstructorSlice.actions

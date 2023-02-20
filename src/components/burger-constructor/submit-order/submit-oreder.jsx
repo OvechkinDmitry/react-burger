@@ -27,7 +27,7 @@ const SubmitOreder = ({totalPrice, ingredients}) => {
     return (<>
                 <div className={`${styles.submit} mt-10 mr-8`}>
                     <Price text={totalPrice} size={'medium'} extraClass={"mr-10"}/>
-                    <Button onClick={handleClick} htmlType="button" type="primary" size="medium">
+                    <Button disabled={true} onClick={handleClick} htmlType="button" type="primary" size="medium">
                         Оформить заказ
                     </Button>
                 </div>

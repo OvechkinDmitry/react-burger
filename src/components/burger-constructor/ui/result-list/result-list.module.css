@@ -1,0 +1,11 @@
+.resultList{
+    min-height: 696px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.resultList > * {
+    flex-grow: 0;
+}
