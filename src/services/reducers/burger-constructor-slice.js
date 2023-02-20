@@ -12,8 +12,18 @@ const burgerConstructorSlice = createSlice({
     reducers:{
         updateConstructorElements(state, action){
             const {itemId, data} = action.payload
-            state.constructorElements = [...state.constructorElements,
-                ...data.filter(el => el["_id"] === itemId.id)]
+            const ingredient = data.find(el => el["_id"] === itemId.id)
+            if(ingredient.type !== 'bun')
+                state.constructorElements = [...state.constructorElements, ingredient]
+            else {
+                state.constructorElements = state.constructorElements.length ?
+                    state.constructorElements.map(el => {
+                    if (el.type === 'bun')
+                        return ingredient
+                    else
+                        return el
+                }) : [...state.constructorElements, ingredient]
+            }
             state.totalPrice = calculatePrice(state.constructorElements)
         }
     }
