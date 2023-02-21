@@ -6,10 +6,11 @@ import ResultList from "./ui/result-list/result-list";
 
 
 const BurgerConstructor = React.memo(({info = []}) => {
-    const {totalPrice} = useSelector(state => state.burgerConstructorReducer)
+    const {totalPrice, bun, constructorElements} = useSelector(state => state.burgerConstructorReducer)
+    const orderElements = [bun, ...constructorElements.map(el => el.ingredient)]
     return( <div className={`${styles.container} mt-25`}>
                 <ResultList/>
-                <SubmitOreder totalPrice={totalPrice} ingredients={[]}/>
+                <SubmitOreder totalPrice={totalPrice} ingredients={orderElements}/>
             </div>)
 })
 

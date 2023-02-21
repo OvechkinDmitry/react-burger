@@ -1,11 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, current} from "@reduxjs/toolkit";
 import {calculatePrice} from "../../utils/calculate-price";
 
 const initialState = {
     constructorElements: [],
     bun: {},
     totalPrice : 0,
-    isOrderDenied : true,
 }
 
 const burgerConstructorSlice = createSlice({
@@ -21,15 +20,21 @@ const burgerConstructorSlice = createSlice({
                     ingredient
                 }
             ]
+            const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
+            state.totalPrice = calculatePrice(orderElements)
         },
         updateBun(state, action){
             state.bun = action.payload.ingredient
+            const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
+            state.totalPrice = calculatePrice(orderElements)
         },
         deleteConstructorElement(state, action){
             const {index} = action.payload
             state.constructorElements = state.constructorElements.filter(el => el.index !== index).map((el, i) => {
                 return {...el, 'index': i}
             })
+            const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
+            state.totalPrice = calculatePrice(orderElements)
         }
     }
 })

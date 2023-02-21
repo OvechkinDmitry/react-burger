@@ -17,18 +17,17 @@ const SubmitOreder = ({totalPrice, ingredients}) => {
         dispatch(deleteId())
         setOpen(false)
     }, [])
-    const idS = useMemo(() => ingredients.map(el => el["_id"]), [ingredients])
+    const idS = useMemo(() => ingredients.map(el => el._id).filter(el => el), [ingredients])
     const handleClick = useCallback(() => {
         setOpen(true)
         postOrder(idS).then(res =>
             dispatch(updateId({id : res?.id})))
             .catch(e => console.log(e.message))
     }, [idS])
-    const {isOrderDenied} = useSelector(state => state.burgerConstructorReducer)
     return (<>
                 <div className={`${styles.submit} mt-10 mr-8`}>
                     <Price text={totalPrice} size={'medium'} extraClass={"mr-10"}/>
-                    <Button disabled={isOrderDenied} onClick={handleClick} htmlType="button" type="primary" size="medium">
+                    <Button disabled={!totalPrice} onClick={handleClick} htmlType="button" type="primary" size="medium">
                         Оформить заказ
                     </Button>
                 </div>

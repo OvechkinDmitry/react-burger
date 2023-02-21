@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './constuctor-list.module.css'
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteConstructorElement} from "../../../../services/reducers/burger-constructor-slice";
 
 const ConstuctorList = ({data}) => {
@@ -27,9 +27,5 @@ const ConstuctorList = ({data}) => {
         </ul>
     )
 };
-
-// ConstuctorList.propTypes = {
-//     data: ingredientArray.isRequired
-// }
 
 export default ConstuctorList;

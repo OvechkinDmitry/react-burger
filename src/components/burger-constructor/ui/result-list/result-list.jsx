@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Bun from "../bun/bun";
 import ConstuctorList from "../constructor-list/constuctor-list";
 import WarnLog from "../../../ui/warn-log/warn-log";
@@ -16,6 +16,7 @@ const ResultList = () => {
         else
             dispatch(updateBun({'ingredient': ingredient}))
     }
+
     const [, dropTarget] = useDrop({
         accept: "ingredient",
         drop(ingredient) {

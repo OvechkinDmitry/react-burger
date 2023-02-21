@@ -26,4 +26,4 @@ const ingredientsSlice = createSlice({
 })
 
 export default ingredientsSlice.reducer
-export const {dataFetching, dataFetchingError, dataFetchingSuccess} = ingredientsSlice.actions
+export const {dataFetching, dataFetchingError, dataFetchingSuccess, updateCount} = ingredientsSlice.actions

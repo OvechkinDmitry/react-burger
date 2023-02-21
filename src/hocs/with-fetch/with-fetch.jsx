@@ -19,9 +19,9 @@ const WithFetch = (WrappedComponent, callback) => {
     );
 };
 
-WithFetch.propTypes = {
-    WrappedComponent: PropTypes.element.isRequired,
-    callback: PropTypes.func.isRequired
-}
+// WithFetch.propTypes = {
+//     WrappedComponent: PropTypes.element.isRequired,
+//     callback: PropTypes.func.isRequired
+// }
 
 export default WithFetch;
