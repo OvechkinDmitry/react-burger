@@ -10,14 +10,7 @@ const IngredientSection = forwardRef(({title, data, handleOpen}, ref) => {
                     {title}
                 </p>
                 <ul className={`${styles.listIngredients} pt-6 pl-4 pb-10 pr-4`}>
-                    {data.map(ing => {
-                            return (<IngredientCart key={ing["_id"]} ing={ing}
-                                                    description={ing.name}
-                                                    image={ing.image}
-                                                    handleOpen={handleOpen}
-                                                    price={ing.price}/>)
-                        }
-                    )}
+                    {data.map(ing => (<IngredientCart key={ing["_id"]} ingredient={ing} handleOpen={handleOpen}/>))}
                 </ul>
         </section>
     )

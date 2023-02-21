@@ -3,6 +3,7 @@ import {calculatePrice} from "../../utils/calculate-price";
 
 const initialState = {
     constructorElements: [],
+    bun: {},
     totalPrice : 0,
     isOrderDenied : true,
 }
@@ -12,22 +13,26 @@ const burgerConstructorSlice = createSlice({
     initialState,
     reducers:{
         updateConstructorElements(state, action){
-            const {itemId, data} = action.payload
-            const ingredient = data.find(el => el["_id"] === itemId.id)
-            state.constructorElements =
-                    state.constructorElements.find(el => el.type === 'bun') && ingredient.type === 'bun' ?
-                    state.constructorElements.map(el => el.type === 'bun' ? ingredient : el)
-                    : [...state.constructorElements, ingredient]
-            state.totalPrice = calculatePrice(state.constructorElements)
-            state.isOrderDenied = state.constructorElements.length <= 0
+            const {ingredient} = action.payload
+            state.constructorElements = [
+                ...state.constructorElements,
+                {
+                    index: state.constructorElements.length ? state.constructorElements.length : 0,
+                    ingredient
+                }
+            ]
+        },
+        updateBun(state, action){
+            state.bun = action.payload.ingredient
         },
         deleteConstructorElement(state, action){
-            const {id} = action.payload
-            console.log(id)
-            state.constructorElements = state.constructorElements.filter(el => el._id !== id)
+            const {index} = action.payload
+            state.constructorElements = state.constructorElements.filter(el => el.index !== index).map((el, i) => {
+                return {...el, 'index': i}
+            })
         }
     }
 })
 
 export default burgerConstructorSlice.reducer
-export const {updateConstructorElements, deleteConstructorElement} = burgerConstructorSlice.actions
+export const {updateConstructorElements, deleteConstructorElement, updateBun} = burgerConstructorSlice.actions
