@@ -14,6 +14,7 @@ const ResultList = () => {
     const {data} = useSelector(state => state.ingredientsReducer)
     const ingredientsData = useMemo(() => processConstructor(constructorElements), [constructorElements])
     const {bun, middle} = ingredientsData
+
     const onDropHandler = (itemId) => {
         dispatch(updateConstructorElements({'itemId': itemId, "data": data}))
     }

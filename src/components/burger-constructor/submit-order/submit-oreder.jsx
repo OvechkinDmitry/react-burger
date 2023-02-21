@@ -7,7 +7,7 @@ import OrderDetails from "../../order-details/order-details";
 import {postOrder} from "../../../utils/post-order";
 import Bun from "../ui/bun/bun";
 import PropTypes from "prop-types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteId, updateId} from "../../../services/reducers/order-details-slice";
 
 const SubmitOreder = ({totalPrice, ingredients}) => {
@@ -24,10 +24,11 @@ const SubmitOreder = ({totalPrice, ingredients}) => {
             dispatch(updateId({id : res?.id})))
             .catch(e => console.log(e.message))
     }, [idS])
+    const {isOrderDenied} = useSelector(state => state.burgerConstructorReducer)
     return (<>
                 <div className={`${styles.submit} mt-10 mr-8`}>
                     <Price text={totalPrice} size={'medium'} extraClass={"mr-10"}/>
-                    <Button disabled={true} onClick={handleClick} htmlType="button" type="primary" size="medium">
+                    <Button disabled={isOrderDenied} onClick={handleClick} htmlType="button" type="primary" size="medium">
                         Оформить заказ
                     </Button>
                 </div>

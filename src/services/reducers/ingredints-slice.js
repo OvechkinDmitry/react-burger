@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, current} from "@reduxjs/toolkit";
 
 const initialState = {
     data: [],
@@ -10,7 +10,7 @@ const ingredientsSlice = createSlice({
     name: "constructorSlice",
     initialState,
     reducers: {
-        dataFetching(state){
+        dataFetching(state) {
             state.isLoading = true
         },
         dataFetchingSuccess(state, action) {
@@ -18,15 +18,12 @@ const ingredientsSlice = createSlice({
             state.isLoading = false
             state.isError = false
         },
-        dataFetchingError(state){
+        dataFetchingError(state) {
             state.isLoading = false
             state.isError = true
         },
-        updateIngerdients(state, action){
-            state.data = state.data.filter(el => el.id !== action.payload.itemId)
-        }
     }
 })
 
 export default ingredientsSlice.reducer
-export const {dataFetching, dataFetchingError, dataFetchingSuccess, updateIngerdients} = ingredientsSlice.actions
+export const {dataFetching, dataFetchingError, dataFetchingSuccess} = ingredientsSlice.actions

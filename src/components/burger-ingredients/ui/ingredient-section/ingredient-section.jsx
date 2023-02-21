@@ -13,7 +13,7 @@ const IngredientSection = forwardRef(({title, data, handleOpen}, ref) => {
                     {data.map(ing => {
                             return (<IngredientCart key={ing["_id"]} ing={ing}
                                                     description={ing.name}
-                                                    count={0} image={ing.image}
+                                                    image={ing.image}
                                                     handleOpen={handleOpen}
                                                     price={ing.price}/>)
                         }
