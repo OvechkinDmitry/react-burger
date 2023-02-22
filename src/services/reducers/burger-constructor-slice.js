@@ -15,20 +15,19 @@ const burgerConstructorSlice = createSlice({
         updateConstructorElements(state, action) {
             const {ingredients} = action.payload
             state.constructorElements = ingredients
-            state.totalPrice = calculatePrice([state.bun, ...state.constructorElements])
         },
         addConstructorElements(state, action) {
             const {ingredient} = action.payload
             state.constructorElements = [...state.constructorElements, {index: uuid(), ...ingredient}]
-            state.totalPrice = calculatePrice([state.bun, ...state.constructorElements])
         },
         addBun(state, action) {
             state.bun = action.payload.ingredient
-            state.totalPrice = calculatePrice([state.bun, ...state.constructorElements])
         },
         deleteConstructorElement(state, action) {
             const {index} = action.payload
             state.constructorElements = state.constructorElements.filter(el => el.index !== index)
+        },
+        calculateTotalPrice(state){
             state.totalPrice = calculatePrice([state.bun, ...state.constructorElements])
         }
     }
@@ -39,5 +38,6 @@ export const {
     addConstructorElements,
     deleteConstructorElement,
     addBun,
-    updateConstructorElements
+    updateConstructorElements,
+    calculateTotalPrice
 } = burgerConstructorSlice.actions

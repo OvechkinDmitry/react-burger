@@ -2,7 +2,11 @@ import React from 'react';
 import Bun from "../bun/bun";
 import ConstuctorList from "../constructor-list/constuctor-list";
 import WarnLog from "../../../ui/warn-log/warn-log";
-import {addBun, addConstructorElements} from "../../../../services/reducers/burger-constructor-slice";
+import {
+    addBun,
+    addConstructorElements,
+    calculateTotalPrice
+} from "../../../../services/reducers/burger-constructor-slice";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import styles from './result-list.module.css'
@@ -15,6 +19,7 @@ const ResultList = () => {
             dispatch(addConstructorElements({'ingredient': ingredient}))
         else
             dispatch(addBun({'ingredient': ingredient}))
+        dispatch(calculateTotalPrice())
     }
 
     const [, dropTarget] = useDrop({
