@@ -22,3 +22,9 @@ export const dataType = objectOf(ingredientArray)
 export const constructorType = {
     data: dataType.isRequired,
 }
+
+export const sectionsData = PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    ref: PropTypes.object.isRequired,
+    data: ingredientArray
+}))

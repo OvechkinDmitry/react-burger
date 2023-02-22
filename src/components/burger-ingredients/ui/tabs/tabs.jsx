@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import styles from "./tabs.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import {sectionsData} from "../../../../utils/global-prop-types";
 
 function Tabs({sectionsData, sectionsRef}) {
     const [current, setCurrent] = React.useState("")
@@ -45,5 +47,9 @@ function Tabs({sectionsData, sectionsRef}) {
     </div>);
 }
 
+Tabs.propTypes = {
+    sectionsData: sectionsData.isRequired,
+    sectionRef: PropTypes.object
+}
 
 export default Tabs;

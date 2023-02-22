@@ -1,10 +1,14 @@
 import React from 'react';
 import {Reorder} from "framer-motion";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ingredientType} from "../../../../utils/global-prop-types";
+import PropTypes from "prop-types";
 
 const ConstructorUnit = React.memo(({ingredient, handleClose}) => {
     return (
         <Reorder.Item
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: 1 }}
             whileDrag={{
                 scale: 1.05,
             }}
@@ -21,5 +25,8 @@ const ConstructorUnit = React.memo(({ingredient, handleClose}) => {
         </Reorder.Item>
     )
 })
-
+ConstructorUnit.propTypes = {
+    ingredient: ingredientType.isRequired,
+    handleClose: PropTypes.func.isRequired,
+}
 export default ConstructorUnit;

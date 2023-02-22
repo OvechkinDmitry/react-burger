@@ -11,8 +11,8 @@ export const orderDetailsSlice = createSlice({
         updateId(state, action){
             state.id = action.payload.id
         },
-        deleteId(state, action){
-            state.id = ''
+        deleteId(state){
+            state = initialState
         }
     }
 })

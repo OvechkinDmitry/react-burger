@@ -25,11 +25,11 @@ const ResultList = () => {
     });
     return (<div ref={dropTarget} className={`${styles.resultList}`}>
         {
-            constructorElements.length || Object.keys(bun).length ? (
+            Object.keys(bun).length || constructorElements.length ? (
                 <>
-                    <Bun isLocked={true} type={"top"} data={bun}/>
-                    <ConstuctorList data={[...constructorElements]}/>
-                    <Bun isLocked={true} type={"bottom"} data={bun}/>
+                    {!!Object.keys(bun).length && <Bun isLocked={true} type={"top"} data={bun}/>}
+                    {!!constructorElements.length && <ConstuctorList data={[...constructorElements]}/>}
+                    {!!Object.keys(bun).length && <Bun isLocked={true} type={"bottom"} data={bun}/>}
                 </>
             ) : <WarnLog>Положите ингредиенты сюда</WarnLog>
         }

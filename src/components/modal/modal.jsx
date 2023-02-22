@@ -7,7 +7,6 @@ import ModalOvrelay from "../modal-overlay/modal-ovrelay";
 
 const portal = document.getElementById("modal-portal")
 
-
 function Modal({handleClose, optionalTitle, children}) {
     useEffect(() => {
         const escClosing = e => e.key === 'Escape' ? handleClose() : null

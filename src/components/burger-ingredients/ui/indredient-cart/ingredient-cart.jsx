@@ -4,6 +4,8 @@ import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import Price from "../../../ui/price/price";
 import {useDrag} from "react-dnd";
 import {useSelector} from "react-redux";
+import {ingredientType} from "../../../../utils/global-prop-types";
+import PropTypes from "prop-types";
 
 const IngredientCart = React.memo(({ingredient, handleOpen}) => {
     const [_,dragRef] = useDrag({
@@ -22,4 +24,8 @@ const IngredientCart = React.memo(({ingredient, handleOpen}) => {
     );
 })
 
+IngredientCart.propTypes = {
+    ingredient: ingredientType.isRequired,
+    handleOpen: PropTypes.func.isRequired,
+}
 export default IngredientCart;

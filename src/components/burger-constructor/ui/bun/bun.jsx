@@ -13,11 +13,11 @@ const Bun = ({type, data, isLocked}) => {
                         thumbnail={data.image}/> : null)
 }
 
-// Bun.propTypes={
-//     type: PropTypes.string.isRequired,
-//     data: ingredientType.isRequired,
-//     isLocked: PropTypes.bool.isRequired,
-// }
+Bun.propTypes={
+    type: PropTypes.string.isRequired,
+    data: ingredientType.isRequired,
+    isLocked: PropTypes.bool.isRequired,
+}
 
 
 export default Bun;
