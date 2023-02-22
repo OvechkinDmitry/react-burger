@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { v1 as uuid} from 'uuid'
+import {calculatePrice} from "../../utils/calculate-price";
 
 const initialState = {
     constructorElements: [],
@@ -18,19 +19,19 @@ const burgerConstructorSlice = createSlice({
         addConstructorElements(state, action){
             const {ingredient} = action.payload
             state.constructorElements = [...state.constructorElements, { index: uuid(), ...ingredient }]
-            // const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
-            // state.totalPrice = calculatePrice(orderElements)
+            const orderElements = [state.bun, ...state.constructorElements]
+            state.totalPrice = calculatePrice(orderElements)
         },
         addBun(state, action){
             state.bun = action.payload.ingredient
-            // const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
-            // state.totalPrice = calculatePrice(orderElements)
+            const orderElements = [state.bun, ...state.constructorElements]
+            state.totalPrice = calculatePrice(orderElements)
         },
         deleteConstructorElement(state, action){
             const {index} = action.payload
             state.constructorElements = state.constructorElements.filter(el => el.index !== index)
-            // const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
-            // state.totalPrice = calculatePrice(orderElements)
+            const orderElements = [state.bun, ...state.constructorElements]
+            state.totalPrice = calculatePrice(orderElements)
         }
     }
 })
