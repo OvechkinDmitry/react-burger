@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
 import styles from "./tabs.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {arrayOf, object, shape, string} from "prop-types";
 
-function Tabs({names, sectionsRef}) {
-    const [current, setCurrent] = React.useState("Булки")
-
+function Tabs({sectionsData, sectionsRef}) {
+    const [current, setCurrent] = React.useState("")
     useEffect(() => {
         const options = {
             root: sectionsRef.current,
@@ -25,31 +23,27 @@ function Tabs({names, sectionsRef}) {
             }
         };
         const observer = new IntersectionObserver(handleIntersection, options)
-        names.forEach(el => {
+        sectionsData.forEach(el => {
             observer.observe(el['ref'].current)
         })
-    }, [current, names, sectionsRef])
+        return () => observer.disconnect();
+    }, [current, sectionsData, sectionsRef])
 
-    const handleScroll = (title, anyRef) => {
+    const handleClick = (title, anyRef) => {
         anyRef.current?.scrollIntoView({behavior: "smooth"})
         setCurrent(title)
     }
     return (<div className={styles.tabs}>
-        {names.map(({title, ref}) =>
+        {sectionsData.map(({title, ref}) =>
             <Tab
                 key={title} value={title}
                 active={current === title}
-                onClick={() => handleScroll(title, ref)}>
+                onClick={() => handleClick(title, ref)}>
                 {title}
             </Tab>)
         }
     </div>);
 }
 
-Tabs.propTypes = {
-    names: arrayOf(shape({
-        title: string.isRequired,
-        ref: object.isRequired,
-    })),
-}
+
 export default Tabs;

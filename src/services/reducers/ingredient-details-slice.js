@@ -12,7 +12,7 @@ export const ingredientDetailsSlice = createSlice({
         setModalData(state, action){
             state.data = action.payload
         },
-        deleteModalData(state, action){
+        deleteModalData(state){
             state.data = {}
         }
     }

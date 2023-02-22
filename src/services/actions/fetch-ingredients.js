@@ -5,7 +5,7 @@ export const fetchIngredients = (URL) => async (dispatch) => {
     try {
         dispatch(dataFetching())
         const {data} = await NomorepartiesInstance.get(URL)
-        dispatch(dataFetchingSuccess({data: data.data}))
+        dispatch(dataFetchingSuccess({ingredients: data.data}))
     }
     catch (err) {
         dispatch(dataFetchingError())

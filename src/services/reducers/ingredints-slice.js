@@ -1,7 +1,7 @@
-import {createSlice, current} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    data: [],
+    ingredients: [],
     isLoading: false,
     isError: false,
 }
@@ -14,7 +14,7 @@ const ingredientsSlice = createSlice({
             state.isLoading = true
         },
         dataFetchingSuccess(state, action) {
-            state.data = action.payload.data
+            state.ingredients = action.payload.ingredients
             state.isLoading = false
             state.isError = false
         },
@@ -26,4 +26,4 @@ const ingredientsSlice = createSlice({
 })
 
 export default ingredientsSlice.reducer
-export const {dataFetching, dataFetchingError, dataFetchingSuccess, updateCount} = ingredientsSlice.actions
+export const {dataFetching, dataFetchingError, dataFetchingSuccess} = ingredientsSlice.actions
