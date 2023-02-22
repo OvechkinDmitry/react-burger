@@ -5,25 +5,31 @@ import {arrayOf, object, shape, string} from "prop-types";
 
 function Tabs({names, sectionsRef}) {
     const [current, setCurrent] = React.useState("Булки")
+
     useEffect(() => {
-        console.log(sectionsRef)
         const options = {
-            root : sectionsRef.ref,
+            root: sectionsRef.current,
+            rootMargin: '-110px'
         }
+        const previousTabs = {}
         const handleIntersection = (entries) => {
             const tabs = entries.reduce((acc, entry) => {
-                    return {...acc, [entry.target.id]: entry.isIntersecting}
+                acc[entry.target.id] = entry.isIntersecting
+                return acc
+            }, previousTabs)
+            for (const name in tabs) {
+                if (tabs[name]) {
+                    setCurrent(name);
+                    break;
                 }
-                , {})
-            const index = entries.findIndex(el => tabs[el.target.id])
-            if (index >= 0)
-                setCurrent(entries[index].target.id)
-        }
+            }
+        };
         const observer = new IntersectionObserver(handleIntersection, options)
         names.forEach(el => {
-            observer.observe(el.ref.current)
+            observer.observe(el['ref'].current)
         })
-    }, [current, names])
+    }, [current, names, sectionsRef])
+
     const handleScroll = (title, anyRef) => {
         anyRef.current?.scrollIntoView({behavior: "smooth"})
         setCurrent(title)
