@@ -9,7 +9,7 @@ function Tabs({names, sectionsRef}) {
     useEffect(() => {
         const options = {
             root: sectionsRef.current,
-            rootMargin: '-110px'
+            rootMargin: '-110px',
         }
         const previousTabs = {}
         const handleIntersection = (entries) => {

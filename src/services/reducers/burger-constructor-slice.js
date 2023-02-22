@@ -1,5 +1,6 @@
 import {createSlice, current} from "@reduxjs/toolkit";
 import {calculatePrice} from "../../utils/calculate-price";
+import { v1 as uuid} from 'uuid'
 
 const initialState = {
     constructorElements: [],
@@ -12,27 +13,23 @@ const burgerConstructorSlice = createSlice({
     initialState,
     reducers:{
         updateConstructorElements(state, action){
+            const {ingredients} = action.payload
+            state.constructorElements = ingredients
+        },
+        addConstructorElements(state, action){
             const {ingredient} = action.payload
-            state.constructorElements = [
-                ...state.constructorElements,
-                {
-                    index: state.constructorElements.length ? state.constructorElements.length : 0,
-                    ingredient
-                }
-            ]
+            state.constructorElements = [...state.constructorElements, { index: uuid(), ingredient }]
             const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
             state.totalPrice = calculatePrice(orderElements)
         },
-        updateBun(state, action){
+        addBun(state, action){
             state.bun = action.payload.ingredient
             const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
             state.totalPrice = calculatePrice(orderElements)
         },
         deleteConstructorElement(state, action){
             const {index} = action.payload
-            state.constructorElements = state.constructorElements.filter(el => el.index !== index).map((el, i) => {
-                return {...el, 'index': i}
-            })
+            state.constructorElements = state.constructorElements.filter(el => el.index !== index)
             const orderElements = [state.bun, ...state.constructorElements.map(el => el.ingredient)]
             state.totalPrice = calculatePrice(orderElements)
         }
@@ -40,4 +37,4 @@ const burgerConstructorSlice = createSlice({
 })
 
 export default burgerConstructorSlice.reducer
-export const {updateConstructorElements, deleteConstructorElement, updateBun} = burgerConstructorSlice.actions
+export const {addConstructorElements, deleteConstructorElement, addBun, updateConstructorElements} = burgerConstructorSlice.actions
