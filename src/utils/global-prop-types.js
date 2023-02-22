@@ -1,4 +1,4 @@
-import PropTypes, {arrayOf, objectOf, shape} from "prop-types";
+import PropTypes, {arrayOf, shape} from "prop-types";
 
 export const ingredientType = shape({
     calories: PropTypes.number.isRequired,
@@ -16,12 +16,6 @@ export const ingredientType = shape({
 })
 
 export const ingredientArray = arrayOf(ingredientType)
-
-export const dataType = objectOf(ingredientArray)
-
-export const constructorType = {
-    data: dataType.isRequired,
-}
 
 export const sectionsData = PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
