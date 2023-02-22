@@ -4,6 +4,7 @@
     row-gap: 16px;
     max-height: 464px;
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-gutter: stable;
 }
 

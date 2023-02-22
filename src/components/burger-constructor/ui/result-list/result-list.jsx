@@ -1,8 +1,8 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import Bun from "../bun/bun";
 import ConstuctorList from "../constructor-list/constuctor-list";
 import WarnLog from "../../../ui/warn-log/warn-log";
-import {addBun, addConstructorElements, updateConstructorElements} from "../../../../services/reducers/burger-constructor-slice";
+import {addBun, addConstructorElements} from "../../../../services/reducers/burger-constructor-slice";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import styles from './result-list.module.css'
@@ -16,13 +16,6 @@ const ResultList = () => {
         else
             dispatch(addBun({'ingredient': ingredient}))
     }
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
-        const dragCard = constructorElements[dragIndex]
-        const newCards = [...constructorElements]
-        newCards.splice(dragIndex, 1)
-        newCards.splice(hoverIndex, 0, dragCard)
-        dispatch(updateConstructorElements({'ingredients': newCards}))
-    },[constructorElements,dispatch])
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
@@ -35,7 +28,7 @@ const ResultList = () => {
             constructorElements.length || Object.keys(bun).length ? (
                 <>
                     <Bun isLocked={true} type={"top"} data={bun}/>
-                    <ConstuctorList data={[...constructorElements]} moveCard={moveCard}/>
+                    <ConstuctorList data={[...constructorElements]}/>
                     <Bun isLocked={true} type={"bottom"} data={bun}/>
                 </>
             ) : <WarnLog>Положите ингредиенты сюда</WarnLog>

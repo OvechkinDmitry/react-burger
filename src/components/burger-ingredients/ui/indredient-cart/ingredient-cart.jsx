@@ -14,7 +14,7 @@ const IngredientCart = React.memo(({ingredient, handleOpen}) => {
     const elementsInOrder = [...constructorElements, bun, bun]
     const count = elementsInOrder.filter(el => el._id === ingredient._id).length
     return (<li key={ingredient._id} ref={dragRef} onClick={() => handleOpen(ingredient)} className={styles.cart}>
-                    <Counter count={count} size="default" extraClass="m-1"/>
+                    {count > 0 && <Counter count={count} size="default" extraClass="m-1"/>}
                     <img alt={`изображение ${ingredient.name}`} src={ingredient.image} className="pr-4 pb-1 pl-4"/>
                     <Price text={ingredient.price} size={"default"}/>
                     <span className={`${styles.description} text text_type_main-small mt-1`}>{ingredient.name}</span>

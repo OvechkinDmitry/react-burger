@@ -1,20 +1,26 @@
 import React from 'react';
+import {Reorder} from "framer-motion";
 import style from './constuctor-list.module.css'
 import {useDispatch} from "react-redux";
-import {deleteConstructorElement} from "../../../../services/reducers/burger-constructor-slice";
+import {
+    deleteConstructorElement,
+    updateConstructorElements
+} from "../../../../services/reducers/burger-constructor-slice";
 import ConstructorUnit from "../constructor-unit/constructor-unit";
 
-const ConstuctorList = ({data, moveCard}) => {
+const ConstuctorList = ({data}) => {
     const dispatch = useDispatch()
     const handleClose = (index) => {
         dispatch(deleteConstructorElement({index}))
     }
-    return (<ul className={style.constructorList}>
-            {data && data.length ? data.map((el, i) => {
-                return <ConstructorUnit key={el.index} handleClose={handleClose} moveCard={moveCard} index={i}
-                                        ingredient={el}/>
-            }) : null}
-        </ul>
+    const handleReorder = (elements) => {
+        dispatch(updateConstructorElements({'ingredients': elements}))
+    }
+    return (
+        <Reorder.Group className={style.constructorList} values={data} axys={"y"} onReorder={handleReorder}>
+            {data.map((el) =>  <ConstructorUnit key={el.index} handleClose={handleClose} ingredient={el}/>)}
+        </Reorder.Group>
+
     )
 };
 
