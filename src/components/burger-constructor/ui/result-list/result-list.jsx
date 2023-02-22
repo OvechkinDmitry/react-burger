@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import Bun from "../bun/bun";
 import ConstuctorList from "../constructor-list/constuctor-list";
 import WarnLog from "../../../ui/warn-log/warn-log";
@@ -16,15 +16,14 @@ const ResultList = () => {
         else
             dispatch(addBun({'ingredient': ingredient}))
     }
-    const moveCard = useCallback((dradIndex, hoverIndex) => {
-        console.log(constructorElements)
-        const dragCard = constructorElements.find(el => el.index === dradIndex)
-        const index = constructorElements.findIndex(el => el.index === dradIndex)
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = constructorElements[dragIndex]
         const newCards = [...constructorElements]
-        newCards.splice(index, 1)
+        newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
         dispatch(updateConstructorElements({'ingredients': newCards}))
     },[constructorElements,dispatch])
+
     const [, dropTarget] = useDrop({
         accept: "ingredient",
         drop(ingredient) {

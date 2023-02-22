@@ -11,7 +11,7 @@ const IngredientCart = React.memo(({ingredient, handleOpen}) => {
         item: ingredient
     })
     const {constructorElements, bun} = useSelector(state => state.burgerConstructorReducer)
-    const elementsInOrder = [...constructorElements.map(el => el.ingredient), bun, bun]
+    const elementsInOrder = [...constructorElements, bun, bun]
     const count = elementsInOrder.filter(el => el._id === ingredient._id).length
     return (<li key={ingredient._id} ref={dragRef} onClick={() => handleOpen(ingredient)} className={styles.cart}>
                     <Counter count={count} size="default" extraClass="m-1"/>

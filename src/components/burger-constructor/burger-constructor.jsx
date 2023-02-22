@@ -5,9 +5,9 @@ import {useSelector} from "react-redux";
 import ResultList from "./ui/result-list/result-list";
 
 
-const BurgerConstructor = React.memo(({info = []}) => {
+const BurgerConstructor = React.memo(() => {
     const {totalPrice, bun, constructorElements} = useSelector(state => state.burgerConstructorReducer)
-    const orderElements = [bun, ...constructorElements.map(el => el.ingredient)]
+    const orderElements = [bun, ...constructorElements]
     return( <div className={`${styles.container} mt-25`}>
                 <ResultList/>
                 <SubmitOreder totalPrice={totalPrice} ingredients={orderElements}/>
