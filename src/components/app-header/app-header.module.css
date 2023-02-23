@@ -1,14 +1,14 @@
 .header {
-    background: #1C1C21;
+	background: #1c1c21;
 }
 
 .headerContainer {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
+	max-width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
 }
 
 .logo {
-    margin: 0 auto 0 112px;
+	margin: 0 auto 0 112px;
 }

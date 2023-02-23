@@ -1,27 +1,27 @@
 .constructorList {
-    max-width: 568px;
-    composes: container from '../../burger-constructor.module.css';
-    row-gap: 16px;
-    max-height: 464px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-gutter: stable;
+	max-width: 568px;
+	composes: container from '../../burger-constructor.module.css';
+	row-gap: 16px;
+	max-height: 464px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-gutter: stable;
 }
 
 .constructorElement {
 }
 
 .constructorList li {
-    width: 100%;
-    display: flex;
-    align-items: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
 }
 
 .constructorList::-webkit-scrollbar {
-    width: 8px;
-    background: #2F2F37;
+	width: 8px;
+	background: #2f2f37;
 }
 
 .constructorList::-webkit-scrollbar-thumb {
-    background: #8585AD;
+	background: #8585ad;
 }

@@ -1,20 +1,20 @@
 .cart {
-    max-width: 272px;
-    min-height: 208px;
-    position: relative;
-    cursor: pointer;
+	max-width: 272px;
+	min-height: 208px;
+	position: relative;
+	cursor: pointer;
 }
 
 .price {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	justify-content: center;
 }
 
 .description {
-    width: 100%;
-    display: block;
-    word-break: break-word;
-    text-align: center;
+	width: 100%;
+	display: block;
+	word-break: break-word;
+	text-align: center;
 }
