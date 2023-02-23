@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {v1 as uuid} from 'uuid'
 import {calculatePrice} from "../../utils/calculate-price";
 
 const initialState = {
@@ -18,7 +17,7 @@ const burgerConstructorSlice = createSlice({
         },
         addConstructorElements(state, action) {
             const {ingredient} = action.payload
-            state.constructorElements = [...state.constructorElements, {index: uuid(), ...ingredient}]
+            state.constructorElements = [...state.constructorElements, ingredient]
         },
         addBun(state, action) {
             state.bun = action.payload.ingredient

@@ -10,13 +10,14 @@ import {
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import styles from './result-list.module.css'
+import {v1 as uuid} from "uuid";
 
 const ResultList = () => {
     const dispatch = useDispatch()
     const {constructorElements, bun} = useSelector(state => state.burgerConstructorReducer)
     const onDropHandler = (ingredient) => {
         if (ingredient.type !== 'bun')
-            dispatch(addConstructorElements({'ingredient': ingredient}))
+            dispatch(addConstructorElements({'ingredient': {...ingredient, index: uuid()}}))
         else
             dispatch(addBun({'ingredient': ingredient}))
         dispatch(calculateTotalPrice())
