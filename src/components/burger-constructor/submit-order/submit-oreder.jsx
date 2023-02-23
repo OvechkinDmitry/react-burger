@@ -7,7 +7,7 @@ import OrderDetails from "../../order-details/order-details";
 import {postOrder} from "../../../utils/post-order";
 import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
-import {deleteId, updateId} from "../../../services/reducers/order-details-slice";
+import {deleteId} from "../../../services/reducers/order-details-slice";
 
 const SubmitOreder = ({totalPrice, idS}) => {
     const dispatch = useDispatch()
@@ -18,9 +18,7 @@ const SubmitOreder = ({totalPrice, idS}) => {
     }, [dispatch])
     const handleClick = useCallback(() => {
         setOpen(true)
-        postOrder(idS).then(res =>
-            dispatch(updateId({id : res?.id})))
-            .catch(e => console.log(e.message))
+        dispatch(postOrder(idS))
     }, [idS, dispatch])
     return (<>
                 <div className={`${styles.submit} mt-10 mr-8`}>
