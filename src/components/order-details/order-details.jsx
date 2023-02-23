@@ -6,9 +6,8 @@ import { useSelector } from 'react-redux'
 import WarnLog from '../ui/warn-log/warn-log'
 
 const OrderDetails = () => {
-	const { id, isError, isLoading } = useSelector(
-		state => state.orderDetailsReducer
-	)
+	const getState = state => state.orderDetailsReducer
+	const { id, isError, isLoading } = useSelector(getState)
 	return (
 		<>
 			{isError && <WarnLog>Ошибка при выполнении заказа</WarnLog>}

@@ -22,9 +22,8 @@ import { URL_INGREDIENTS } from '../../utils/constants'
 
 const BurgerIngredients = () => {
 	const dispatch = useDispatch()
-	const { isLoading, isError, ingredients } = useSelector(
-		state => state.ingredientsReducer
-	)
+	const getState = state => state.ingredientsReducer
+	const { isLoading, isError, ingredients } = useSelector(getState)
 	const handleClose = useCallback(() => {
 		setOpen(false)
 		dispatch(deleteModalData())
@@ -52,7 +51,7 @@ const BurgerIngredients = () => {
 		<>
 			{isLoading && <WarnLog>Загрузка...</WarnLog>}
 			{isError && <WarnLog>Ошибка</WarnLog>}
-			{!isError && !isLoading && Object.keys(ingredients).length && (
+			{!isError && !isLoading && !!Object.keys(ingredients).length && (
 				<div className={styles.container}>
 					<p className='text text_type_main-large mt-10 mb-5'>
 						Соберите бургер

@@ -5,9 +5,8 @@ import { useSelector } from 'react-redux'
 import ResultList from './ui/result-list/result-list'
 
 const BurgerConstructor = React.memo(() => {
-	const { totalPrice, bun, constructorElements } = useSelector(
-		state => state.burgerConstructorReducer
-	)
+	const getState = state => state.burgerConstructorReducer
+	const { totalPrice, bun, constructorElements } = useSelector(getState)
 	const orderElementsIdS = useMemo(
 		() => [bun, ...constructorElements].map(el => el._id).filter(el => el),
 		[bun, constructorElements]

@@ -4,7 +4,8 @@ import IngredientInfo from './ui/ingredient-info/ingredient-info'
 import { useSelector } from 'react-redux'
 
 function IngredientDetails() {
-	const { data } = useSelector(state => state.ingredientDetailsReducer)
+	const getState = state => state.ingredientDetailsReducer
+	const { data } = useSelector(getState)
 	const { calories, carbohydrates, fat, name, proteins } = data
 	return (
 		<>

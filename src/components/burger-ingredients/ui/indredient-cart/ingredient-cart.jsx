@@ -12,9 +12,8 @@ const IngredientCart = React.memo(({ ingredient, handleOpen }) => {
 		type: 'ingredient',
 		item: ingredient
 	})
-	const { constructorElements, bun } = useSelector(
-		state => state.burgerConstructorReducer
-	)
+	const getState = state => state.burgerConstructorReducer
+	const { constructorElements, bun } = useSelector(getState)
 	const elementsInOrder = [...constructorElements, bun, bun]
 	const count = elementsInOrder.filter(el => el._id === ingredient._id).length
 	return (
