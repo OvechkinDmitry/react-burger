@@ -1,7 +1,6 @@
 import React from 'react';
 import Bun from "../bun/bun";
 import ConstuctorList from "../constructor-list/constuctor-list";
-import WarnLog from "../../../ui/warn-log/warn-log";
 import {
     addBun,
     addConstructorElements,
@@ -30,15 +29,9 @@ const ResultList = () => {
         },
     });
     return (<div ref={dropTarget} className={`${styles.resultList}`}>
-        {
-            Object.keys(bun).length || constructorElements.length ? (
-                <>
-                    {!!Object.keys(bun).length && <Bun isLocked={true} type={"top"} data={bun}/>}
-                    {!!constructorElements.length && <ConstuctorList data={[...constructorElements]}/>}
-                    {!!Object.keys(bun).length && <Bun isLocked={true} type={"bottom"} data={bun}/>}
-                </>
-            ) : <WarnLog>Положите ингредиенты сюда</WarnLog>
-        }
+                    <Bun isLocked={true} type={"top"} data={bun}/>
+                    <ConstuctorList data={[...constructorElements]}/>
+                    <Bun isLocked={true} type={"bottom"} data={bun}/>
     </div>)
 };
 

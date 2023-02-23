@@ -9,6 +9,7 @@ import {
 } from "../../../../services/reducers/burger-constructor-slice";
 import ConstructorUnit from "../constructor-unit/constructor-unit";
 import {ingredientArray} from "../../../../utils/global-prop-types";
+import IngredientPlaceholder from "../../../ui/ingredient-placeholder/ingredient-placeholder";
 
 const ConstuctorList = ({data}) => {
     const dispatch = useDispatch()
@@ -19,11 +20,13 @@ const ConstuctorList = ({data}) => {
     const handleReorder = (elements) => {
         dispatch(updateConstructorElements({'ingredients': elements}))
     }
-    return (
-        <Reorder.Group  className={style.constructorList} values={data} axys={"y"} onReorder={handleReorder}>
-            {data.map((el) =>  <ConstructorUnit key={el.index} handleClose={handleClose} ingredient={el}/>)}
-        </Reorder.Group>
-
+    return(<>
+                {
+                    !!data.length ? <Reorder.Group className={style.constructorList} values={data} axys={"y"} onReorder={handleReorder}>
+                        {data.map((el) => <ConstructorUnit key={el.index} handleClose={handleClose} ingredient={el}/>)}
+                    </Reorder.Group> : (<IngredientPlaceholder position={'middle'} title={"Место для начинки"}/>)
+                }
+          </>
     )
 };
 ConstuctorList.propTypes = {

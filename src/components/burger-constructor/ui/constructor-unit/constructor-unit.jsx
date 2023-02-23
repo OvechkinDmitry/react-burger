@@ -10,7 +10,7 @@ const ConstructorUnit = React.memo(({ingredient, handleClose}) => {
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             whileDrag={{
-                scale: 1.05,
+                scale: 1.1,
             }}
             value={ingredient}>
                 <div className={"ml-4"}>

@@ -2,6 +2,7 @@ import React from 'react';
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import {ingredientType} from "../../../../utils/global-prop-types";
+import IngredientPlaceholder from "../../../ui/ingredient-placeholder/ingredient-placeholder";
 
 const Bun = ({type, data, isLocked}) => {
     const place = type === "top" ? "верх" : "низ";
@@ -10,12 +11,12 @@ const Bun = ({type, data, isLocked}) => {
                         type={type} isLocked={isLocked}
                         text={`${data.name} (${place})`}
                         price={data.price}
-                        thumbnail={data.image}/> : null)
+                        thumbnail={data.image}/> : <IngredientPlaceholder title={"Место для булки"} position={type}/>)
 }
 
 Bun.propTypes={
     type: PropTypes.string.isRequired,
-    data: ingredientType.isRequired,
+    data: PropTypes.oneOfType([ingredientType, PropTypes.object]).isRequired,
     isLocked: PropTypes.bool.isRequired,
 }
 
