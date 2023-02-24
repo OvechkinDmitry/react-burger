@@ -1,22 +1,15 @@
-import React, {useMemo} from 'react';
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {processData} from "../../utils/process-data";
-import {ingredientArray} from "../../utils/global-prop-types";
-import {ConstructorContext} from "../../services/constructor-context";
+import React from 'react'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
+import BurgerConstructor from '../burger-constructor/burger-constructor'
+import GlobalDndProvider from '../../utils/global-dnd-provider'
 
-const Constructor = ({data}) => {
-    const ingredientsData = useMemo(() => processData(data), [data])
-    
-    return (<ConstructorContext.Provider value={ingredientsData}>
-                <BurgerIngredients/>
-                <BurgerConstructor/>
-           </ConstructorContext.Provider>
-    );
-};
-
-Constructor.propTypes = {
-    data: ingredientArray.isRequired
+const Constructor = () => {
+	return (
+		<GlobalDndProvider>
+			<BurgerIngredients />
+			<BurgerConstructor />
+		</GlobalDndProvider>
+	)
 }
 
-export default Constructor;
+export default Constructor

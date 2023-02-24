@@ -1,29 +1,44 @@
-import React from 'react';
+import React from 'react'
 import styles from './ingredient-cart.module.css'
-import {Counter} from "@ya.praktikum/react-developer-burger-ui-components";
-import Price from "../../../ui/price/price";
-import {string, number, func} from "prop-types";
-import {ingredientType} from "../../../../utils/global-prop-types";
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import Price from '../../../ui/price/price'
+import { useDrag } from 'react-dnd'
+import { useSelector } from 'react-redux'
+import { ingredientType } from '../../../../utils/global-prop-types'
+import PropTypes from 'prop-types'
 
-const IngredientCart = ({price, description, count, image, ing, handleOpen}) => {
-    return (<>
-                <li onClick={() => handleOpen(ing)} className={styles.cart}>
-                    <img alt={`изображение ${description}`} src={image} className="pr-4 pb-1 pl-4"/>
-                    <Counter count={count} size="default" extraClass="m-1"/>
-                    <Price text={price} size={"default"}/>
-                    <span className={`${styles.description} text text_type_main-small mt-1`}>{description}</span>
-                </li>
-          </>
-    );
-}
+const IngredientCart = React.memo(({ ingredient, handleOpen }) => {
+	const [_, dragRef] = useDrag({
+		type: 'ingredient',
+		item: ingredient
+	})
+	const getState = state => state.burgerConstructorReducer
+	const { constructorElements, bun } = useSelector(getState)
+	const elementsInOrder = [...constructorElements, bun, bun]
+	const count = elementsInOrder.filter(el => el._id === ingredient._id).length
+	return (
+		<li
+			key={ingredient._id}
+			ref={dragRef}
+			onClick={() => handleOpen(ingredient)}
+			className={styles.cart}
+		>
+			{count > 0 && <Counter count={count} size='default' extraClass='m-1' />}
+			<img
+				alt={`изображение ${ingredient.name}`}
+				src={ingredient.image}
+				className='pr-4 pb-1 pl-4'
+			/>
+			<Price text={ingredient.price} size={'default'} />
+			<span className={`${styles.description} text text_type_main-small mt-1`}>
+				{ingredient.name}
+			</span>
+		</li>
+	)
+})
 
 IngredientCart.propTypes = {
-    price: number.isRequired,
-    description: string.isRequired,
-    count: number.isRequired,
-    image: string.isRequired,
-    ing: ingredientType.isRequired,
-    handleOpen: func.isRequired,
+	ingredient: ingredientType.isRequired,
+	handleOpen: PropTypes.func.isRequired
 }
-
-export default IngredientCart;
+export default IngredientCart

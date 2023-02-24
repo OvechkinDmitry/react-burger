@@ -1,0 +1,12 @@
+.resultList {
+	min-height: 696px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.resultList > * {
+	flex-grow: 0;
+}

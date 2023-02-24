@@ -1,11 +1,9 @@
-.info{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
+.info {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
 }
-.name{
-    text-align: center;
+.name {
+	text-align: center;
 }
-
-

@@ -1,11 +1,19 @@
-import {NomorepartiesInstance, URL_ORDER} from "./constants";
+import { NomorepartiesInstance, URL_ORDER } from './constants'
+import {
+	dataFetching,
+	dataFetchingError,
+	updateId
+} from '../services/reducers/order-details-slice'
 
-export const postOrder = async (idS) => {
-    const res = await NomorepartiesInstance.post(URL_ORDER, { ingredients: idS });
-    if (res.status === 200) {
-        const { name, order } = res.data;
-        return { name, id: order.number };
-    } else {
-        return Promise.reject(`Ошибка ${res.status}`);
-    }
-};
+export const postOrder = idS => async dispatch => {
+	dispatch(dataFetching())
+	try {
+		const res = await NomorepartiesInstance.post(URL_ORDER, {
+			ingredients: idS
+		})
+		const { name, order } = res.data
+		dispatch(updateId({ name, id: order.number }))
+	} catch (e) {
+		dispatch(dataFetchingError())
+	}
+}

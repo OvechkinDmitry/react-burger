@@ -1,6 +1,6 @@
 .price {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	justify-content: center;
 }
