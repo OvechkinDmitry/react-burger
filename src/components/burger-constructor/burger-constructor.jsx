@@ -1,46 +1,49 @@
-import React, {useCallback, useState} from 'react';
+import React, { useContext, useEffect, useMemo, useReducer } from 'react';
 import styles from "./burger-constructor.module.css"
-import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstuctorList from "./ui/constructorList/constuctor-list";
-import Price from "../ui/price/price";
-import {constructorType} from "../../utils/global-prop-types";
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
+import {ConstructorContext} from "../../services/constructor-context";
+import Bun from "./ui/bun/bun";
+import SubmitOreder from "./submit-order/submit-oreder";
 
+const initialState = {totalPrice: 0};
 
-const BurgerConstructor = React.memo(({data}) => {
-    const {bun, main, sauce} = data
-    const [isOpen, setOpen] = useState(false)
-    const handleClose = useCallback(() => setOpen(false),[])
-    const handleOpen = useCallback(() => setOpen(true),[])
+function reducer(state, action) {
+    switch (action.type) {
+        case "calculatePrice": {
+            const indgredients = action.payload
+            const totalPrice = indgredients.reduce((acc, el) => {
+                if (el.type === "bun")
+                    return acc + el?.price * 2
+                return acc + el?.price
+            }, 0)
+            return {...state, totalPrice}
+        }
+        default:
+            throw new Error(`Wrong type of action: ${action.type}`);
+    }
+}
+
+const BurgerConstructor = React.memo(() => {
+    const data = useContext(ConstructorContext)
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const constructorData = useMemo(() => {
+        return {
+            "main": data.main.slice(3),
+            "bun": data.bun[0],
+            "sauce": data.sauce.slice(8)
+        }
+    }, [data])
+    const {bun, main, sauce} = constructorData
+    useEffect(() => dispatch({type: "calculatePrice", payload: [...main, ...sauce, bun]}),
+        [...main, ...sauce, bun])
     return (<div>
-        <div className={`${styles.container} mt-25`}>
-            <ConstructorElement extraClass={"mb-4 mr-4"}
-                                type="top" isLocked={true}
-                                text={`${bun[1].name} (верх)`}
-                                price={bun[1].price}
-                                thumbnail={bun[1].image}/>
-            <ConstuctorList data={[...main, ...sauce]}/>
-            <ConstructorElement extraClass={"mt-4 mr-4"}
-                                type="bottom"
-                                isLocked={true}
-                                text={`${bun[1].name} (низ)`}
-                                price={bun[1].price}
-                                thumbnail={bun[1].image}/>
-            <div className={`${styles.submit} mt-10 mr-8`}>
-                <Price text={610} size={'medium'} extraClass={"mr-10"}/>
-                <Button onClick={handleOpen} htmlType="button" type="primary" size="medium">
-                    Оформить заказ
-                </Button>
-            </div>
-            {
-                isOpen && (<Modal handleClose={handleClose}>
-                    <OrderDetails id={"012131"}/>
-                </Modal>)
-            }
-        </div>
-    </div>)
+                <div className={`${styles.container} mt-25`}>
+                    <Bun isLocked={true} type={"top"} data={bun}/>
+                    <ConstuctorList data={[...main, ...sauce]}/>
+                    <Bun isLocked={true} type={"bottom"} data={bun}/>
+                    <SubmitOreder totalPrice={state.totalPrice} ingredients={[bun, ...main, ...sauce]}/>
+                </div>
+            </div>)
 })
 
-BurgerConstructor.propTypes = constructorType
 export default BurgerConstructor;
