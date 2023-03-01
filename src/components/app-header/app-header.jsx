@@ -15,7 +15,7 @@ const AppHeader = () => {
 				<NavButton text={'Конструктор'} link={'/'}>
 					<BurgerIcon type='primary' />
 				</NavButton>
-				<NavButton text={'Лента заказов'} link={'/ytube'}>
+				<NavButton text={'Лента заказов'} link={'/orders'}>
 					<ListIcon type='primary' />
 				</NavButton>
 				<div className={styles.logo}>

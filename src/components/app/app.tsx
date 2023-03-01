@@ -5,6 +5,7 @@ import ErrorBoundary from '../../hocs/error-boundary/error-boundary'
 import Constructor from '../pages/constructor/constructor'
 import { Route, Routes } from 'react-router-dom'
 import PersonalAccount from '../pages/personal-account/personal-account'
+import Login from '../pages/login/login'
 
 //Todo:
 // / - главная страница, конструктор бургеров.
@@ -21,8 +22,10 @@ function App() {
 			<AppHeader />
 			<main className={styles.container}>
 				<Routes>
-					<Route path={'/'} element={<Constructor />}></Route>
-					<Route path={'/profile'} element={<PersonalAccount />}></Route>
+					<Route path={'/'} element={<Constructor />} />
+					<Route path={'/orders'} element={<div>working on it</div>} />
+					<Route path={'/login'} element={<Login />} />
+					<Route path={'/profile/*'} element={<PersonalAccount />} />
 				</Routes>
 			</main>
 		</ErrorBoundary>
