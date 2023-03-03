@@ -6,6 +6,9 @@ import Constructor from '../pages/constructor/constructor'
 import { Route, Routes } from 'react-router-dom'
 import PersonalAccount from '../pages/personal-account/personal-account'
 import Login from '../pages/login/login'
+import ForgotPassword from '../pages/forgot-password/forgot-password'
+import ResetPassword from '../pages/reset-password/reset-password'
+import Register from '../pages/register/register'
 
 //Todo:
 // / - главная страница, конструктор бургеров.
@@ -25,7 +28,10 @@ function App() {
 					<Route path={'/'} element={<Constructor />} />
 					<Route path={'/orders'} element={<div>working on it</div>} />
 					<Route path={'/login'} element={<Login />} />
+					<Route path={'/forgot-password'} element={<ForgotPassword />} />
 					<Route path={'/profile/*'} element={<PersonalAccount />} />
+					<Route path={'/reset-password'} element={<ResetPassword />} />
+					<Route path={'/register'} element={<Register />} />
 				</Routes>
 			</main>
 		</ErrorBoundary>

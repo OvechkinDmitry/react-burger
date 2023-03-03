@@ -1,36 +1,34 @@
 import React from 'react'
 import styles from './profile.css'
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import {
+	EmailInput,
+	PasswordInput
+} from '@ya.praktikum/react-developer-burger-ui-components'
 
 const Profile = () => {
 	return (
 		<div className={styles.inputs}>
-			<Input
-				type={'text'}
+			<EmailInput
 				placeholder={'Имя'}
-				icon={'EditIcon'}
 				name={'name'}
+				isIcon={true}
 				error={false}
-				errorText={'Ошибка'}
+				inputMode={'text'}
 				extraClass=''
 			/>
-			<Input
-				type={'email'}
+			<EmailInput
 				placeholder={'Логин'}
-				icon={'EditIcon'}
-				name={'name'}
+				name={'login'}
+				isIcon={true}
 				error={false}
 				errorText={'Ошибка'}
 				extraClass='mt-6 mb-6'
 			/>
-			<Input
-				type={'password'}
+			<PasswordInput
 				placeholder={'Пароль'}
 				icon={'EditIcon'}
-				name={'name'}
-				error={false}
+				name={'password'}
 				errorText={'Ошибка'}
-				extraClass=''
 			/>
 		</div>
 	)
