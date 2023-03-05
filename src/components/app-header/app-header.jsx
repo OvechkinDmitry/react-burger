@@ -21,7 +21,7 @@ const AppHeader = () => {
 				<div className={styles.logo}>
 					<Logo />
 				</div>
-				<NavButton text={'Личный кабинет'} link={'/profile'}>
+				<NavButton text={'Личный кабинет'} link={'/login'}>
 					<ProfileIcon type='primary' />
 				</NavButton>
 			</nav>

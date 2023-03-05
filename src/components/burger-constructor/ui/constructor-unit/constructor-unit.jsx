@@ -10,8 +10,6 @@ import PropTypes from 'prop-types'
 const ConstructorUnit = React.memo(({ ingredient, handleClose }) => {
 	return (
 		<Reorder.Item
-			initial={{ opacity: 0.5 }}
-			animate={{ opacity: 1 }}
 			whileDrag={{
 				scale: 1.1
 			}}
