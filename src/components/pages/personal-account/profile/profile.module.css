@@ -1,0 +1,9 @@
+.inputs {
+	display: flex;
+	flex-direction: column;
+}
+.edit {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}

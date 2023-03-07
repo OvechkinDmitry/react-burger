@@ -35,6 +35,7 @@ function App() {
 						path={'/profile/*'}
 						element={<ProtectedRouteElement element={<PersonalAccount />} />}
 					/>
+					{/*<Route path={'/profile/*'} element={<PersonalAccount />} />*/}
 					<Route path={'/reset-password'} element={<ResetPassword />} />
 					<Route path={'/register'} element={<Register />} />
 				</Routes>

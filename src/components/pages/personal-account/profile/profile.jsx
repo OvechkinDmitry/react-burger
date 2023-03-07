@@ -1,19 +1,43 @@
-import React, { useState } from 'react'
-import styles from './profile.css'
+import React, { useEffect, useState } from 'react'
+import styles from './profile.module.css'
 import {
+	Button,
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { patchUser } from '../../../../utils/patch-user'
+import { updateUser } from '../../../../services/reducers/auth-user-slice'
 
 const Profile = () => {
+	const dispatch = useDispatch()
 	const { user } = useSelector(state => state.authUserReducer)
-	const [form, setValue] = useState({
+	const [editFieldVisible, setEditFieldVisible] = useState(false)
+	const initialStateForm = {
 		name: user.name,
-		login: user.email,
+		email: user.email,
 		password: user.password
-	})
-	const onChange = e => setValue({ ...form, [e.target.name]: e.target.value })
+	}
+	const [form, setValue] = useState(initialStateForm)
+	const applyChanges = async () => {
+		try {
+			const res = await patchUser(form)
+			const data = await res.json()
+			console.log(data)
+			dispatch(updateUser(form))
+		} catch (e) {
+			console.log(e)
+		}
+	}
+	const onChange = e =>
+		setValue({ ...form, [e.target.name]: e.target.value.trim() })
+
+	useEffect(() => {
+		setEditFieldVisible(
+			JSON.stringify(initialStateForm) !== JSON.stringify(form)
+		)
+	}, [form.name, form.password, form.login, initialStateForm])
+
 	return (
 		<div className={styles.inputs}>
 			<EmailInput
@@ -28,7 +52,7 @@ const Profile = () => {
 			/>
 			<EmailInput
 				placeholder={'Логин'}
-				value={form.login}
+				value={form.email}
 				onChange={onChange}
 				name={'login'}
 				isIcon={true}
@@ -44,6 +68,26 @@ const Profile = () => {
 				name={'password'}
 				errorText={'Ошибка'}
 			/>
+			{editFieldVisible && (
+				<div className={`${styles.edit} mt-6`}>
+					<Button
+						onClick={() => setValue(initialStateForm)}
+						htmlType='button'
+						type='secondary'
+						size='medium'
+					>
+						Отмена
+					</Button>
+					<Button
+						onClick={applyChanges}
+						htmlType='button'
+						type='primary'
+						size='medium'
+					>
+						Сохранить
+					</Button>
+				</div>
+			)}
 		</div>
 	)
 }

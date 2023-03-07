@@ -3,7 +3,8 @@ import {
 	NomorepartiesInstance,
 	URL_LOGIN
 } from '../../utils/constants/constants'
-import { getAccessToken } from '../../utils/post-login'
+
+export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
 
 const initialState = {
 	user: {
@@ -46,6 +47,11 @@ export const loginUser = createAsyncThunk(
 	}
 )
 
+// export const updateUser = createAsyncThunk(
+// 	'authUserSlice/loginUser',
+// 	async function (form, { rejectWithValue, dispatch, getState }) {}
+// )
+
 const authUserSlice = createSlice({
 	name: 'authUserSlice',
 	initialState,
@@ -64,6 +70,9 @@ const authUserSlice = createSlice({
 		},
 		exitUser(state) {
 			state.user = initialState.user
+		},
+		updateUser(state, action) {
+			state.user = action.payload
 		}
 	},
 	extraReducers(builder) {
@@ -79,5 +88,5 @@ const authUserSlice = createSlice({
 })
 
 export default authUserSlice.reducer
-export const { dataLoading, dataError, dataSuccess, exitUser } =
+export const { dataLoading, dataError, dataSuccess, exitUser, updateUser } =
 	authUserSlice.actions
