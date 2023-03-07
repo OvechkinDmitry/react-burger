@@ -5,31 +5,38 @@ import {
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { postLogin } from '../../../utils/post-login'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../../../services/reducers/auth-user-slice'
 
 const Login = () => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const [pageError, setPageError] = useState('')
+	const { user } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ email: '', password: '' })
 	const onChange = e => {
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
 	const onClick = async () => {
-		try {
-			const data = await postLogin(form.email, form.password)()
-			console.log(data)
-		} catch (e) {
-			console.log(e.response)
-		}
+		const res = await dispatch(
+			loginUser({ userEmail: form.email, userPassword: form.password })
+		)
+		if (res.error) setPageError(res.payload)
+		else navigate('/', { replace: true })
 	}
 	return (
 		<div className={styles.container}>
+			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
+				{pageError}
+			</p>
 			<p className={`text text_type_main-medium mb-6`}>Вход</p>
 			<EmailInput
 				placeholder={'E-mail'}
 				value={form.email}
 				onChange={onChange}
 				name={'email'}
-				// isIcon={true}
 				extraClass='mb-6'
 			/>
 			<PasswordInput
