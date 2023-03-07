@@ -4,16 +4,21 @@ import {
 	Button,
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 import { postForgotPassword } from '../../../utils/post-forgot-password'
+import { useSelector } from 'react-redux'
 
 const ForgotPassword = () => {
+	const { user } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ email: '' })
 	const onChange = e => {
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
 	const onClick = async () => {
 		const data = await postForgotPassword(form.email)()
+	}
+	if (user.email !== '') {
+		return <Navigate to={'/'} replace />
 	}
 	return (
 		<div className={`${styles.container}`}>

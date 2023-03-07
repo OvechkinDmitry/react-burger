@@ -69,6 +69,8 @@ const authUserSlice = createSlice({
 			state.user = action.payload
 		},
 		exitUser(state) {
+			localStorage.setItem('accessToken', '')
+			localStorage.setItem('refreshToken', '')
 			state.user = initialState.user
 		},
 		updateUser(state, action) {

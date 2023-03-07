@@ -8,9 +8,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { patchUser } from '../../../../utils/patch-user'
 import { updateUser } from '../../../../services/reducers/auth-user-slice'
+import WarnLog from '../../../ui/warn-log/warn-log'
 
 const Profile = () => {
 	const dispatch = useDispatch()
+	const [pageError, setPageError] = useState('')
 	const { user } = useSelector(state => state.authUserReducer)
 	const [editFieldVisible, setEditFieldVisible] = useState(false)
 	const initialStateForm = {
@@ -20,13 +22,12 @@ const Profile = () => {
 	}
 	const [form, setValue] = useState(initialStateForm)
 	const applyChanges = async () => {
-		try {
-			const res = await patchUser(form)
-			const data = await res.json()
-			console.log(data)
-			dispatch(updateUser(form))
-		} catch (e) {
-			console.log(e)
+		const res = await patchUser(form)
+		if (res.ok) dispatch(updateUser(form))
+		else {
+			setEditFieldVisible(false)
+			setValue(initialStateForm)
+			setPageError('Ошибка на сервере')
 		}
 	}
 	const onChange = e =>
@@ -40,6 +41,7 @@ const Profile = () => {
 
 	return (
 		<div className={styles.inputs}>
+			<WarnLog>{pageError}</WarnLog>
 			<EmailInput
 				placeholder={'Имя'}
 				value={form.name}

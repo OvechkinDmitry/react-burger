@@ -5,6 +5,7 @@ import Profile from './profile/profile'
 import { useDispatch } from 'react-redux'
 import { exitUser } from '../../../services/reducers/auth-user-slice'
 import WarnLog from '../../ui/warn-log/warn-log'
+import { postLogout } from '../../../utils/post-logout'
 
 const routes = [
 	{
@@ -19,11 +20,16 @@ const routes = [
 
 const PersonalAccount = () => {
 	const dispatch = useDispatch()
-	const exit = e => {
+	const exit = async e => {
 		e.preventDefault()
-		dispatch(exitUser())
-		localStorage.setItem('accessToken', '')
-		localStorage.setItem('refreshToken', '')
+		try {
+			const res = await postLogout()
+			const data = await res.json()
+			console.log(data)
+			dispatch(exitUser())
+		} catch (e) {
+			console.log(e)
+		}
 	}
 	return (
 		<div className={styles.body}>

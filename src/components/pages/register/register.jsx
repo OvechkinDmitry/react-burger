@@ -6,10 +6,12 @@ import {
 	Input,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 import { postRegister } from '../../../utils/post-register'
+import { useSelector } from 'react-redux'
 
 const Register = () => {
+	const { user } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ name: '', email: '', password: '' })
 	const onChange = e => {
 		setValue({ ...form, [e.target.name]: e.target.value })
@@ -22,6 +24,9 @@ const Register = () => {
 		} catch (e) {
 			console.log(e + ' такая ошибка брат')
 		}
+	}
+	if (user.email !== '') {
+		return <Navigate to={'/'} replace />
 	}
 	return (
 		<div className={`${styles.container}`}>

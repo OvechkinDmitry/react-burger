@@ -1,5 +1,4 @@
 export const patchUser = async form => {
-	console.log(form)
 	const res = fetch('https://norma.nomoreparties.space/api/auth/user', {
 		method: 'PATCH',
 		headers: {

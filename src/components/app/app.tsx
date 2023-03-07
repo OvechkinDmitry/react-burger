@@ -28,7 +28,14 @@ function App() {
 			<main className={styles.container}>
 				<Routes>
 					<Route path={'/'} element={<Constructor />} />
-					<Route path={'/orders'} element={<WarnLog>working on it</WarnLog>} />
+					<Route
+						path={'/orders'}
+						element={
+							<ProtectedRouteElement
+								element={<WarnLog>working on it</WarnLog>}
+							/>
+						}
+					/>
 					<Route path={'/login'} element={<Login />} />
 					<Route path={'/forgot-password'} element={<ForgotPassword />} />
 					<Route

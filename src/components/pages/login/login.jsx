@@ -5,7 +5,7 @@ import {
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Navigate, NavLink, redirect, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../../services/reducers/auth-user-slice'
 
@@ -24,6 +24,10 @@ const Login = () => {
 		)
 		if (res.error) setPageError(res.payload)
 		else navigate('/profile')
+	}
+	console.log(user)
+	if (user.email !== '') {
+		navigate('/')
 	}
 	return (
 		<div className={styles.container}>
