@@ -1,11 +1,10 @@
 import {
-	NomorepartiesAuth,
 	NomorepartiesInstance,
 	URL_FORGOT_PASSWORD,
 	URL_LOGIN,
 	URL_PASSWORD_RESET,
 	URL_REGISTER
-} from './constants'
+} from './constants/constants'
 
 export class AuthService {
 	static async login(email, password) {

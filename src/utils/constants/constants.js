@@ -5,6 +5,7 @@ export const URL_FORGOT_PASSWORD = '/password-reset'
 export const URL_PASSWORD_RESET = '/password-reset/reset'
 export const URL_REGISTER = '/auth/register'
 export const URL_LOGIN = 'auth/login'
+export const URL_GET_USER = 'auth/user'
 
 export const NomorepartiesInstance = axios.create({
 	baseURL: 'https://norma.nomoreparties.space/api/',
@@ -19,6 +20,6 @@ export const NomorepartiesAuth = axios.create({
 	timeout: 0,
 	headers: {
 		Accept: 'application/json',
-		Authorization: `Bearer ${localStorage.getItem('token')}`
+		Authorization: 'Bearer ' + localStorage.getItem('accessToken')
 	}
 })

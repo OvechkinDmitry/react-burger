@@ -6,7 +6,6 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { postLogin } from '../../../utils/post-login'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../../services/reducers/auth-user-slice'
 
@@ -24,7 +23,7 @@ const Login = () => {
 			loginUser({ userEmail: form.email, userPassword: form.password })
 		)
 		if (res.error) setPageError(res.payload)
-		else navigate('/', { replace: true })
+		else navigate('/profile')
 	}
 	return (
 		<div className={styles.container}>

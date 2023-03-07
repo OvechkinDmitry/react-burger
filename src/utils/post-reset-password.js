@@ -1,4 +1,7 @@
-import { NomorepartiesInstance, URL_PASSWORD_RESET } from './constants'
+import {
+	NomorepartiesInstance,
+	URL_PASSWORD_RESET
+} from './constants/constants'
 
 export const postResetPassword = (password, code) => async () => {
 	try {

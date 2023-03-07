@@ -9,6 +9,8 @@ import Login from '../pages/login/login'
 import ForgotPassword from '../pages/forgot-password/forgot-password'
 import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
+import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
+import WarnLog from '../ui/warn-log/warn-log'
 
 //Todo:
 // / - главная страница, конструктор бургеров.
@@ -26,10 +28,13 @@ function App() {
 			<main className={styles.container}>
 				<Routes>
 					<Route path={'/'} element={<Constructor />} />
-					<Route path={'/orders'} element={<div>working on it</div>} />
+					<Route path={'/orders'} element={<WarnLog>working on it</WarnLog>} />
 					<Route path={'/login'} element={<Login />} />
 					<Route path={'/forgot-password'} element={<ForgotPassword />} />
-					<Route path={'/profile/*'} element={<PersonalAccount />} />
+					<Route
+						path={'/profile/*'}
+						element={<ProtectedRouteElement element={<PersonalAccount />} />}
+					/>
 					<Route path={'/reset-password'} element={<ResetPassword />} />
 					<Route path={'/register'} element={<Register />} />
 				</Routes>

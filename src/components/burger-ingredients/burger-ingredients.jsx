@@ -18,7 +18,7 @@ import {
 import { processData } from '../../utils/process-data'
 import WarnLog from '../ui/warn-log/warn-log'
 import { fetchIngredients } from '../../services/actions/fetch-ingredients'
-import { URL_INGREDIENTS } from '../../utils/constants'
+import { URL_INGREDIENTS } from '../../utils/constants/constants'
 
 const BurgerIngredients = () => {
 	const dispatch = useDispatch()

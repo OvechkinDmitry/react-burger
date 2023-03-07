@@ -1,4 +1,4 @@
-import { NomorepartiesInstance, URL_LOGIN } from './constants'
+import { NomorepartiesInstance, URL_LOGIN } from './constants/constants'
 import {
 	dataError,
 	dataLoading,

@@ -2,6 +2,9 @@ import React from 'react'
 import styles from './personal-account.module.css'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import Profile from './profile/profile'
+import { useDispatch } from 'react-redux'
+import { exitUser } from '../../../services/reducers/auth-user-slice'
+import WarnLog from '../../ui/warn-log/warn-log'
 
 const routes = [
 	{
@@ -11,14 +14,17 @@ const routes = [
 	{
 		title: 'История заказов',
 		link: 'orders'
-	},
-	{
-		title: 'Выход',
-		link: 'exit'
 	}
 ]
 
 const PersonalAccount = () => {
+	const dispatch = useDispatch()
+	const exit = e => {
+		e.preventDefault()
+		dispatch(exitUser())
+		localStorage.setItem('accessToken', '')
+		localStorage.setItem('refreshToken', '')
+	}
 	return (
 		<div className={styles.body}>
 			<div className={`${styles.navigation} mr-15`}>
@@ -35,14 +41,19 @@ const PersonalAccount = () => {
 						{title}
 					</NavLink>
 				))}
+				<div
+					className={`text text_type_main-medium ${styles.navLink} text_color_inactive`}
+					onClick={exit}
+				>
+					Выход
+				</div>
 				<p className={'text text_type_main-small text_color_inactive mt-20'}>
 					В этом разделе вы можете изменить свои персональные данные
 				</p>
 			</div>
 			<Routes>
 				<Route path={'/'} element={<Profile />} />
-				<Route path={'orders'} element={<div>working on it</div>} />
-				<Route path={'exit'} element={<div>working on it</div>} />
+				<Route path={'orders'} element={<WarnLog>working on it</WarnLog>} />
 			</Routes>
 		</div>
 	)

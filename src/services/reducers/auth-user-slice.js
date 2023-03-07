@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { NomorepartiesInstance, URL_LOGIN } from '../../utils/constants'
+import {
+	NomorepartiesInstance,
+	URL_LOGIN
+} from '../../utils/constants/constants'
 import { getAccessToken } from '../../utils/post-login'
 
 const initialState = {
@@ -32,10 +35,12 @@ export const loginUser = createAsyncThunk(
 				refreshToken,
 				user: { name }
 			} = res.data
-			document.cookie = `refreshToken=${refreshToken}`
-			document.cookie = `accessToken=${getAccessToken(accessToken)}`
+			localStorage.setItem('refreshToken', refreshToken)
+			localStorage.setItem('accessToken', getAccessToken(accessToken))
 			return { password: userPassword, email: userEmail, name: name }
 		} catch (e) {
+			localStorage.setItem('refreshToken', '')
+			localStorage.setItem('accessToken', '')
 			return rejectWithValue('Некорректная почта или пароль')
 		}
 	}
@@ -56,6 +61,9 @@ const authUserSlice = createSlice({
 			state.isLoading = false
 			state.isError = true
 			state.user = action.payload
+		},
+		exitUser(state) {
+			state.user = initialState.user
 		}
 	},
 	extraReducers(builder) {
@@ -71,4 +79,5 @@ const authUserSlice = createSlice({
 })
 
 export default authUserSlice.reducer
-export const { dataLoading, dataError, dataSuccess } = authUserSlice.actions
+export const { dataLoading, dataError, dataSuccess, exitUser } =
+	authUserSlice.actions

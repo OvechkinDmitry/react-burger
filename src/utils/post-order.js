@@ -1,4 +1,4 @@
-import { NomorepartiesInstance, URL_ORDER } from './constants'
+import { NomorepartiesInstance, URL_ORDER } from './constants/constants'
 import {
 	dataFetching,
 	dataFetchingError,

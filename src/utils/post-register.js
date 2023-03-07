@@ -1,4 +1,4 @@
-import { NomorepartiesInstance, URL_REGISTER } from './constants'
+import { NomorepartiesInstance, URL_REGISTER } from './constants/constants'
 
 export const postRegister = (email, password, name) => async () => {
 	try {

@@ -1,4 +1,7 @@
-import { NomorepartiesInstance, URL_FORGOT_PASSWORD } from './constants'
+import {
+	NomorepartiesInstance,
+	URL_FORGOT_PASSWORD
+} from './constants/constants'
 
 export const postForgotPassword = email => async () => {
 	try {
