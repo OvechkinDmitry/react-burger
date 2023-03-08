@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Navigate, NavLink, redirect, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../../services/reducers/auth-user-slice'
 
@@ -25,10 +25,13 @@ const Login = () => {
 		if (res.error) setPageError(res.payload)
 		else navigate('/profile')
 	}
-	console.log(user)
-	if (user.email !== '') {
-		navigate('/')
-	}
+	//todo: это выражение избавляет от ошибки в логах проверить почему
+	useEffect(() => {
+		if (user.email !== '') {
+			navigate('/')
+		}
+	}, [user.email, navigate])
+
 	return (
 		<div className={styles.container}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
