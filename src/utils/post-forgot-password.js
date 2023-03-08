@@ -9,7 +9,8 @@ export const postForgotPassword = email => async () => {
 		const res = await NomorepartiesInstance.post(URL_FORGOT_PASSWORD, {
 			email: email
 		})
-		return res.data
+		console.log(res)
+		return res
 	} catch (e) {
 		return Promise.reject(new Error(e))
 	}

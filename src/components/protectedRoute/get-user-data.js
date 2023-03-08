@@ -6,5 +6,5 @@ export const getUserData = async () => {
 			Authorization: 'Bearer ' + localStorage.getItem('accessToken')
 		}
 	})
-	return res.json()
+	return res
 }

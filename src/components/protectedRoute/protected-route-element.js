@@ -6,13 +6,12 @@ import useAuth from '../../hooks/use-auth'
 
 export function ProtectedRouteElement({ element }) {
 	const { user } = useAuth()
-
 	const [isUserLoaded, setUserLoaded] = useState(false)
 
 	const init = async () => {
 		try {
-			const data = await getUserData()
-			console.log(data)
+			const res = await getUserData()
+			console.log(res)
 		} catch (e) {
 			console.log(e)
 		} finally {
@@ -24,6 +23,5 @@ export function ProtectedRouteElement({ element }) {
 	}, [])
 
 	if (!isUserLoaded) return null
-
 	return user.email ? element : <Navigate to='/login' replace />
 }

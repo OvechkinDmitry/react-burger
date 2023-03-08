@@ -18,7 +18,7 @@ const Profile = () => {
 	const initialStateForm = {
 		name: user.name,
 		email: user.email,
-		password: user.password
+		password: user.password || ''
 	}
 	const [form, setValue] = useState(initialStateForm)
 	const applyChanges = async () => {

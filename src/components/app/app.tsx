@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header'
 import ErrorBoundary from '../../hocs/error-boundary/error-boundary'
@@ -11,6 +11,11 @@ import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
+import { getUserData } from '../protectedRoute/get-user-data'
+import { bool } from 'prop-types'
+import { updateUser } from '../../services/reducers/auth-user-slice'
+import refresh from '../../utils/refresh'
+import { useDispatch } from 'react-redux'
 
 //Todo:
 // / - главная страница, конструктор бургеров.
@@ -22,6 +27,30 @@ import WarnLog from '../ui/warn-log/warn-log'
 // /ingredients/:id — страница ингредиента.
 
 function App() {
+	const [isUserChecked, setUserChecked] = useState(false)
+	const dispatch = useDispatch()
+	useEffect(() => {
+		const accessToken = localStorage.getItem('accessToken')
+		if (accessToken) {
+			const checkUser = async () => {
+				const res = await getUserData()
+				if (res.ok) {
+					const body = await res.json()
+					dispatch(updateUser(body.user))
+				} else {
+					const success = await refresh()
+					if (success) {
+						const reResponse = await getUserData()
+						const reBody = await reResponse.json()
+						dispatch(updateUser(reBody.user))
+					}
+				}
+			}
+			checkUser()
+		}
+		return () => setUserChecked(true)
+	}, [])
+	if (!isUserChecked) return null
 	return (
 		<ErrorBoundary>
 			<AppHeader />

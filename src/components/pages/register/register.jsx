@@ -8,21 +8,30 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink } from 'react-router-dom'
 import { postRegister } from '../../../utils/post-register'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser } from '../../../services/reducers/auth-user-slice'
 
 const Register = () => {
+	const [pageError, setPageError] = useState('')
+	const dispatch = useDispatch()
 	const { user } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ name: '', email: '', password: '' })
 	const onChange = e => {
+		setPageError('')
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
 	const onClick = async () => {
+		//todo: перенести в стэйт
 		const { email, password, name } = form
 		try {
 			const data = await postRegister(email, password, name)()
+			localStorage.setItem('refreshToken', data.refreshToken)
+			localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1])
+			dispatch(updateUser({ ...data.user, password: form.password }))
 			console.log(data)
 		} catch (e) {
-			console.log(e + ' такая ошибка брат')
+			setPageError(e)
+			console.log(e)
 		}
 	}
 	if (user.email !== '') {
@@ -30,6 +39,9 @@ const Register = () => {
 	}
 	return (
 		<div className={`${styles.container}`}>
+			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
+				{pageError}
+			</p>
 			<p className={`text text_type_main-medium mb-6`}>Регистрация</p>
 			<Input
 				type={'text'}

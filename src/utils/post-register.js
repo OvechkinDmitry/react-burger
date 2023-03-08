@@ -9,6 +9,7 @@ export const postRegister = (email, password, name) => async () => {
 		})
 		return res.data
 	} catch (e) {
-		return Promise.reject(e)
+		if (e.message === 'Request failed with status code 403')
+			return Promise.reject('Пользователь с таким именем уже существует')
 	}
 }
