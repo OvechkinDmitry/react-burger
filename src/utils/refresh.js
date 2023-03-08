@@ -1,25 +1,10 @@
 import React from 'react'
+import { NomorepartiesInstance, URL_TOKEN } from './constants/constants'
 
 const refresh = async () => {
-	const res = await fetch('https://norma.nomoreparties.space/api/auth/token', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			token: localStorage.getItem('refreshToken')
-		})
+	return await NomorepartiesInstance.post(URL_TOKEN, {
+		token: localStorage.getItem('refreshToken')
 	})
-	if (res.ok) {
-		const body = await res.json()
-		localStorage.setItem('refreshToken', body.refreshToken)
-		localStorage.setItem('accessToken', body.accessToken.split('Bearer ')[1])
-	} else {
-		const data = await res.json()
-		console.log(data)
-		return false
-	}
-	return res.ok
 }
 
 export default refresh

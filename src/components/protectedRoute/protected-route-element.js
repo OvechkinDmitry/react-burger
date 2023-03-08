@@ -1,4 +1,4 @@
-import { Navigate, Route } from 'react-router-dom'
+import { Navigate, Route, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getUserData } from './get-user-data'
@@ -9,34 +9,34 @@ import refresh from '../../utils/refresh'
 export function ProtectedRouteElement({ element }) {
 	const { user } = useAuth()
 	const dispatch = useDispatch()
+	const location = useLocation()
 	const [isUserLoaded, setUserLoaded] = useState(false)
 	const checkUser = async () => {
-		const res = await getUserData()
-		if (res.ok) {
-			const body = await res.json()
-			console.log()
-			dispatch(updateUser(body.user))
-		} else {
-			const success = await refresh()
-			if (success) {
-				const reResponse = await getUserData()
-				const reBody = await reResponse.json()
-				dispatch(updateUser(reBody.user))
-			}
+		try {
+			const res = await refresh()
+			const { accessToken, refreshToken } = res.data
+			localStorage.setItem('refreshToken', refreshToken)
+			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
+			const userData = await getUserData()
+			dispatch(updateUser(userData.data.user))
+		} catch (e) {
+			// console.log(e)
+			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
 		}
 	}
 	const init = async () => {
-		const accessToken = localStorage.getItem('accessToken')
-		const res = await getUserData()
-		if (!res.ok && accessToken) {
-			console.log(await res.json())
+		try {
+			console.log('Зашел')
+			const res = await getUserData()
+			console.log(res)
+		} catch (e) {
 			checkUser()
 		}
 		setUserLoaded(true)
 	}
 	useEffect(() => {
 		init()
-	}, [])
+	}, [location])
 
 	if (!isUserLoaded) return null
 	return user.email ? element : <Navigate to='/login' replace />

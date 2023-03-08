@@ -6,8 +6,6 @@ import { useDispatch } from 'react-redux'
 import { exitUser } from '../../../services/reducers/auth-user-slice'
 import WarnLog from '../../ui/warn-log/warn-log'
 import { postLogout } from '../../../utils/post-logout'
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import refresh from '../../../utils/refresh'
 
 const routes = [
 	{
@@ -22,23 +20,16 @@ const routes = [
 
 const PersonalAccount = () => {
 	const dispatch = useDispatch()
-	const exit = async e => {
-		e.preventDefault()
+	const exit = async () => {
 		try {
-			const res = await postLogout()
-			console.log(res)
-			const data = await res.json()
-			console.log(data)
+			await postLogout()
 			dispatch(exitUser())
 		} catch (e) {
-			console.log(e)
+			console.log(e.message)
 		}
 	}
 	return (
 		<div className={styles.body}>
-			{/*<Button htmlType={'button'} onClick={() => refresh()}>*/}
-			{/*	Обновить*/}
-			{/*</Button>*/}
 			<div className={`${styles.navigation} mr-15`}>
 				{routes.map(({ title, link }, index) => (
 					<NavLink

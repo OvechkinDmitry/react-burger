@@ -22,9 +22,12 @@ const Profile = () => {
 	}
 	const [form, setValue] = useState(initialStateForm)
 	const applyChanges = async () => {
-		const res = await patchUser(form)
-		if (res.ok) dispatch(updateUser(form))
-		else {
+		try {
+			const res = await patchUser(form)
+			console.log(res)
+			dispatch(updateUser(form))
+		} catch (e) {
+			console.log(e.message)
 			setEditFieldVisible(false)
 			setValue(initialStateForm)
 			setPageError('Ошибка на сервере')

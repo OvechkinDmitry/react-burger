@@ -6,6 +6,8 @@ export const URL_PASSWORD_RESET = '/password-reset/reset'
 export const URL_REGISTER = '/auth/register'
 export const URL_LOGIN = 'auth/login'
 export const URL_USER = 'auth/user'
+export const URL_TOKEN = 'auth/token'
+export const URL_LOGOUT = 'auth/logout'
 
 export const NomorepartiesInstance = axios.create({
 	baseURL: 'https://norma.nomoreparties.space/api/',
@@ -13,9 +15,4 @@ export const NomorepartiesInstance = axios.create({
 	headers: {
 		Accept: 'application/json'
 	}
-})
-
-export const NomorepartiesAuth = axios.create({
-	baseURL: 'https://norma.nomoreparties.space/api/',
-	timeout: 0
 })

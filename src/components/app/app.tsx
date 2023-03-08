@@ -29,25 +29,31 @@ function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
 	const checkUser = async () => {
-		const res = await getUserData()
-		if (res.ok) {
-			const body = await res.json()
-			dispatch(updateUser(body.user))
-		} else {
-			const success = await refresh()
-			if (success) {
-				const reResponse = await getUserData()
-				const reBody = await reResponse.json()
-				dispatch(updateUser(reBody.user))
-			}
+		try {
+			const res = await refresh()
+			const { accessToken, refreshToken } = res.data
+			localStorage.setItem('refreshToken', refreshToken)
+			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
+			const userData = await getUserData()
+			dispatch(updateUser(userData.data.user))
+		} catch (e) {
+			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
+		}
+	}
+	//todo: сейчас при каждом обновлении
+	const init = async () => {
+		try {
+			const res = await getUserData()
+			dispatch(updateUser(res.data.user))
+			setUserChecked(true)
+		} catch (e) {
+			console.log(e)
+			await checkUser()
+			setUserChecked(true)
 		}
 	}
 	useEffect(() => {
-		const accessToken = localStorage.getItem('accessToken')
-		if (accessToken) {
-			checkUser()
-		}
-		return () => setUserChecked(true)
+		init()
 	}, [])
 	if (!isUserChecked) return null
 	return (
