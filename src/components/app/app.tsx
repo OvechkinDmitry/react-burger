@@ -12,7 +12,6 @@ import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
 import { getUserData } from '../protectedRoute/get-user-data'
-import { bool } from 'prop-types'
 import { updateUser } from '../../services/reducers/auth-user-slice'
 import refresh from '../../utils/refresh'
 import { useDispatch } from 'react-redux'
@@ -29,23 +28,23 @@ import { useDispatch } from 'react-redux'
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
+	const checkUser = async () => {
+		const res = await getUserData()
+		if (res.ok) {
+			const body = await res.json()
+			dispatch(updateUser(body.user))
+		} else {
+			const success = await refresh()
+			if (success) {
+				const reResponse = await getUserData()
+				const reBody = await reResponse.json()
+				dispatch(updateUser(reBody.user))
+			}
+		}
+	}
 	useEffect(() => {
 		const accessToken = localStorage.getItem('accessToken')
 		if (accessToken) {
-			const checkUser = async () => {
-				const res = await getUserData()
-				if (res.ok) {
-					const body = await res.json()
-					dispatch(updateUser(body.user))
-				} else {
-					const success = await refresh()
-					if (success) {
-						const reResponse = await getUserData()
-						const reBody = await reResponse.json()
-						dispatch(updateUser(reBody.user))
-					}
-				}
-			}
 			checkUser()
 		}
 		return () => setUserChecked(true)

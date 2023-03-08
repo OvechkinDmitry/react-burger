@@ -26,6 +26,7 @@ export const loginUser = createAsyncThunk(
 	async function (data, { rejectWithValue, dispatch, getState }) {
 		const { user } = getState().authUserReducer
 		const { userEmail, userPassword } = data
+		console.log(userEmail, userPassword)
 		try {
 			const res = await NomorepartiesInstance.post(URL_LOGIN, {
 				email: userEmail,
@@ -81,7 +82,8 @@ const authUserSlice = createSlice({
 		builder
 			.addCase(loginUser.pending, setLoading)
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.user = action.payload
+				console.log(action.payload)
+				state.user = { ...state.user, ...action.payload }
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.error = action.payload

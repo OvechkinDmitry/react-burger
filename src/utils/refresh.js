@@ -14,10 +14,10 @@ const refresh = async () => {
 		const body = await res.json()
 		localStorage.setItem('refreshToken', body.refreshToken)
 		localStorage.setItem('accessToken', body.accessToken.split('Bearer ')[1])
-		// return body
 	} else {
 		const data = await res.json()
 		console.log(data)
+		return false
 	}
 	return res.ok
 }

@@ -17,15 +17,13 @@ const ForgotPassword = () => {
 	}
 	const onClick = async () => {
 		try {
-			const data = await postForgotPassword(form.email)()
+			await postForgotPassword(form.email)()
 			navigate('/reset-password')
 		} catch (e) {
 			console.log(e)
 		}
 	}
-	if (user.email !== '') {
-		return <Navigate to={'/'} replace />
-	}
+	if (user.email !== '') return <Navigate to={'/'} replace />
 	return (
 		<div className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>

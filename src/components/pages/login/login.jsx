@@ -19,6 +19,7 @@ const Login = () => {
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
 	const onClick = async () => {
+		console.log(form)
 		const res = await dispatch(
 			loginUser({ userEmail: form.email, userPassword: form.password })
 		)
@@ -27,9 +28,7 @@ const Login = () => {
 	}
 	//todo: это выражение избавляет от ошибки в логах проверить почему
 	useEffect(() => {
-		if (user.email !== '') {
-			navigate('/')
-		}
+		if (user.email !== '') navigate('/')
 	}, [user.email, navigate])
 
 	return (

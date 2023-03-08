@@ -26,6 +26,7 @@ const PersonalAccount = () => {
 		e.preventDefault()
 		try {
 			const res = await postLogout()
+			console.log(res)
 			const data = await res.json()
 			console.log(data)
 			dispatch(exitUser())
