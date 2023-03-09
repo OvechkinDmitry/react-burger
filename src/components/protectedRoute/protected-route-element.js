@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getUserData } from './get-user-data'
 import useAuth from '../../hooks/use-auth'
-import { updateUser } from '../../services/reducers/auth-user-slice'
+import { exitUser, updateUser } from '../../services/reducers/auth-user-slice'
 import refresh from '../../utils/refresh'
+import { AuthService } from '../../utils/auth-service'
 
 export function ProtectedRouteElement({ element }) {
 	const { user } = useAuth()
@@ -17,7 +18,7 @@ export function ProtectedRouteElement({ element }) {
 			const { accessToken, refreshToken } = res.data
 			localStorage.setItem('refreshToken', refreshToken)
 			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
-			const userData = await getUserData()
+			const userData = await AuthService.getUserData()
 			dispatch(updateUser(userData.data.user))
 		} catch (e) {
 			console.log(e + 'checkUser')
@@ -25,6 +26,14 @@ export function ProtectedRouteElement({ element }) {
 		}
 	}
 	const init = async () => {
+		if (
+			!localStorage.getItem('accessToken') ||
+			!localStorage.getItem('refreshToken')
+		) {
+			dispatch(exitUser())
+			setUserLoaded(true)
+			return
+		}
 		try {
 			const res = await getUserData()
 			console.log(res)

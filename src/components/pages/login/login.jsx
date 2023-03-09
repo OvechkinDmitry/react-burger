@@ -5,35 +5,25 @@ import {
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../../services/reducers/auth-user-slice'
 
 const Login = () => {
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
-	const [pageError, setPageError] = useState('')
-	const { user } = useSelector(state => state.authUserReducer)
+	const { user, status } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ email: '', password: '' })
 	const onChange = e => {
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
-	const onClick = async () => {
-		console.log(form)
-		const res = await dispatch(
-			loginUser({ userEmail: form.email, userPassword: form.password })
-		)
-		if (res.error) setPageError(res.payload)
-		else navigate('/profile')
+	const onClick = () => {
+		dispatch(loginUser({ userEmail: form.email, userPassword: form.password }))
 	}
-	useEffect(() => {
-		if (user.email !== '') navigate('/')
-	}, [user.email, navigate])
-
+	if (!status.isLoading && user.email) return <Navigate to={'/profile'} />
 	return (
 		<div className={styles.container}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
-				{pageError}
+				{status.error}
 			</p>
 			<p className={`text text_type_main-medium mb-6`}>Вход</p>
 			<EmailInput

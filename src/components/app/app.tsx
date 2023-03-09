@@ -12,18 +12,10 @@ import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
 import { getUserData } from '../protectedRoute/get-user-data'
-import { updateUser } from '../../services/reducers/auth-user-slice'
+import { exitUser, updateUser } from '../../services/reducers/auth-user-slice'
 import refresh from '../../utils/refresh'
 import { useDispatch } from 'react-redux'
-
-//Todo:
-// / - главная страница, конструктор бургеров.
-// /login - страница авторизации.
-// /register - страница регистрации.
-// /forgot-password - страница восстановления пароля.
-// /reset-password - страница сброса пароля.
-// /profile — страница с настройками профиля пользователя.
-// /ingredients/:id — страница ингредиента.
+import { AuthService } from '../../utils/auth-service'
 
 function App() {
 	//todo: через наличие токенов следить за запросами чтобы не было долгих перезагрузок
@@ -43,11 +35,18 @@ function App() {
 	}
 	//todo: сейчас при каждом обновлении
 	const init = async () => {
+		if (
+			!localStorage.getItem('accessToken') ||
+			!localStorage.getItem('refreshToken')
+		) {
+			dispatch(exitUser())
+			setUserChecked(true)
+			return
+		}
 		try {
-			const res = await getUserData()
+			const res = await AuthService.getUserData()
 			dispatch(updateUser(res.data.user))
 		} catch (e) {
-			console.log(e)
 			await checkUser()
 		}
 		setUserChecked(true)
@@ -55,32 +54,32 @@ function App() {
 	useEffect(() => {
 		init()
 	}, [])
-	if (!isUserChecked) return null
 	return (
 		<ErrorBoundary>
 			<AppHeader />
-			<main className={styles.container}>
-				<Routes>
-					<Route path={'/'} element={<Constructor />} />
-					<Route
-						path={'/orders'}
-						element={
-							<ProtectedRouteElement
-								element={<WarnLog>working on it</WarnLog>}
-							/>
-						}
-					/>
-					<Route path={'/login'} element={<Login />} />
-					<Route path={'/forgot-password'} element={<ForgotPassword />} />
-					<Route
-						path={'/profile/*'}
-						element={<ProtectedRouteElement element={<PersonalAccount />} />}
-					/>
-					{/*<Route path={'/profile/*'} element={<PersonalAccount />} />*/}
-					<Route path={'/reset-password'} element={<ResetPassword />} />
-					<Route path={'/register'} element={<Register />} />
-				</Routes>
-			</main>
+			{isUserChecked && (
+				<main className={styles.container}>
+					<Routes>
+						<Route path={'/'} element={<Constructor />} />
+						<Route
+							path={'/orders'}
+							element={
+								<ProtectedRouteElement
+									element={<WarnLog>working on it</WarnLog>}
+								/>
+							}
+						/>
+						<Route path={'/login'} element={<Login />} />
+						<Route path={'/forgot-password'} element={<ForgotPassword />} />
+						<Route
+							path={'/profile/*'}
+							element={<ProtectedRouteElement element={<PersonalAccount />} />}
+						/>
+						<Route path={'/reset-password'} element={<ResetPassword />} />
+						<Route path={'/register'} element={<Register />} />
+					</Routes>
+				</main>
+			)}
 		</ErrorBoundary>
 	)
 }

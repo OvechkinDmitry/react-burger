@@ -9,6 +9,7 @@ const NomorepartiesAuth = axios.create({
 })
 
 NomorepartiesAuth.interceptors.request.use(config => {
+	console.log(localStorage.getItem('accessToken'))
 	config.headers.Authorization =
 		'Bearer ' + (localStorage.getItem('accessToken') || ' ')
 	return config

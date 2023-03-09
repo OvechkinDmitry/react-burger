@@ -4,6 +4,7 @@ import {
 	URL_LOGIN
 } from '../../utils/constants/constants'
 import { postLogout } from '../../utils/post-logout'
+import { AuthService } from '../../utils/auth-service'
 
 export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
 
@@ -13,25 +14,28 @@ const initialState = {
 		email: '',
 		password: ''
 	},
-	isLoading: false,
-	error: ''
+	status: {
+		isError: false,
+		isLoading: false,
+		error: ''
+	}
 }
 
 const setLoading = state => {
-	state.isLoading = true
-	state.error = ''
+	state.status.isLoading = true
+	state.status.isError = false
+	state.status.error = ''
 }
 export const logoutUser = createAsyncThunk(
 	'authUserSlice/logoutUser',
 	async function (data, { rejectWithValue, dispatch, getState }) {
 		try {
-			await postLogout()
-			dispatch(exitUser())
+			await AuthService.logout()
 		} catch (e) {
 			console.log(e)
-			dispatch(exitUser())
 			return rejectWithValue(e.message())
 		}
+		dispatch(exitUser())
 	}
 )
 
@@ -40,10 +44,7 @@ export const loginUser = createAsyncThunk(
 	async function (data, { rejectWithValue }) {
 		const { userEmail, userPassword } = data
 		try {
-			const res = await NomorepartiesInstance.post(URL_LOGIN, {
-				email: userEmail,
-				password: userPassword
-			})
+			const res = await AuthService.login(userEmail, userPassword)
 			const {
 				accessToken,
 				refreshToken,
@@ -68,8 +69,7 @@ const authUserSlice = createSlice({
 			localStorage.setItem('accessToken', '')
 			localStorage.setItem('refreshToken', '')
 			state.user = initialState.user
-			state.isLoading = false
-			state.isError = false
+			state.status = initialState.status
 		},
 		updateUser(state, action) {
 			state.user = action.payload
@@ -78,15 +78,15 @@ const authUserSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(loginUser.pending, setLoading)
+			.addCase(logoutUser.pending, setLoading)
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.isLoading = false
-				state.isError = false
+				state.status = initialState.status
 				state.user = { ...state.user, ...action.payload }
 			})
 			.addCase(loginUser.rejected, (state, action) => {
-				state.isLoading = false
-				state.isError = true
-				state.error = action.payload
+				state.status.isLoading = false
+				state.status.isError = true
+				state.status.error = action.payload
 			})
 	}
 })
