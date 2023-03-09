@@ -26,13 +26,18 @@ export const refreshToken = createAsyncThunk(
 	'authUserSlice/refreshToken',
 	async function (_, { rejectWithValue, dispatch, getState }) {
 		try {
+			console.log('request 2')
 			const res = await AuthService.refresh()
-			const { accessToken, refreshToken } = res.data
-			localStorage.setItem('refreshToken', refreshToken)
-			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
+			localStorage.setItem('refreshToken', res.data.refreshToken)
+			localStorage.setItem(
+				'accessToken',
+				res.data.accessToken.split('Bearer ')[1]
+			)
+			console.log('request 3')
 			const userData = await AuthService.getUserData()
 			dispatch(updateUser(userData.data.user))
 		} catch (e) {
+			console.log('error')
 			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
 		}
 	}

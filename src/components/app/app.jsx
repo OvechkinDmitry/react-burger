@@ -20,22 +20,8 @@ import { useDispatch } from 'react-redux'
 import { AuthService } from '../../utils/auth-service'
 
 function App() {
-	//todo: через наличие токенов следить за запросами чтобы не было долгих перезагрузок
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
-	// const checkUser = async () => {
-	// 	try {
-	// 		const res = await AuthService.refresh()
-	// 		const { accessToken, refreshToken } = res.data
-	// 		localStorage.setItem('refreshToken', refreshToken)
-	// 		localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
-	// 		const userData = await AuthService.getUserData()
-	// 		dispatch(updateUser(userData.data.user))
-	// 	} catch (e) {
-	// 		dispatch(updateUser({ email: '', passwoord: '', name: '' }))
-	// 	}
-	// }
-	//todo: сейчас при каждом обновлении
 	const init = async () => {
 		if (
 			!localStorage.getItem('accessToken') ||
@@ -49,13 +35,16 @@ function App() {
 			const res = await AuthService.getUserData()
 			dispatch(updateUser(res.data.user))
 		} catch (e) {
-			// @ts-ignore
+			console.log('request 1')
 			dispatch(refreshToken())
 		}
 		setUserChecked(true)
 	}
 	useEffect(() => {
 		init()
+		return () => {
+			setUserChecked(false)
+		}
 	}, [])
 	return (
 		<ErrorBoundary>

@@ -14,19 +14,6 @@ export function ProtectedRouteElement({ element }) {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const [isUserLoaded, setUserLoaded] = useState(false)
-	// const checkUser = async () => {
-	// 	try {
-	// 		const res = await AuthService.refresh()
-	// 		const { accessToken, refreshToken } = res.data
-	// 		localStorage.setItem('refreshToken', refreshToken)
-	// 		localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
-	// 		const userData = await AuthService.getUserData()
-	// 		dispatch(updateUser(userData.data.user))
-	// 	} catch (e) {
-	// 		console.log(e + 'checkUser')
-	// 		dispatch(updateUser({ email: '', passwoord: '', name: '' }))
-	// 	}
-	// }
 	const init = async () => {
 		if (
 			!localStorage.getItem('accessToken') ||
