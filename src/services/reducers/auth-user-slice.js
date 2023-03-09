@@ -38,21 +38,25 @@ export const refreshToken = createAsyncThunk(
 	}
 )
 
-// export const checkUserWithTokens = createAsyncThunk(
-// 	'authUserSlice/refreshToken',
-// 	async function (_, { rejectWithValue, dispatch, getState }) {
-// 		console.log('request 2')
-// 		const res = await AuthService.refresh()
-// 		localStorage.setItem('refreshToken', res.data.refreshToken)
-// 		localStorage.setItem(
-// 			'accessToken',
-// 			res.data.accessToken.split('Bearer ')[1]
-// 		)
-// 		console.log('request 3')
-// 		const userData = await AuthService.getUserData()
-// 		dispatch(updateUser(userData.data.user))
-// 	}
-// )
+export const checkUserWithTokens = createAsyncThunk(
+	'authUserSlice/checkUserWithTokens',
+	async function (_, { rejectWithValue, dispatch, getState }) {
+		if (
+			!localStorage.getItem('accessToken') ||
+			!localStorage.getItem('refreshToken')
+		) {
+			console.log('if tokens are empty')
+			dispatch(exitUser())
+			return {}
+		}
+		try {
+			const res = await AuthService.getUserData()
+			dispatch(updateUser(res.data.user))
+		} catch (e) {
+			dispatch(refreshToken())
+		}
+	}
+)
 
 export const registerUser = createAsyncThunk(
 	'authUserSlice/registerUser',
@@ -109,10 +113,10 @@ const authUserSlice = createSlice({
 	initialState,
 	reducers: {
 		exitUser(state) {
-			localStorage.setItem('accessToken', '')
-			localStorage.setItem('refreshToken', '')
 			state.user = initialState.user
 			state.status = initialState.status
+			localStorage.setItem('accessToken', '')
+			localStorage.setItem('refreshToken', '')
 		},
 		updateUser(state, action) {
 			state.user = action.payload
@@ -123,19 +127,24 @@ const authUserSlice = createSlice({
 			.addCase(loginUser.pending, setLoading)
 			.addCase(registerUser.pending, setLoading)
 			.addCase(logoutUser.pending, setLoading)
+			.addCase(checkUserWithTokens.pending, setLoading)
+			// .addCase(checkUserWithTokens.fulfilled, (state, action) => {
+			// 	state.status = initialState.status
+			// 	state.user = { ...state.user, ...action.payload }
+			// })
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.status = initialState.status
 				state.user = { ...state.user, ...action.payload }
+			})
+			.addCase(loginUser.rejected, (state, action) => {
+				state.status.isLoading = false
+				state.status.isError = true
+				state.status.error = action.payload
 			})
 			.addCase(refreshToken.rejected, (state, action) => {
 				state.user = initialState.user
 			})
 			.addCase(registerUser.rejected, (state, action) => {
-				state.status.isLoading = false
-				state.status.isError = true
-				state.status.error = action.payload
-			})
-			.addCase(loginUser.rejected, (state, action) => {
 				state.status.isLoading = false
 				state.status.isError = true
 				state.status.error = action.payload

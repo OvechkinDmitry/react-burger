@@ -12,32 +12,38 @@ import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
 import {
+	checkUserWithTokens,
 	exitUser,
 	refreshToken,
 	updateUser
 } from '../../services/reducers/auth-user-slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AuthService } from '../../utils/auth-service'
 import Loader from '../ui/loader/loader'
 
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
+	const { user } = useSelector(state => state.authUserReducer)
+	// const init = async () => {
+	// 	if (
+	// 		!localStorage.getItem('accessToken') ||
+	// 		!localStorage.getItem('refreshToken')
+	// 	) {
+	// 		dispatch(exitUser())
+	// 		setUserChecked(true)
+	// 		return
+	// 	}
+	// 	try {
+	// 		const res = await AuthService.getUserData()
+	// 		dispatch(updateUser(res.data.user))
+	// 	} catch (e) {
+	// 		await dispatch(refreshToken())
+	// 	}
+	// 	setUserChecked(true)
+	// }
 	const init = async () => {
-		if (
-			!localStorage.getItem('accessToken') ||
-			!localStorage.getItem('refreshToken')
-		) {
-			dispatch(exitUser())
-			setUserChecked(true)
-			return
-		}
-		try {
-			const res = await AuthService.getUserData()
-			dispatch(updateUser(res.data.user))
-		} catch (e) {
-			await dispatch(refreshToken())
-		}
+		await dispatch(checkUserWithTokens())
 		setUserChecked(true)
 	}
 	useEffect(() => {
