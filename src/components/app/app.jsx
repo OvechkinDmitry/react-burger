@@ -18,6 +18,7 @@ import {
 } from '../../services/reducers/auth-user-slice'
 import { useDispatch } from 'react-redux'
 import { AuthService } from '../../utils/auth-service'
+import Loader from '../ui/loader/loader'
 
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
@@ -35,21 +36,17 @@ function App() {
 			const res = await AuthService.getUserData()
 			dispatch(updateUser(res.data.user))
 		} catch (e) {
-			console.log('request 1')
-			dispatch(refreshToken())
+			await dispatch(refreshToken())
 		}
 		setUserChecked(true)
 	}
 	useEffect(() => {
 		init()
-		return () => {
-			setUserChecked(false)
-		}
 	}, [])
 	return (
 		<ErrorBoundary>
 			<AppHeader />
-			{isUserChecked && (
+			{isUserChecked ? (
 				<main className={styles.container}>
 					<Routes>
 						<Route path={'/'} element={<Constructor />} />
@@ -71,6 +68,10 @@ function App() {
 						<Route path={'/register'} element={<Register />} />
 					</Routes>
 				</main>
+			) : (
+				<div style={{ marginTop: 50 }}>
+					<Loader />
+				</div>
 			)}
 		</ErrorBoundary>
 	)
