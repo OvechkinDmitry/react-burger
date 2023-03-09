@@ -5,8 +5,8 @@ import {
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-import { postForgotPassword } from '../../../utils/post-forgot-password'
 import { useSelector } from 'react-redux'
+import { AuthService } from '../../../utils/auth-service'
 
 const ForgotPassword = () => {
 	const { user } = useSelector(state => state.authUserReducer)
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
 	}
 	const onClick = async () => {
 		try {
-			await postForgotPassword(form.email)()
+			await AuthService.getMailReset(form.email)
 			navigate('/reset-password')
 		} catch (e) {
 			console.log(e)

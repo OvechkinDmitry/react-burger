@@ -5,23 +5,35 @@ import {
 	Input,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Navigate, NavLink } from 'react-router-dom'
-import { postResetPassword } from '../../../utils/post-reset-password'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { AuthService } from '../../../utils/auth-service'
 
 const ResetPassword = () => {
+	const navigate = useNavigate()
 	const { user } = useSelector(state => state.authUserReducer)
+	const [pageError, setPageError] = useState('')
 	const [form, setValue] = useState({ password: '', code: '' })
-	const onChange = e => setValue({ ...form, [e.target.name]: e.target.value })
+	const onChange = e => {
+		if (pageError) setPageError('')
+		setValue({ ...form, [e.target.name]: e.target.value })
+	}
 	const onClick = async () => {
-		const data = await postResetPassword(form.password, form.code)()
-		console.log(data)
+		try {
+			await AuthService.resetPassword(form.password, form.code)
+			navigate('/login')
+		} catch (e) {
+			setPageError('Неверный токен')
+		}
 	}
 	if (user.email !== '') {
 		return <Navigate to={'/'} replace />
 	}
 	return (
 		<div className={`${styles.container}`}>
+			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
+				{pageError}
+			</p>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>
 			<PasswordInput
 				placeholder={'Введите новый пароль'}

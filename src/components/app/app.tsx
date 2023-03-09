@@ -11,9 +11,11 @@ import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
-import { getUserData } from '../protectedRoute/get-user-data'
-import { exitUser, updateUser } from '../../services/reducers/auth-user-slice'
-import refresh from '../../utils/refresh'
+import {
+	exitUser,
+	refreshToken,
+	updateUser
+} from '../../services/reducers/auth-user-slice'
 import { useDispatch } from 'react-redux'
 import { AuthService } from '../../utils/auth-service'
 
@@ -21,18 +23,18 @@ function App() {
 	//todo: через наличие токенов следить за запросами чтобы не было долгих перезагрузок
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
-	const checkUser = async () => {
-		try {
-			const res = await refresh()
-			const { accessToken, refreshToken } = res.data
-			localStorage.setItem('refreshToken', refreshToken)
-			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
-			const userData = await getUserData()
-			dispatch(updateUser(userData.data.user))
-		} catch (e) {
-			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
-		}
-	}
+	// const checkUser = async () => {
+	// 	try {
+	// 		const res = await AuthService.refresh()
+	// 		const { accessToken, refreshToken } = res.data
+	// 		localStorage.setItem('refreshToken', refreshToken)
+	// 		localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
+	// 		const userData = await AuthService.getUserData()
+	// 		dispatch(updateUser(userData.data.user))
+	// 	} catch (e) {
+	// 		dispatch(updateUser({ email: '', passwoord: '', name: '' }))
+	// 	}
+	// }
 	//todo: сейчас при каждом обновлении
 	const init = async () => {
 		if (
@@ -47,7 +49,8 @@ function App() {
 			const res = await AuthService.getUserData()
 			dispatch(updateUser(res.data.user))
 		} catch (e) {
-			await checkUser()
+			// @ts-ignore
+			dispatch(refreshToken())
 		}
 		setUserChecked(true)
 	}

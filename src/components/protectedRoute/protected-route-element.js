@@ -1,10 +1,12 @@
-import { Navigate, Route, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { Navigate, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getUserData } from './get-user-data'
 import useAuth from '../../hooks/use-auth'
-import { exitUser, updateUser } from '../../services/reducers/auth-user-slice'
-import refresh from '../../utils/refresh'
+import {
+	exitUser,
+	refreshToken,
+	updateUser
+} from '../../services/reducers/auth-user-slice'
 import { AuthService } from '../../utils/auth-service'
 
 export function ProtectedRouteElement({ element }) {
@@ -12,19 +14,19 @@ export function ProtectedRouteElement({ element }) {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const [isUserLoaded, setUserLoaded] = useState(false)
-	const checkUser = async () => {
-		try {
-			const res = await refresh()
-			const { accessToken, refreshToken } = res.data
-			localStorage.setItem('refreshToken', refreshToken)
-			localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
-			const userData = await AuthService.getUserData()
-			dispatch(updateUser(userData.data.user))
-		} catch (e) {
-			console.log(e + 'checkUser')
-			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
-		}
-	}
+	// const checkUser = async () => {
+	// 	try {
+	// 		const res = await AuthService.refresh()
+	// 		const { accessToken, refreshToken } = res.data
+	// 		localStorage.setItem('refreshToken', refreshToken)
+	// 		localStorage.setItem('accessToken', accessToken.split('Bearer ')[1])
+	// 		const userData = await AuthService.getUserData()
+	// 		dispatch(updateUser(userData.data.user))
+	// 	} catch (e) {
+	// 		console.log(e + 'checkUser')
+	// 		dispatch(updateUser({ email: '', passwoord: '', name: '' }))
+	// 	}
+	// }
 	const init = async () => {
 		if (
 			!localStorage.getItem('accessToken') ||
@@ -35,10 +37,10 @@ export function ProtectedRouteElement({ element }) {
 			return
 		}
 		try {
-			const res = await getUserData()
+			const res = await AuthService.getUserData()
 			console.log(res)
 		} catch (e) {
-			await checkUser() //делает рефреш
+			dispatch(refreshToken()) //делает рефреш
 		}
 		setUserLoaded(true)
 	}

@@ -6,9 +6,10 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { patchUser } from '../../../../utils/patch-user'
+// import { patchUser } from '../../../../utils/patch-user'
 import { updateUser } from '../../../../services/reducers/auth-user-slice'
 import WarnLog from '../../../ui/warn-log/warn-log'
+import { AuthService } from '../../../../utils/auth-service'
 
 const Profile = () => {
 	const dispatch = useDispatch()
@@ -23,7 +24,7 @@ const Profile = () => {
 	const [form, setValue] = useState(initialStateForm)
 	const applyChanges = async () => {
 		try {
-			const res = await patchUser(form)
+			const res = await AuthService.patchUser(form)
 			console.log(res)
 			dispatch(updateUser(form))
 		} catch (e) {

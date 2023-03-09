@@ -7,32 +7,18 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink } from 'react-router-dom'
-import { postRegister } from '../../../utils/post-register'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from '../../../services/reducers/auth-user-slice'
+import { registerUser } from '../../../services/reducers/auth-user-slice'
 
 const Register = () => {
-	const [pageError, setPageError] = useState('')
 	const dispatch = useDispatch()
-	const { user } = useSelector(state => state.authUserReducer)
+	const { user, status } = useSelector(state => state.authUserReducer)
 	const [form, setValue] = useState({ name: '', email: '', password: '' })
 	const onChange = e => {
-		setPageError('')
 		setValue({ ...form, [e.target.name]: e.target.value })
 	}
 	const onClick = async () => {
-		//todo: перенести в стэйт
-		const { email, password, name } = form
-		try {
-			const data = await postRegister(email, password, name)()
-			localStorage.setItem('refreshToken', data.refreshToken)
-			localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1])
-			dispatch(updateUser({ ...data.user, password: form.password }))
-			console.log(data)
-		} catch (e) {
-			setPageError(e)
-			console.log(e)
-		}
+		dispatch(registerUser(form))
 	}
 	if (user.email !== '') {
 		return <Navigate to={'/'} replace />
@@ -40,7 +26,7 @@ const Register = () => {
 	return (
 		<div className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
-				{pageError}
+				{status.error}
 			</p>
 			<p className={`text text_type_main-medium mb-6`}>Регистрация</p>
 			<Input
