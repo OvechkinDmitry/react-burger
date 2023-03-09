@@ -20,17 +20,16 @@ export function ProtectedRouteElement({ element }) {
 			const userData = await getUserData()
 			dispatch(updateUser(userData.data.user))
 		} catch (e) {
-			// console.log(e)
+			console.log(e + 'checkUser')
 			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
 		}
 	}
 	const init = async () => {
 		try {
-			console.log('Зашел')
 			const res = await getUserData()
 			console.log(res)
 		} catch (e) {
-			checkUser()
+			await checkUser() //делает рефреш
 		}
 		setUserLoaded(true)
 	}

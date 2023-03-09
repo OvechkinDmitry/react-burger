@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux'
 // /ingredients/:id — страница ингредиента.
 
 function App() {
+	//todo: через наличие токенов следить за запросами чтобы не было долгих перезагрузок
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
 	const checkUser = async () => {
@@ -45,12 +46,11 @@ function App() {
 		try {
 			const res = await getUserData()
 			dispatch(updateUser(res.data.user))
-			setUserChecked(true)
 		} catch (e) {
 			console.log(e)
 			await checkUser()
-			setUserChecked(true)
 		}
+		setUserChecked(true)
 	}
 	useEffect(() => {
 		init()
