@@ -25,23 +25,34 @@ const setLoading = state => {
 export const refreshToken = createAsyncThunk(
 	'authUserSlice/refreshToken',
 	async function (_, { rejectWithValue, dispatch, getState }) {
-		try {
-			console.log('request 2')
-			const res = await AuthService.refresh()
-			localStorage.setItem('refreshToken', res.data.refreshToken)
-			localStorage.setItem(
-				'accessToken',
-				res.data.accessToken.split('Bearer ')[1]
-			)
-			console.log('request 3')
-			const userData = await AuthService.getUserData()
-			dispatch(updateUser(userData.data.user))
-		} catch (e) {
-			console.log('error')
-			dispatch(updateUser({ email: '', passwoord: '', name: '' }))
-		}
+		console.log('request 2')
+		const res = await AuthService.refresh()
+		localStorage.setItem('refreshToken', res.data.refreshToken)
+		localStorage.setItem(
+			'accessToken',
+			res.data.accessToken.split('Bearer ')[1]
+		)
+		console.log('request 3')
+		const userData = await AuthService.getUserData()
+		dispatch(updateUser(userData.data.user))
 	}
 )
+
+// export const checkUserWithTokens = createAsyncThunk(
+// 	'authUserSlice/refreshToken',
+// 	async function (_, { rejectWithValue, dispatch, getState }) {
+// 		console.log('request 2')
+// 		const res = await AuthService.refresh()
+// 		localStorage.setItem('refreshToken', res.data.refreshToken)
+// 		localStorage.setItem(
+// 			'accessToken',
+// 			res.data.accessToken.split('Bearer ')[1]
+// 		)
+// 		console.log('request 3')
+// 		const userData = await AuthService.getUserData()
+// 		dispatch(updateUser(userData.data.user))
+// 	}
+// )
 
 export const registerUser = createAsyncThunk(
 	'authUserSlice/registerUser',
@@ -115,6 +126,9 @@ const authUserSlice = createSlice({
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.status = initialState.status
 				state.user = { ...state.user, ...action.payload }
+			})
+			.addCase(refreshToken.rejected, (state, action) => {
+				state.user = initialState.user
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.status.isLoading = false
