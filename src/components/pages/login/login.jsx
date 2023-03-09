@@ -26,7 +26,6 @@ const Login = () => {
 		if (res.error) setPageError(res.payload)
 		else navigate('/profile')
 	}
-	//todo: это выражение избавляет от ошибки в логах проверить почему
 	useEffect(() => {
 		if (user.email !== '') navigate('/')
 	}, [user.email, navigate])

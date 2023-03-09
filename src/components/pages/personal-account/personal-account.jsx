@@ -3,9 +3,8 @@ import styles from './personal-account.module.css'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import Profile from './profile/profile'
 import { useDispatch } from 'react-redux'
-import { exitUser } from '../../../services/reducers/auth-user-slice'
+import { logoutUser } from '../../../services/reducers/auth-user-slice'
 import WarnLog from '../../ui/warn-log/warn-log'
-import { postLogout } from '../../../utils/post-logout'
 
 const routes = [
 	{
@@ -20,13 +19,8 @@ const routes = [
 
 const PersonalAccount = () => {
 	const dispatch = useDispatch()
-	const exit = async () => {
-		try {
-			await postLogout()
-			dispatch(exitUser())
-		} catch (e) {
-			console.log(e.message)
-		}
+	const exit = () => {
+		dispatch(logoutUser())
 	}
 	return (
 		<div className={styles.body}>
