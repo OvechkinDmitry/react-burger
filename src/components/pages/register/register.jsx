@@ -20,8 +20,8 @@ const Register = () => {
 	const onClick = async () => {
 		dispatch(registerUser(form))
 	}
-	if (user.email !== '') {
-		return <Navigate to={'/'} replace />
+	if (user.email) {
+		return <Navigate to={'/profile'} replace />
 	}
 	return (
 		<div className={`${styles.container}`}>

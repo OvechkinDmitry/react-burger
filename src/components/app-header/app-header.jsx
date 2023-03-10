@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './app-header.module.css'
 import {
 	Logo,
@@ -7,8 +7,10 @@ import {
 	ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavButton } from './ui/nav-button/nav-button'
+import { useSelector } from 'react-redux'
 
 const AppHeader = () => {
+	const { user } = useSelector(state => state.authUserReducer)
 	return (
 		<header className={styles.header}>
 			<nav className={styles.headerContainer + ' pt-4 pb-4'}>
@@ -21,7 +23,7 @@ const AppHeader = () => {
 				<div className={styles.logo}>
 					<Logo />
 				</div>
-				<NavButton text={'Личный кабинет'} link={'/profile'}>
+				<NavButton text={user.name || 'Личный кабинет'} link={'/profile'}>
 					<ProfileIcon type='primary' />
 				</NavButton>
 			</nav>

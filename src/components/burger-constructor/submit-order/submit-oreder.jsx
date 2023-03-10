@@ -14,21 +14,25 @@ import { useNavigate } from 'react-router-dom'
 const SubmitOreder = ({ totalPrice, idS }) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { user, isChecking } = useSelector(state => state.authUserReducer)
+	const { user, isChecking, status } = useSelector(
+		state => state.authUserReducer
+	)
 	const [isOpen, setOpen] = useState(false)
 	const handleClose = useCallback(() => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
-	const handleClick = useCallback(() => {
-		if (!user.email) {
+	const handleClick = useCallback(async () => {
+		const res = await dispatch(checkUserWithTokens())
+		console.log(res)
+		if (!user.email || res.error) {
 			navigate('/login')
 			return
 		}
-		dispatch(checkUserWithTokens())
 		setOpen(true)
 		dispatch(postOrder(idS))
 	}, [idS, dispatch, user.email, navigate])
+	//todo:
 	return (
 		<>
 			<div className={`${styles.submit} mt-10 mr-8`}>

@@ -57,8 +57,8 @@ export const checkUserWithTokens = createAsyncThunk(
 			const res = await AuthService.getUserData()
 			return res.data.user
 		} catch (e) {
-			await dispatch(refreshToken())
-			return rejectWithValue({})
+			const refresh = await dispatch(refreshToken())
+			return rejectWithValue(refresh)
 		}
 	}
 )
@@ -161,6 +161,8 @@ const authUserSlice = createSlice({
 			.addCase(refreshToken.rejected, state => {
 				console.log('refreshToken.rejected')
 				state.isChecking = false
+				state.status.isError = true
+				state.status.isLoading = false
 				state.user = initialState.user
 			})
 			.addCase(registerUser.rejected, (state, action) => {
