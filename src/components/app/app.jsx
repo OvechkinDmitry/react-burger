@@ -16,20 +16,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../ui/loader/loader'
 
 function App() {
-	const [isUserChecked, setUserChecked] = useState(true)
+	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
-	const { isChecking } = useSelector(state => state.authUserReducer)
+	// const { isChecking } = useSelector(state => state.authUserReducer)
 	const init = async () => {
-		dispatch(checkUserWithTokens())
+		await dispatch(checkUserWithTokens())
+		setUserChecked(true)
 	}
 	useEffect(() => {
 		init()
-		// setUserChecked(isChecking)
 	}, [])
 	return (
 		<ErrorBoundary>
 			<AppHeader />
-			{!isChecking ? (
+			{isUserChecked ? (
 				<main className={styles.container}>
 					<Routes>
 						<Route path={'/'} element={<Constructor />} />
