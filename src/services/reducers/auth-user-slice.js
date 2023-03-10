@@ -9,6 +9,7 @@ const initialState = {
 		email: '',
 		password: ''
 	},
+	isChecking: true,
 	status: {
 		isError: false,
 		isLoading: false,
@@ -25,16 +26,19 @@ const setLoading = state => {
 export const refreshToken = createAsyncThunk(
 	'authUserSlice/refreshToken',
 	async function (_, { rejectWithValue, dispatch, getState }) {
-		console.log('request 2')
-		const res = await AuthService.refresh()
-		localStorage.setItem('refreshToken', res.data.refreshToken)
-		localStorage.setItem(
-			'accessToken',
-			res.data.accessToken.split('Bearer ')[1]
-		)
-		console.log('request 3')
-		const userData = await AuthService.getUserData()
-		dispatch(updateUser(userData.data.user))
+		try {
+			const res = await AuthService.refresh()
+			localStorage.setItem('refreshToken', res.data.refreshToken)
+			localStorage.setItem(
+				'accessToken',
+				res.data.accessToken.split('Bearer ')[1]
+			)
+			const userData = await AuthService.getUserData()
+			return userData.data.user
+		} catch (e) {
+			console.log('refresh error')
+			return rejectWithValue({})
+		}
 	}
 )
 
@@ -45,15 +49,15 @@ export const checkUserWithTokens = createAsyncThunk(
 			!localStorage.getItem('accessToken') ||
 			!localStorage.getItem('refreshToken')
 		) {
-			console.log('if tokens are empty')
 			dispatch(exitUser())
 			return {}
 		}
 		try {
 			const res = await AuthService.getUserData()
-			dispatch(updateUser(res.data.user))
+			return res.data.user
 		} catch (e) {
 			dispatch(refreshToken())
+			return rejectWithValue({})
 		}
 	}
 )
@@ -81,8 +85,9 @@ export const logoutUser = createAsyncThunk(
 		} catch (e) {
 			console.log(e)
 			return rejectWithValue(e.message())
+		} finally {
+			dispatch(exitUser())
 		}
-		dispatch(exitUser())
 	}
 )
 
@@ -128,12 +133,18 @@ const authUserSlice = createSlice({
 			.addCase(registerUser.pending, setLoading)
 			.addCase(logoutUser.pending, setLoading)
 			.addCase(checkUserWithTokens.pending, setLoading)
-			// .addCase(checkUserWithTokens.fulfilled, (state, action) => {
-			// 	state.status = initialState.status
-			// 	state.user = { ...state.user, ...action.payload }
-			// })
+			.addCase(checkUserWithTokens.fulfilled, (state, action) => {
+				console.log('checkUserWithTokens.fulfilled')
+				state.isChecking = false
+				state.user = { ...state.user, ...action.payload }
+			})
+			.addCase(checkUserWithTokens.rejected, (state, action) => {
+				console.log('checkUserWithTokens.rejected')
+				state.isChecking = true
+				state.user = initialState
+			})
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.status = initialState.status
+				state.status.isAuth = true
 				state.user = { ...state.user, ...action.payload }
 			})
 			.addCase(loginUser.rejected, (state, action) => {
@@ -141,7 +152,14 @@ const authUserSlice = createSlice({
 				state.status.isError = true
 				state.status.error = action.payload
 			})
+			.addCase(refreshToken.fulfilled, (state, action) => {
+				console.log('refreshToken.fulfilled')
+				state.isChecking = false
+				state.user = action.payload
+			})
 			.addCase(refreshToken.rejected, (state, action) => {
+				console.log('refreshToken.rejected')
+				state.isChecking = false
 				state.user = initialState.user
 			})
 			.addCase(registerUser.rejected, (state, action) => {

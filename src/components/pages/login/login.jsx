@@ -19,7 +19,7 @@ const Login = () => {
 	const onClick = () => {
 		dispatch(loginUser({ userEmail: form.email, userPassword: form.password }))
 	}
-	if (!status.isLoading && user.email) return <Navigate to={'/profile'} />
+	if (user.email) return <Navigate to={'/profile'} />
 	return (
 		<div className={styles.container}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
