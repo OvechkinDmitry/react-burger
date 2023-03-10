@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { registerUser } from '../../../services/reducers/auth-user-slice'
+import { registerUser } from '../../../services/actions/register-user'
 
 const Register = () => {
 	const dispatch = useDispatch()

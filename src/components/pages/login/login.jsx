@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../../services/reducers/auth-user-slice'
+import { loginUser } from '../../../services/actions/login-user'
 
 const Login = () => {
 	const dispatch = useDispatch()

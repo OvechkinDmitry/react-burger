@@ -1,5 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AuthService } from '../../utils/auth-service'
+import { createSlice } from '@reduxjs/toolkit'
+import { logoutUser } from '../actions/logout-user'
+import { registerUser } from '../actions/register-user'
+import { loginUser } from '../actions/login-user'
+import { refreshToken } from '../actions/refresh-token'
+import { checkUserWithTokens } from '../actions/check-user-with-tokens'
 
 export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
 
@@ -22,97 +26,6 @@ const setLoading = state => {
 	state.status.error = ''
 }
 
-export const refreshToken = createAsyncThunk(
-	'authUserSlice/refreshToken',
-	async function (_, { rejectWithValue }) {
-		try {
-			const res = await AuthService.refresh()
-			localStorage.setItem('refreshToken', res.data.refreshToken)
-			localStorage.setItem(
-				'accessToken',
-				res.data.accessToken.split('Bearer ')[1]
-			)
-			const userData = await AuthService.getUserData()
-			return userData.data.user
-		} catch (e) {
-			console.log('refresh error')
-			return rejectWithValue({})
-		}
-	}
-)
-
-export const checkUserWithTokens = createAsyncThunk(
-	'authUserSlice/checkUserWithTokens',
-	async function (_, { rejectWithValue, dispatch }) {
-		console.log('checkUserWithTokens')
-		if (
-			!localStorage.getItem('accessToken') ||
-			!localStorage.getItem('refreshToken')
-		) {
-			dispatch(exitUser())
-			return {}
-		}
-		try {
-			const res = await AuthService.getUserData()
-			return res.data.user
-		} catch (e) {
-			const refresh = await dispatch(refreshToken())
-			return rejectWithValue(refresh)
-		}
-	}
-)
-
-export const registerUser = createAsyncThunk(
-	'authUserSlice/registerUser',
-	async function (form, { rejectWithValue, dispatch }) {
-		const { email, password, name } = form
-		try {
-			const { data } = await AuthService.register(email, password, name)
-			localStorage.setItem('refreshToken', data.refreshToken)
-			localStorage.setItem('accessToken', data.accessToken.split('Bearer ')[1])
-			dispatch(updateUser({ ...data.user, password: form.password }))
-		} catch (e) {
-			return rejectWithValue('Пользователь уже зарегестрирован')
-		}
-	}
-)
-
-export const logoutUser = createAsyncThunk(
-	'authUserSlice/logoutUser',
-	async function (data, { rejectWithValue, dispatch }) {
-		try {
-			await AuthService.logout()
-		} catch (e) {
-			console.log(e)
-			return rejectWithValue(e.message())
-		} finally {
-			dispatch(exitUser())
-		}
-	}
-)
-
-export const loginUser = createAsyncThunk(
-	'authUserSlice/loginUser',
-	async function (data, { rejectWithValue }) {
-		const { userEmail, userPassword } = data
-		try {
-			const res = await AuthService.login(userEmail, userPassword)
-			const {
-				accessToken,
-				refreshToken,
-				user: { name }
-			} = res.data
-			localStorage.setItem('refreshToken', refreshToken)
-			localStorage.setItem('accessToken', getAccessToken(accessToken))
-			return { email: userEmail, name: name }
-		} catch (e) {
-			localStorage.setItem('refreshToken', '')
-			localStorage.setItem('accessToken', '')
-			return rejectWithValue('Некорректная почта или пароль')
-		}
-	}
-)
-
 const authUserSlice = createSlice({
 	name: 'authUserSlice',
 	initialState,
@@ -129,41 +42,50 @@ const authUserSlice = createSlice({
 	},
 	extraReducers(builder) {
 		builder
-			.addCase(loginUser.pending, setLoading)
-			.addCase(registerUser.pending, setLoading)
 			.addCase(logoutUser.pending, setLoading)
+			.addCase(logoutUser.fulfilled, state => {
+				state.status.isLoading = false
+				state.status.isError = false
+			})
+			.addCase(logoutUser.rejected, state => {
+				state.status.isLoading = false
+				state.status.isError = true
+			})
 			.addCase(checkUserWithTokens.pending, state => {
 				state.status.isLoading = true
 				state.status.isError = false
-				state.isChecking = true
 			})
 			.addCase(checkUserWithTokens.fulfilled, (state, action) => {
-				console.log('checkUserWithTokens.fulfilled')
-				state.isChecking = false
 				state.status.isLoading = false
 				state.status.isError = false
 				state.user = { ...state.user, ...action.payload }
 			})
+			.addCase(checkUserWithTokens.rejected, state => {
+				state.status.isLoading = false
+				state.status.isError = true
+			})
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.status.isAuth = true
 				state.user = { ...state.user, ...action.payload }
 			})
+			.addCase(loginUser.pending, setLoading)
 			.addCase(loginUser.rejected, (state, action) => {
 				state.status.isLoading = false
 				state.status.isError = true
 				state.status.error = action.payload
 			})
+			.addCase(refreshToken.pending, setLoading)
 			.addCase(refreshToken.fulfilled, (state, action) => {
-				console.log('refreshToken.fulfilled')
-				state.isChecking = false
 				state.user = action.payload
 			})
 			.addCase(refreshToken.rejected, state => {
-				console.log('refreshToken.rejected')
-				state.isChecking = false
 				state.status.isError = true
 				state.status.isLoading = false
 				state.user = initialState.user
+			})
+			.addCase(registerUser.pending, setLoading)
+			.addCase(registerUser.fulfilled, state => {
+				state.status.isLoading = false
+				state.status.isError = false
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.status.isLoading = false
