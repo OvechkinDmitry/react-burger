@@ -134,11 +134,15 @@ const authUserSlice = createSlice({
 			.addCase(registerUser.pending, setLoading)
 			.addCase(logoutUser.pending, setLoading)
 			.addCase(checkUserWithTokens.pending, state => {
+				state.status.isLoading = true
+				state.status.isError = false
 				state.isChecking = true
 			})
 			.addCase(checkUserWithTokens.fulfilled, (state, action) => {
 				console.log('checkUserWithTokens.fulfilled')
 				state.isChecking = false
+				state.status.isLoading = false
+				state.status.isError = false
 				state.user = { ...state.user, ...action.payload }
 			})
 			// .addCase(checkUserWithTokens.rejected, (state, action) => {

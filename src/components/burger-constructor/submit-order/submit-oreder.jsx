@@ -22,16 +22,16 @@ const SubmitOreder = ({ totalPrice, idS }) => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
-	const handleClick = useCallback(async () => {
-		const res = await dispatch(checkUserWithTokens())
-		console.log(res)
-		if (!user.email || res.error) {
+	const handleClick = async () => {
+		await dispatch(checkUserWithTokens())
+		console.log(!user.email, status.isError)
+		if (!user.email || status.isError) {
 			navigate('/login')
 			return
 		}
 		setOpen(true)
 		dispatch(postOrder(idS))
-	}, [idS, dispatch, user.email, navigate])
+	}
 	//todo:
 	return (
 		<>
