@@ -24,7 +24,7 @@ import Loader from '../ui/loader/loader'
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
-	const { user } = useSelector(state => state.authUserReducer)
+	const { user, status } = useSelector(state => state.authUserReducer)
 	// const init = async () => {
 	// 	if (
 	// 		!localStorage.getItem('accessToken') ||
