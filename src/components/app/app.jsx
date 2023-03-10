@@ -11,9 +11,9 @@ import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
-import { checkUserWithTokens } from '../../services/reducers/auth-user-slice'
 import { useDispatch } from 'react-redux'
 import Loader from '../ui/loader/loader'
+import { checkUserWithTokens } from '../../services/actions/check-user-with-tokens'
 
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
