@@ -6,8 +6,7 @@ export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
 const initialState = {
 	user: {
 		name: '',
-		email: '',
-		password: ''
+		email: ''
 	},
 	isChecking: true,
 	status: {
@@ -105,7 +104,7 @@ export const loginUser = createAsyncThunk(
 			} = res.data
 			localStorage.setItem('refreshToken', refreshToken)
 			localStorage.setItem('accessToken', getAccessToken(accessToken))
-			return { password: userPassword, email: userEmail, name: name }
+			return { email: userEmail, name: name }
 		} catch (e) {
 			localStorage.setItem('refreshToken', '')
 			localStorage.setItem('accessToken', '')
@@ -145,9 +144,6 @@ const authUserSlice = createSlice({
 				state.status.isError = false
 				state.user = { ...state.user, ...action.payload }
 			})
-			// .addCase(checkUserWithTokens.rejected, (state, action) => {
-			// 	console.log('checkUserWithTokens.rejected')
-			// })
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.status.isAuth = true
 				state.user = { ...state.user, ...action.payload }

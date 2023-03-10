@@ -6,10 +6,10 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-// import { patchUser } from '../../../../utils/patch-user'
 import { updateUser } from '../../../../services/reducers/auth-user-slice'
 import WarnLog from '../../../ui/warn-log/warn-log'
 import { AuthService } from '../../../../utils/auth-service'
+import { filterObject } from '../../../../utils/filter-object'
 
 const Profile = () => {
 	const dispatch = useDispatch()
@@ -24,11 +24,10 @@ const Profile = () => {
 	const [form, setValue] = useState(initialStateForm)
 	const applyChanges = async () => {
 		try {
-			const res = await AuthService.patchUser(form)
-			console.log(res)
-			dispatch(updateUser(form))
+			const filtObj = filterObject(form, el => el !== '')
+			await AuthService.patchUser(filtObj)
+			dispatch(updateUser(filtObj))
 		} catch (e) {
-			console.log(e.message)
 			setEditFieldVisible(false)
 			setValue(initialStateForm)
 			setPageError('Ошибка на сервере')
@@ -41,7 +40,7 @@ const Profile = () => {
 		setEditFieldVisible(
 			JSON.stringify(initialStateForm) !== JSON.stringify(form)
 		)
-	}, [form.name, form.password, form.login, initialStateForm])
+	}, [JSON.stringify(form), initialStateForm])
 
 	return (
 		<div className={styles.inputs}>
@@ -60,7 +59,7 @@ const Profile = () => {
 				placeholder={'Логин'}
 				value={form.email}
 				onChange={onChange}
-				name={'login'}
+				name={'email'}
 				isIcon={true}
 				error={false}
 				errorText={'Ошибка'}

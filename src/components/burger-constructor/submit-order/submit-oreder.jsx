@@ -8,24 +8,20 @@ import { postOrder } from '../../../utils/post-order'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteId } from '../../../services/reducers/order-details-slice'
-import { checkUserWithTokens } from '../../../services/reducers/auth-user-slice'
 import { useNavigate } from 'react-router-dom'
 
 const SubmitOreder = ({ totalPrice, idS }) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { user, isChecking, status } = useSelector(
-		state => state.authUserReducer
-	)
+	const { user } = useSelector(state => state.authUserReducer)
+	const { isLoading } = useSelector(state => state.orderDetailsReducer)
 	const [isOpen, setOpen] = useState(false)
 	const handleClose = useCallback(() => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
 	const handleClick = async () => {
-		await dispatch(checkUserWithTokens())
-		console.log(!user.email, status.isError)
-		if (!user.email || status.isError) {
+		if (!user.email) {
 			navigate('/login')
 			return
 		}
@@ -44,10 +40,10 @@ const SubmitOreder = ({ totalPrice, idS }) => {
 					type='primary'
 					size='medium'
 				>
-					{isChecking ? 'Загрузка...' : 'Оформить заказ'}
+					{isLoading ? 'Загрузка...' : 'Оформить заказ'}
 				</Button>
 			</div>
-			{isOpen && !isChecking && (
+			{isOpen && !isLoading && (
 				<Modal handleClose={handleClose}>
 					<OrderDetails />
 				</Modal>
