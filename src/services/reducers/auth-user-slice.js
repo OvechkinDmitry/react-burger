@@ -25,7 +25,7 @@ const setLoading = state => {
 
 export const refreshToken = createAsyncThunk(
 	'authUserSlice/refreshToken',
-	async function (_, { rejectWithValue, dispatch, getState }) {
+	async function (_, { rejectWithValue }) {
 		try {
 			const res = await AuthService.refresh()
 			localStorage.setItem('refreshToken', res.data.refreshToken)
@@ -44,7 +44,8 @@ export const refreshToken = createAsyncThunk(
 
 export const checkUserWithTokens = createAsyncThunk(
 	'authUserSlice/checkUserWithTokens',
-	async function (_, { rejectWithValue, dispatch, getState }) {
+	async function (_, { rejectWithValue, dispatch }) {
+		console.log('checkUserWithTokens')
 		if (
 			!localStorage.getItem('accessToken') ||
 			!localStorage.getItem('refreshToken')
@@ -64,7 +65,7 @@ export const checkUserWithTokens = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
 	'authUserSlice/registerUser',
-	async function (form, { rejectWithValue, dispatch, getState }) {
+	async function (form, { rejectWithValue, dispatch }) {
 		const { email, password, name } = form
 		try {
 			const { data } = await AuthService.register(email, password, name)
@@ -79,7 +80,7 @@ export const registerUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
 	'authUserSlice/logoutUser',
-	async function (data, { rejectWithValue, dispatch, getState }) {
+	async function (data, { rejectWithValue, dispatch }) {
 		try {
 			await AuthService.logout()
 		} catch (e) {
@@ -132,16 +133,17 @@ const authUserSlice = createSlice({
 			.addCase(loginUser.pending, setLoading)
 			.addCase(registerUser.pending, setLoading)
 			.addCase(logoutUser.pending, setLoading)
-			.addCase(checkUserWithTokens.pending, setLoading)
+			.addCase(checkUserWithTokens.pending, state => {
+				state.isChecking = true
+			})
 			.addCase(checkUserWithTokens.fulfilled, (state, action) => {
 				console.log('checkUserWithTokens.fulfilled')
 				state.isChecking = false
 				state.user = { ...state.user, ...action.payload }
 			})
-			.addCase(checkUserWithTokens.rejected, (state, action) => {
-				console.log('checkUserWithTokens.rejected')
-				state.isChecking = true
-			})
+			// .addCase(checkUserWithTokens.rejected, (state, action) => {
+			// 	console.log('checkUserWithTokens.rejected')
+			// })
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.status.isAuth = true
 				state.user = { ...state.user, ...action.payload }
@@ -156,7 +158,7 @@ const authUserSlice = createSlice({
 				state.isChecking = false
 				state.user = action.payload
 			})
-			.addCase(refreshToken.rejected, (state, action) => {
+			.addCase(refreshToken.rejected, state => {
 				console.log('refreshToken.rejected')
 				state.isChecking = false
 				state.user = initialState.user

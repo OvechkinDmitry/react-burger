@@ -12,13 +12,12 @@ import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
 import { checkUserWithTokens } from '../../services/reducers/auth-user-slice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Loader from '../ui/loader/loader'
 
 function App() {
 	const [isUserChecked, setUserChecked] = useState(false)
 	const dispatch = useDispatch()
-	// const { isChecking } = useSelector(state => state.authUserReducer)
 	const init = async () => {
 		await dispatch(checkUserWithTokens())
 		setUserChecked(true)
