@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -8,16 +8,19 @@ import {
 import { Navigate, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../../services/actions/login-user'
+import { useForm } from '../../../hooks/useForm'
 
 const Login = () => {
 	const dispatch = useDispatch()
 	const { user, status } = useSelector(state => state.authUserReducer)
-	const [form, setValue] = useState({ email: '', password: '' })
-	const onChange = e => {
-		setValue({ ...form, [e.target.name]: e.target.value })
-	}
+	const { values, handleChange } = useForm({
+		email: '',
+		password: ''
+	})
 	const onClick = () => {
-		dispatch(loginUser({ userEmail: form.email, userPassword: form.password }))
+		dispatch(
+			loginUser({ userEmail: values.email, userPassword: values.password })
+		)
 	}
 	if (user.email) return <Navigate to={'/profile'} />
 	return (
@@ -28,15 +31,15 @@ const Login = () => {
 			<p className={`text text_type_main-medium mb-6`}>Вход</p>
 			<EmailInput
 				placeholder={'E-mail'}
-				value={form.email}
-				onChange={onChange}
+				value={values.email}
+				onChange={handleChange}
 				name={'email'}
 				extraClass='mb-6'
 			/>
 			<PasswordInput
 				placeholder={'Пароль'}
-				value={form.password}
-				onChange={onChange}
+				value={values.password}
+				onChange={handleChange}
 				name={'password'}
 				errorText={'Ошибка'}
 				extraClass='mb-6'

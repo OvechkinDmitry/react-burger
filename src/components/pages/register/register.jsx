@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -9,16 +9,18 @@ import {
 import { Navigate, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../../services/actions/register-user'
+import { useForm } from '../../../hooks/useForm'
 
 const Register = () => {
 	const dispatch = useDispatch()
 	const { user, status } = useSelector(state => state.authUserReducer)
-	const [form, setValue] = useState({ name: '', email: '', password: '' })
-	const onChange = e => {
-		setValue({ ...form, [e.target.name]: e.target.value })
-	}
+	const { values, handleChange } = useForm({
+		name: '',
+		email: '',
+		password: ''
+	})
 	const onClick = async () => {
-		dispatch(registerUser(form))
+		dispatch(registerUser(values))
 	}
 	if (user.email) {
 		return <Navigate to={'/profile'} replace />
@@ -32,25 +34,25 @@ const Register = () => {
 			<Input
 				type={'text'}
 				placeholder={'Имя'}
-				value={form.name}
+				value={values.name}
 				name={'name'}
-				onChange={onChange}
+				onChange={handleChange}
 				error={false}
 				errorText={'Ошибка'}
 				extraClass='mb-6'
 			/>
 			<EmailInput
 				placeholder={'E-mail'}
-				value={form.email}
+				value={values.email}
 				name={'email'}
-				onChange={onChange}
+				onChange={handleChange}
 				errorText={'Ошибка'}
 				extraClass='mb-6'
 			/>
 			<PasswordInput
-				value={form.password}
+				value={values.password}
 				placeholder={'Пароль'}
-				onChange={onChange}
+				onChange={handleChange}
 				name={'password'}
 				errorText={'Ошибка'}
 				extraClass='mb-6'

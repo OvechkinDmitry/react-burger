@@ -8,19 +8,16 @@ import {
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { AuthService } from '../../../utils/auth-service'
+import { useForm } from '../../../hooks/useForm'
 
 const ResetPassword = () => {
 	const navigate = useNavigate()
 	const { user } = useSelector(state => state.authUserReducer)
 	const [pageError, setPageError] = useState('')
-	const [form, setValue] = useState({ password: '', code: '' })
-	const onChange = e => {
-		if (pageError) setPageError('')
-		setValue({ ...form, [e.target.name]: e.target.value })
-	}
+	const { values, handleChange } = useForm({ password: '', code: '' })
 	const onClick = async () => {
 		try {
-			await AuthService.resetPassword(form.password, form.code)
+			await AuthService.resetPassword(values.password, values.code)
 			navigate('/login')
 		} catch (e) {
 			setPageError('Неверный токен')
@@ -38,8 +35,8 @@ const ResetPassword = () => {
 			<PasswordInput
 				placeholder={'Введите новый пароль'}
 				name={'password'}
-				value={form.password}
-				onChange={onChange}
+				value={values.password}
+				onChange={handleChange}
 				errorText={'Пароль слишком короткий'}
 				extraClass='mb-6'
 			/>
@@ -47,10 +44,10 @@ const ResetPassword = () => {
 				type={'text'}
 				placeholder={'Введите код из письма'}
 				icon={''}
-				value={form.code}
+				value={values.code}
 				name={'code'}
 				error={false}
-				onChange={onChange}
+				onChange={handleChange}
 				errorText={'Ошибка'}
 				extraClass='mb-6'
 			/>

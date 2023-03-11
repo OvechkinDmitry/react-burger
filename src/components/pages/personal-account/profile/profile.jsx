@@ -10,6 +10,7 @@ import { updateUser } from '../../../../services/reducers/auth-user-slice'
 import WarnLog from '../../../ui/warn-log/warn-log'
 import { AuthService } from '../../../../utils/auth-service'
 import { filterObject } from '../../../../utils/filter-object'
+import { useForm } from '../../../../hooks/useForm'
 
 const Profile = () => {
 	const dispatch = useDispatch()
@@ -21,34 +22,31 @@ const Profile = () => {
 		email: user.email,
 		password: user.password || ''
 	}
-	const [form, setValue] = useState(initialStateForm)
+	const { values, handleChange, setValues } = useForm(initialStateForm)
 	const applyChanges = async () => {
 		try {
-			const filtObj = filterObject(form, el => el !== '')
+			const filtObj = filterObject(values, el => el !== '')
 			await AuthService.patchUser(filtObj)
 			dispatch(updateUser(filtObj))
 		} catch (e) {
 			setEditFieldVisible(false)
-			setValue(initialStateForm)
+			setValues(initialStateForm)
 			setPageError('Ошибка на сервере')
 		}
 	}
-	const onChange = e =>
-		setValue({ ...form, [e.target.name]: e.target.value.trim() })
-
 	useEffect(() => {
 		setEditFieldVisible(
-			JSON.stringify(initialStateForm) !== JSON.stringify(form)
+			JSON.stringify(initialStateForm) !== JSON.stringify(values)
 		)
-	}, [JSON.stringify(form), initialStateForm])
+	}, [JSON.stringify(values), initialStateForm])
 
 	return (
 		<div className={styles.inputs}>
 			<WarnLog>{pageError}</WarnLog>
 			<EmailInput
 				placeholder={'Имя'}
-				value={form.name}
-				onChange={onChange}
+				value={values.name}
+				onChange={handleChange}
 				name={'name'}
 				isIcon={true}
 				error={false}
@@ -57,8 +55,8 @@ const Profile = () => {
 			/>
 			<EmailInput
 				placeholder={'Логин'}
-				value={form.email}
-				onChange={onChange}
+				value={values.email}
+				onChange={handleChange}
 				name={'email'}
 				isIcon={true}
 				error={false}
@@ -66,8 +64,8 @@ const Profile = () => {
 				extraClass='mt-6 mb-6'
 			/>
 			<PasswordInput
-				value={form.password}
-				onChange={onChange}
+				value={values.password}
+				onChange={handleChange}
 				placeholder={'Пароль'}
 				icon={'EditIcon'}
 				name={'password'}
@@ -76,7 +74,7 @@ const Profile = () => {
 			{editFieldVisible && (
 				<div className={`${styles.edit} mt-6`}>
 					<Button
-						onClick={() => setValue(initialStateForm)}
+						onClick={() => setValues(initialStateForm)}
 						htmlType='button'
 						type='secondary'
 						size='medium'

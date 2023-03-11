@@ -7,6 +7,9 @@ import { useLocation, useParams } from 'react-router-dom'
 function IngredientDetails() {
 	const location = useLocation()
 	const { ingredientId } = useParams()
+	const containerClass = location.state?.background
+		? styles.inModal
+		: styles.withoutModal
 	const { ingredients, isLoading, isError } = useSelector(
 		state => state.ingredientsReducer
 	)
@@ -14,7 +17,12 @@ function IngredientDetails() {
 	return (
 		<>
 			{!isLoading && !isError && (
-				<>
+				<div className={containerClass}>
+					{!location.state?.background ? (
+						<p className={`${styles.name} text text_type_main-large`}>
+							{'Детали ингредиента'}
+						</p>
+					) : null}
 					<img
 						className={'mb-4'}
 						src={data['image_large']}
@@ -29,7 +37,7 @@ function IngredientDetails() {
 						<IngredientInfo title={'Жиры, г'} amount={data.fat} />
 						<IngredientInfo title={'Углеводы, г'} amount={data.carbohydrates} />
 					</div>
-				</>
+				</div>
 			)}
 		</>
 	)

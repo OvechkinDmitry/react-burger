@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -7,17 +7,15 @@ import {
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { AuthService } from '../../../utils/auth-service'
+import { useForm } from '../../../hooks/useForm'
 
 const ForgotPassword = () => {
 	const { user } = useSelector(state => state.authUserReducer)
 	const navigate = useNavigate()
-	const [form, setValue] = useState({ email: '' })
-	const onChange = e => {
-		setValue({ ...form, [e.target.name]: e.target.value })
-	}
+	const { values, handleChange } = useForm({ email: '' })
 	const onClick = async () => {
 		try {
-			await AuthService.getMailReset(form.email)
+			await AuthService.getMailReset(values.email)
 			navigate('/reset-password')
 		} catch (e) {
 			console.log(e)
@@ -28,10 +26,10 @@ const ForgotPassword = () => {
 		<div className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>
 			<EmailInput
-				value={form.email}
+				value={values.email}
 				placeholder={'Укажите e-mail'}
 				errorText={'Введите правильный формат email'}
-				onChange={onChange}
+				onChange={handleChange}
 				name={'email'}
 				extraClass='mb-6'
 			/>
