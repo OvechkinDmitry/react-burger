@@ -17,13 +17,16 @@ const ResetPassword = () => {
 	const onClick = async e => {
 		e.preventDefault()
 		try {
+			//навигации не произойдет, тк при впри возникновении ошибки
+			//содержимое try не пройдет дальше вызова асинхронной функции (await)
+
+			//введите неправильный код для ошибки и навигации не произойдет
 			await AuthService.resetPassword(values.password, values.code)
 			navigate('/login')
 		} catch (e) {
 			setPageError('Неверный токен')
 		}
 	}
-	console.log(location)
 	if (location.state?.from !== '/forgot-password')
 		return <Navigate replace to={'/forgot-password'} />
 	return (

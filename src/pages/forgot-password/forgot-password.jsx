@@ -15,6 +15,8 @@ const ForgotPassword = () => {
 	const onSubmit = async e => {
 		e.preventDefault()
 		try {
+			//навигации не произойдет, тк при впри возникновении ошибки
+			//содержимое try не пройдет дальше вызова асинхронной функции (await)
 			await AuthService.getMailReset(values.email)
 			navigate('/reset-password', {
 				replace: true,

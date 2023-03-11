@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './ingredient-detailes.module.css'
 import IngredientInfo from './ui/ingredient-info/ingredient-info'
 import { useSelector } from 'react-redux'
@@ -13,7 +13,10 @@ function IngredientDetails() {
 	const { ingredients, isLoading, isError } = useSelector(
 		state => state.ingredientsReducer
 	)
-	const data = ingredients.filter(el => el._id === ingredientId)[0]
+	const data = useMemo(
+		() => ingredients.find(el => el._id === ingredientId),
+		[ingredients, ingredientId]
+	)
 	return (
 		<>
 			{!isLoading && !isError && (
