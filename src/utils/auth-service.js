@@ -57,4 +57,26 @@ export class AuthService {
 			token: token
 		})
 	}
+
+	static async refreshToken(request) {
+		try {
+			const res = await this.refresh()
+			localStorage.setItem('refreshToken', res.data['refreshToken'])
+			localStorage.setItem(
+				'accessToken',
+				res.data['accessToken'].split('Bearer ')[1]
+			)
+			const data = await request()
+			return {
+				success: true,
+				data: data?.data
+			}
+		} catch (e) {
+			return {
+				success: false,
+				error: e.message,
+				data: {}
+			}
+		}
+	}
 }

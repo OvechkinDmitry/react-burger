@@ -19,6 +19,7 @@ import { ModalSwitch } from '../modal-switch/modal-switch'
 import { fetchIngredients } from '../../services/actions/fetch-ingredients'
 import { URL_INGREDIENTS } from '../../utils/constants/constants'
 import NotFound from '../../pages/not-found/not-found'
+import Profile from '../../pages/personal-account/profile/profile'
 
 function App() {
 	const dispatch = useDispatch()
@@ -26,12 +27,9 @@ function App() {
 	const { isChecking } = useSelector(state => state.authUserReducer)
 	const background = location.state && location.state.background
 	useEffect(() => {
+		dispatch(checkUserWithTokens())
 		dispatch(fetchIngredients(URL_INGREDIENTS))
 	}, [dispatch])
-
-	useEffect(() => {
-		dispatch(checkUserWithTokens())
-	}, [])
 	return (
 		<ErrorBoundary>
 			<AppHeader />
@@ -49,37 +47,33 @@ function App() {
 						/>
 						<Route
 							path={'/login'}
-							element={
-								<ProtectedRouteElement guest={true} element={<Login />} />
-							}
+							element={<ProtectedRouteElement guest element={<Login />} />}
 						/>
 						<Route
 							path={'/forgot-password'}
 							element={
-								<ProtectedRouteElement
-									guest={true}
-									element={<ForgotPassword />}
-								/>
+								<ProtectedRouteElement guest element={<ForgotPassword />} />
 							}
 						/>
 						<Route
-							path={'/profile/*'}
+							path={'/profile'}
 							element={<ProtectedRouteElement element={<PersonalAccount />} />}
-						/>
+						>
+							<Route index element={<Profile />} />
+							<Route
+								path={'orders'}
+								element={<WarnLog>working on it</WarnLog>}
+							/>
+						</Route>
 						<Route
 							path={'/reset-password'}
 							element={
-								<ProtectedRouteElement
-									guest={true}
-									element={<ResetPassword />}
-								/>
+								<ProtectedRouteElement guest element={<ResetPassword />} />
 							}
 						/>
 						<Route
 							path={'/register'}
-							element={
-								<ProtectedRouteElement guest={true} element={<Register />} />
-							}
+							element={<ProtectedRouteElement guest element={<Register />} />}
 						/>
 						<Route path={'/*'} element={<NotFound />} />
 						<Route

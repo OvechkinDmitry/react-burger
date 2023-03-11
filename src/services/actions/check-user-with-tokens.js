@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AuthService } from '../../utils/auth-service'
-import { refreshToken } from './refresh-token'
+// import { refreshToken } from './refresh-token'
 import { exitUser } from '../reducers/auth-user-slice'
 
 export const checkUserWithTokens = createAsyncThunk(
@@ -11,14 +11,16 @@ export const checkUserWithTokens = createAsyncThunk(
 			!localStorage.getItem('refreshToken')
 		) {
 			dispatch(exitUser())
-			return {}
+			return
 		}
 		try {
 			const res = await AuthService.getUserData()
 			return res.data.user
 		} catch (e) {
-			dispatch(refreshToken())
-			return rejectWithValue(true)
+			const { data, success } = await AuthService.refreshToken(
+				AuthService.getUserData
+			)
+			return rejectWithValue({ data: data, success })
 		}
 	}
 )

@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { logoutUser } from '../actions/logout-user'
 import { registerUser } from '../actions/register-user'
 import { loginUser } from '../actions/login-user'
-import { refreshToken } from '../actions/refresh-token'
 import { checkUserWithTokens } from '../actions/check-user-with-tokens'
 
 export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
@@ -63,10 +62,12 @@ const authUserSlice = createSlice({
 				state.isChecking = false
 				state.user = { ...state.user, ...action.payload }
 			})
-			.addCase(checkUserWithTokens.rejected, state => {
+			.addCase(checkUserWithTokens.rejected, (state, action) => {
+				const { data, success } = action.payload
 				state.status.isLoading = false
-				state.status.isError = true
-				state.status.isChecking = true
+				state.status.isError = !success
+				state.user = success ? data.user : initialState.user
+				state.isChecking = false
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.user = { ...state.user, ...action.payload }
@@ -76,21 +77,6 @@ const authUserSlice = createSlice({
 				state.status.isLoading = false
 				state.status.isError = true
 				state.status.error = action.payload
-			})
-			.addCase(refreshToken.pending, state => {
-				state.isChecking = true
-			})
-			.addCase(refreshToken.fulfilled, (state, action) => {
-				state.user = action.payload
-				state.isError = false
-				state.isLoading = false
-				state.isChecking = false
-			})
-			.addCase(refreshToken.rejected, state => {
-				state.status.isError = true
-				state.status.isLoading = false
-				state.isChecking = false
-				state.user = initialState.user
 			})
 			.addCase(registerUser.pending, setLoading)
 			.addCase(registerUser.fulfilled, state => {

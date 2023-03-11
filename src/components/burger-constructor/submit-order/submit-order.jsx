@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteId } from '../../../services/reducers/order-details-slice'
 import { useNavigate } from 'react-router-dom'
 
-const SubmitOreder = ({ totalPrice, idS }) => {
+const SubmitOrder = ({ totalPrice, idS }) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const { user } = useSelector(state => state.authUserReducer)
@@ -52,9 +52,9 @@ const SubmitOreder = ({ totalPrice, idS }) => {
 	)
 }
 
-SubmitOreder.propTypes = {
+SubmitOrder.propTypes = {
 	totalPrice: PropTypes.number.isRequired,
 	idS: PropTypes.arrayOf(PropTypes.string)
 }
 
-export default SubmitOreder
+export default SubmitOrder

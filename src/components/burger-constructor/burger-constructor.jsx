@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import styles from './burger-constructor.module.css'
-import SubmitOreder from './submit-order/submit-oreder'
+import SubmitOrder from './submit-order/submit-order'
 import { useSelector } from 'react-redux'
 import ResultList from './ui/result-list/result-list'
 
@@ -14,7 +14,7 @@ const BurgerConstructor = React.memo(() => {
 	return (
 		<div className={`${styles.container} mt-25`}>
 			<ResultList />
-			<SubmitOreder totalPrice={totalPrice} idS={orderElementsIdS} />
+			<SubmitOrder totalPrice={totalPrice} idS={orderElementsIdS} />
 		</div>
 	)
 })

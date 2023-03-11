@@ -1,9 +1,7 @@
 import React from 'react'
 import styles from './personal-account.module.css'
-import { NavLink, Route, Routes } from 'react-router-dom'
-import Profile from './profile/profile'
+import { NavLink, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import WarnLog from '../../components/ui/warn-log/warn-log'
 import { logoutUser } from '../../services/actions/logout-user'
 
 const routes = [
@@ -48,10 +46,7 @@ const PersonalAccount = () => {
 					В этом разделе вы можете изменить свои персональные данные
 				</p>
 			</div>
-			<Routes>
-				<Route path={'/'} element={<Profile />} />
-				<Route path={'orders'} element={<WarnLog>working on it</WarnLog>} />
-			</Routes>
+			<Outlet />
 		</div>
 	)
 }

@@ -12,7 +12,6 @@ export const postOrder = idS => async dispatch => {
 		const res = await NomorepartiesAuth.post(URL_ORDER, {
 			ingredients: idS
 		})
-		console.log(res)
 		const { name, order } = res.data
 		dispatch(updateId({ name, id: order.number }))
 	} catch (e) {

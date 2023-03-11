@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './ingredient-cart.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import Price from '../../../ui/price/price'
@@ -16,8 +16,12 @@ const IngredientCart = React.memo(({ ingredient }) => {
 	})
 	const getState = state => state.burgerConstructorReducer
 	const { constructorElements, bun } = useSelector(getState)
-	const elementsInOrder = [...constructorElements, bun, bun]
-	const count = elementsInOrder.filter(el => el._id === ingredient._id).length
+	const count = useMemo(() => {
+		return [...constructorElements, bun, bun].filter(
+			el => el._id === ingredient._id
+		).length
+	}, [ingredient, constructorElements, bun])
+
 	return (
 		<Link
 			key={ingredient._id}
