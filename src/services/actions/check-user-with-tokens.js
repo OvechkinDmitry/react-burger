@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AuthService } from '../../utils/auth-service'
-// import { refreshToken } from './refresh-token'
 import { exitUser } from '../reducers/auth-user-slice'
 
 export const checkUserWithTokens = createAsyncThunk(

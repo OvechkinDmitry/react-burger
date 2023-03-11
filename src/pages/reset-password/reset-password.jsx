@@ -5,11 +5,12 @@ import {
 	Input,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../utils/auth-service'
 import { useForm } from '../../hooks/useForm'
 
 const ResetPassword = () => {
+	const location = useLocation()
 	const navigate = useNavigate()
 	const [pageError, setPageError] = useState('')
 	const { values, handleChange } = useForm({ password: '', code: '' })
@@ -22,6 +23,9 @@ const ResetPassword = () => {
 			setPageError('Неверный токен')
 		}
 	}
+	console.log(location)
+	if (location.state?.from !== '/forgot-password')
+		return <Navigate replace to={'/forgot-password'} />
 	return (
 		<form onSubmit={onClick} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>

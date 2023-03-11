@@ -48,6 +48,5 @@ const IngredientCart = React.memo(({ ingredient }) => {
 
 IngredientCart.propTypes = {
 	ingredient: ingredientType.isRequired
-	// handleOpen: PropTypes.func.isRequired
 }
 export default IngredientCart

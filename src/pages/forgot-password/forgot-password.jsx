@@ -4,18 +4,22 @@ import {
 	Button,
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../utils/auth-service'
 import { useForm } from '../../hooks/useForm'
 
 const ForgotPassword = () => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const { values, handleChange } = useForm({ email: '' })
 	const onSubmit = async e => {
 		e.preventDefault()
 		try {
 			await AuthService.getMailReset(values.email)
-			navigate('/reset-password')
+			navigate('/reset-password', {
+				replace: true,
+				state: { from: location.pathname }
+			})
 		} catch (e) {
 			console.log(e)
 		}
@@ -23,7 +27,6 @@ const ForgotPassword = () => {
 	return (
 		<form onSubmit={onSubmit} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>
-
 			<EmailInput
 				value={values.email}
 				placeholder={'Укажите e-mail'}
