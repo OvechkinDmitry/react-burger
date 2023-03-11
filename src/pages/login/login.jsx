@@ -7,8 +7,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../../services/actions/login-user'
-import { useForm } from '../../../hooks/useForm'
+import { loginUser } from '../../services/actions/login-user'
+import { useForm } from '../../hooks/useForm'
 
 const Login = () => {
 	const dispatch = useDispatch()

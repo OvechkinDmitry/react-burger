@@ -3,8 +3,8 @@ import styles from './personal-account.module.css'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import Profile from './profile/profile'
 import { useDispatch } from 'react-redux'
-import WarnLog from '../../ui/warn-log/warn-log'
-import { logoutUser } from '../../../services/actions/logout-user'
+import WarnLog from '../../components/ui/warn-log/warn-log'
+import { logoutUser } from '../../services/actions/logout-user'
 
 const routes = [
 	{

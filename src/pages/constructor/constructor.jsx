@@ -1,8 +1,8 @@
 import React from 'react'
-import BurgerIngredients from '../../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../../burger-constructor/burger-constructor'
+import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients'
+import BurgerConstructor from '../../components/burger-constructor/burger-constructor'
 import styles from './constructor.module.css'
-import GlobalDndProvider from '../../../utils/global-dnd-provider'
+import GlobalDndProvider from '../../utils/global-dnd-provider'
 
 const Constructor = () => {
 	return (

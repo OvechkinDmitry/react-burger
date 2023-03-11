@@ -5,8 +5,8 @@ import {
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { AuthService } from '../../../utils/auth-service'
-import { useForm } from '../../../hooks/useForm'
+import { AuthService } from '../../utils/auth-service'
+import { useForm } from '../../hooks/useForm'
 
 const ForgotPassword = () => {
 	const navigate = useNavigate()

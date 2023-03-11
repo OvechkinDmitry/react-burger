@@ -6,11 +6,11 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from '../../../../services/reducers/auth-user-slice'
-import WarnLog from '../../../ui/warn-log/warn-log'
-import { AuthService } from '../../../../utils/auth-service'
-import { filterObject } from '../../../../utils/filter-object'
-import { useForm } from '../../../../hooks/useForm'
+import { updateUser } from '../../../services/reducers/auth-user-slice'
+import WarnLog from '../../../components/ui/warn-log/warn-log'
+import { AuthService } from '../../../utils/auth-service'
+import { filterObject } from '../../../utils/filter-object'
+import { useForm } from '../../../hooks/useForm'
 
 const Profile = () => {
 	const dispatch = useDispatch()
