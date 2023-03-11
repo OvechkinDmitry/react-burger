@@ -31,6 +31,7 @@ const authUserSlice = createSlice({
 	initialState,
 	reducers: {
 		exitUser(state) {
+			state.isChecking = false
 			state.user = initialState.user
 			state.status = initialState.status
 			localStorage.setItem('accessToken', '')
@@ -54,15 +55,18 @@ const authUserSlice = createSlice({
 			.addCase(checkUserWithTokens.pending, state => {
 				state.status.isLoading = true
 				state.status.isError = false
+				state.isChecking = true
 			})
 			.addCase(checkUserWithTokens.fulfilled, (state, action) => {
 				state.status.isLoading = false
 				state.status.isError = false
+				state.isChecking = false
 				state.user = { ...state.user, ...action.payload }
 			})
 			.addCase(checkUserWithTokens.rejected, state => {
 				state.status.isLoading = false
 				state.status.isError = true
+				state.status.isChecking = true
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				state.user = { ...state.user, ...action.payload }
@@ -73,13 +77,19 @@ const authUserSlice = createSlice({
 				state.status.isError = true
 				state.status.error = action.payload
 			})
-			.addCase(refreshToken.pending, setLoading)
+			.addCase(refreshToken.pending, state => {
+				state.isChecking = true
+			})
 			.addCase(refreshToken.fulfilled, (state, action) => {
 				state.user = action.payload
+				state.isError = false
+				state.isLoading = false
+				state.isChecking = false
 			})
 			.addCase(refreshToken.rejected, state => {
 				state.status.isError = true
 				state.status.isLoading = false
+				state.isChecking = false
 				state.user = initialState.user
 			})
 			.addCase(registerUser.pending, setLoading)

@@ -4,16 +4,15 @@ import {
 	Button,
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../../utils/auth-service'
 import { useForm } from '../../../hooks/useForm'
 
 const ForgotPassword = () => {
-	const { user } = useSelector(state => state.authUserReducer)
 	const navigate = useNavigate()
 	const { values, handleChange } = useForm({ email: '' })
-	const onClick = async () => {
+	const onSubmit = async e => {
+		e.preventDefault()
 		try {
 			await AuthService.getMailReset(values.email)
 			navigate('/reset-password')
@@ -21,10 +20,10 @@ const ForgotPassword = () => {
 			console.log(e)
 		}
 	}
-	if (user.email !== '') return <Navigate to={'/'} replace />
 	return (
-		<div className={`${styles.container}`}>
+		<form onSubmit={onSubmit} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>
+
 			<EmailInput
 				value={values.email}
 				placeholder={'Укажите e-mail'}
@@ -34,10 +33,10 @@ const ForgotPassword = () => {
 				extraClass='mb-6'
 			/>
 			<Button
-				htmlType='button'
+				htmlType='submit'
 				type='primary'
 				size='medium'
-				onClick={onClick}
+				onClick={onSubmit}
 				extraClass={'mb-20'}
 			>
 				Восстановить
@@ -48,7 +47,7 @@ const ForgotPassword = () => {
 					Войти
 				</NavLink>
 			</p>
-		</div>
+		</form>
 	)
 }
 

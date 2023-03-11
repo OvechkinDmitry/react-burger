@@ -5,17 +5,16 @@ import {
 	Input,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../../utils/auth-service'
 import { useForm } from '../../../hooks/useForm'
 
 const ResetPassword = () => {
 	const navigate = useNavigate()
-	const { user } = useSelector(state => state.authUserReducer)
 	const [pageError, setPageError] = useState('')
 	const { values, handleChange } = useForm({ password: '', code: '' })
-	const onClick = async () => {
+	const onClick = async e => {
+		e.preventDefault()
 		try {
 			await AuthService.resetPassword(values.password, values.code)
 			navigate('/login')
@@ -23,11 +22,8 @@ const ResetPassword = () => {
 			setPageError('Неверный токен')
 		}
 	}
-	if (user.email !== '') {
-		return <Navigate to={'/'} replace />
-	}
 	return (
-		<div className={`${styles.container}`}>
+		<form onSubmit={onClick} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
 				{pageError}
 			</p>
@@ -52,10 +48,9 @@ const ResetPassword = () => {
 				extraClass='mb-6'
 			/>
 			<Button
-				htmlType='button'
+				htmlType='submit'
 				type='primary'
 				size='medium'
-				onClick={onClick}
 				extraClass={'mb-20'}
 			>
 				Восстановить
@@ -66,7 +61,7 @@ const ResetPassword = () => {
 					Войти
 				</NavLink>
 			</p>
-		</div>
+		</form>
 	)
 }
 

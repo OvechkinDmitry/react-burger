@@ -17,8 +17,8 @@ export const checkUserWithTokens = createAsyncThunk(
 			const res = await AuthService.getUserData()
 			return res.data.user
 		} catch (e) {
-			const refresh = await dispatch(refreshToken())
-			return rejectWithValue(refresh)
+			dispatch(refreshToken())
+			return rejectWithValue(true)
 		}
 	}
 )

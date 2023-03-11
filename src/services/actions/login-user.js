@@ -5,9 +5,9 @@ import { getAccessToken } from '../reducers/auth-user-slice'
 export const loginUser = createAsyncThunk(
 	'authUserSlice/loginUser',
 	async function (data, { rejectWithValue }) {
-		const { userEmail, userPassword } = data
+		const { email, password } = data
 		try {
-			const res = await AuthService.login(userEmail, userPassword)
+			const res = await AuthService.login(email, password)
 			const {
 				accessToken,
 				refreshToken,
@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
 			} = res.data
 			localStorage.setItem('refreshToken', refreshToken)
 			localStorage.setItem('accessToken', getAccessToken(accessToken))
-			return { email: userEmail, name: name }
+			return { email: email, name: name }
 		} catch (e) {
 			localStorage.setItem('refreshToken', '')
 			localStorage.setItem('accessToken', '')

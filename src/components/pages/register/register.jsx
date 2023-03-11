@@ -6,27 +6,25 @@ import {
 	Input,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Navigate, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../../services/actions/register-user'
 import { useForm } from '../../../hooks/useForm'
 
 const Register = () => {
 	const dispatch = useDispatch()
-	const { user, status } = useSelector(state => state.authUserReducer)
+	const { status } = useSelector(state => state.authUserReducer)
 	const { values, handleChange } = useForm({
 		name: '',
 		email: '',
 		password: ''
 	})
-	const onClick = async () => {
+	const onSubmit = async e => {
+		e.preventDefault()
 		dispatch(registerUser(values))
 	}
-	if (user.email) {
-		return <Navigate to={'/profile'} replace />
-	}
 	return (
-		<div className={`${styles.container}`}>
+		<form onSubmit={onSubmit} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
 				{status.error}
 			</p>
@@ -58,10 +56,9 @@ const Register = () => {
 				extraClass='mb-6'
 			/>
 			<Button
-				htmlType='button'
+				htmlType='submit'
 				type='primary'
 				size='medium'
-				onClick={onClick}
 				extraClass={'mb-20'}
 			>
 				Зарегистрироваться
@@ -72,7 +69,7 @@ const Register = () => {
 					Войти
 				</NavLink>
 			</p>
-		</div>
+		</form>
 	)
 }
 

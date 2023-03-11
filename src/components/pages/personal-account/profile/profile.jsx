@@ -20,10 +20,11 @@ const Profile = () => {
 	const initialStateForm = {
 		name: user.name,
 		email: user.email,
-		password: user.password || ''
+		password: ''
 	}
 	const { values, handleChange, setValues } = useForm(initialStateForm)
-	const applyChanges = async () => {
+	const applyChanges = async e => {
+		e.preventDefault()
 		try {
 			const filtObj = filterObject(values, el => el !== '')
 			await AuthService.patchUser(filtObj)
@@ -41,8 +42,8 @@ const Profile = () => {
 	}, [JSON.stringify(values), initialStateForm])
 
 	return (
-		<div className={styles.inputs}>
-			<WarnLog>{pageError}</WarnLog>
+		<form onSubmit={applyChanges} className={styles.inputs}>
+			{pageError && <WarnLog>{pageError}</WarnLog>}
 			<EmailInput
 				placeholder={'Имя'}
 				value={values.name}
@@ -81,17 +82,12 @@ const Profile = () => {
 					>
 						Отмена
 					</Button>
-					<Button
-						onClick={applyChanges}
-						htmlType='button'
-						type='primary'
-						size='medium'
-					>
+					<Button htmlType='submit' type='primary' size='medium'>
 						Сохранить
 					</Button>
 				</div>
 			)}
-		</div>
+		</form>
 	)
 }
 

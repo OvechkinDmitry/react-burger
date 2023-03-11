@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header'
 import ErrorBoundary from '../../hocs/error-boundary/error-boundary'
@@ -11,7 +11,7 @@ import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../ui/loader/loader'
 import { checkUserWithTokens } from '../../services/actions/check-user-with-tokens'
 import IngredientDetails from '../ingredient-details/ingredient-details'
@@ -22,23 +22,19 @@ import { URL_INGREDIENTS } from '../../utils/constants/constants'
 function App() {
 	const dispatch = useDispatch()
 	const location = useLocation()
-	const [isUserChecked, setUserChecked] = useState(false)
-	let background = location.state && location.state.background
-	const init = async () => {
-		await dispatch(checkUserWithTokens())
-		setUserChecked(true)
-	}
+	const { isChecking } = useSelector(state => state.authUserReducer)
+	const background = location.state && location.state.background
 	useEffect(() => {
 		dispatch(fetchIngredients(URL_INGREDIENTS))
 	}, [dispatch])
 
 	useEffect(() => {
-		init()
+		dispatch(checkUserWithTokens())
 	}, [])
 	return (
 		<ErrorBoundary>
 			<AppHeader />
-			{isUserChecked ? (
+			{!isChecking ? (
 				<main className={styles.container}>
 					<Routes location={background || location}>
 						<Route path={'/'} element={<Constructor />} />
@@ -50,14 +46,40 @@ function App() {
 								/>
 							}
 						/>
-						<Route path={'/login'} element={<Login />} />
-						<Route path={'/forgot-password'} element={<ForgotPassword />} />
+						<Route
+							path={'/login'}
+							element={
+								<ProtectedRouteElement guest={true} element={<Login />} />
+							}
+						/>
+						<Route
+							path={'/forgot-password'}
+							element={
+								<ProtectedRouteElement
+									guest={true}
+									element={<ForgotPassword />}
+								/>
+							}
+						/>
 						<Route
 							path={'/profile/*'}
 							element={<ProtectedRouteElement element={<PersonalAccount />} />}
 						/>
-						<Route path={'/reset-password'} element={<ResetPassword />} />
-						<Route path={'/register'} element={<Register />} />
+						<Route
+							path={'/reset-password'}
+							element={
+								<ProtectedRouteElement
+									guest={true}
+									element={<ResetPassword />}
+								/>
+							}
+						/>
+						<Route
+							path={'/register'}
+							element={
+								<ProtectedRouteElement guest={true} element={<Register />} />
+							}
+						/>
 						<Route
 							path={'/ingredients/:ingredientId'}
 							element={<IngredientDetails />}
