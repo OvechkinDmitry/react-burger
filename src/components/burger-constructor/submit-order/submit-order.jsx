@@ -6,20 +6,29 @@ import Modal from '../../modal/modal'
 import OrderDetails from '../../order-details/order-details'
 import { postOrder } from '../../../utils/post-order'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteId } from '../../../services/reducers/order-details-slice'
+import { useNavigate } from 'react-router-dom'
 
-const SubmitOreder = ({ totalPrice, idS }) => {
+const SubmitOrder = ({ totalPrice, idS }) => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const { user } = useSelector(state => state.authUserReducer)
+	const { isLoading } = useSelector(state => state.orderDetailsReducer)
 	const [isOpen, setOpen] = useState(false)
 	const handleClose = useCallback(() => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
-	const handleClick = useCallback(() => {
+	const handleClick = async () => {
+		if (!user.email) {
+			navigate('/login')
+			return
+		}
 		setOpen(true)
 		dispatch(postOrder(idS))
-	}, [idS, dispatch])
+	}
+	//todo:
 	return (
 		<>
 			<div className={`${styles.submit} mt-10 mr-8`}>
@@ -31,10 +40,10 @@ const SubmitOreder = ({ totalPrice, idS }) => {
 					type='primary'
 					size='medium'
 				>
-					Оформить заказ
+					{isLoading ? 'Загрузка...' : 'Оформить заказ'}
 				</Button>
 			</div>
-			{isOpen && (
+			{isOpen && !isLoading && (
 				<Modal handleClose={handleClose}>
 					<OrderDetails />
 				</Modal>
@@ -43,9 +52,9 @@ const SubmitOreder = ({ totalPrice, idS }) => {
 	)
 }
 
-SubmitOreder.propTypes = {
+SubmitOrder.propTypes = {
 	totalPrice: PropTypes.number.isRequired,
 	idS: PropTypes.arrayOf(PropTypes.string)
 }
 
-export default SubmitOreder
+export default SubmitOrder

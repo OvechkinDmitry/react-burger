@@ -18,7 +18,6 @@ const IngredientSection = forwardRef(({ title, data, handleOpen }, ref) => {
 })
 IngredientSection.propTypes = {
 	title: PropTypes.string.isRequired,
-	data: ingredientArray.isRequired,
-	handleOpen: PropTypes.func.isRequired
+	data: ingredientArray.isRequired
 }
 export default IngredientSection
