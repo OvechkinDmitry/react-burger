@@ -9,16 +9,17 @@ import {
 	URL_USER
 } from './constants/constants'
 import NomorepartiesAuth from './constants/axios-auth'
+import { AxiosError, AxiosResponse } from 'axios'
 
 export class AuthService {
-	static async login(email, password) {
+	static async login(email: string, password: string) {
 		return await NomorepartiesInstance.post(URL_LOGIN, {
 			email: email,
 			password: password
 		})
 	}
 
-	static async register(email, password, name) {
+	static async register(email: string, password: string, name: string) {
 		return await NomorepartiesInstance.post(URL_REGISTER, {
 			email: email,
 			password: password,
@@ -36,7 +37,7 @@ export class AuthService {
 		return await NomorepartiesAuth.get(URL_USER)
 	}
 
-	static async patchUser(form) {
+	static async patchUser(form: { [key: string]: string }) {
 		return await NomorepartiesAuth.patch(URL_USER, { ...form })
 	}
 
@@ -45,20 +46,20 @@ export class AuthService {
 			token: localStorage.getItem('refreshToken')
 		})
 	}
-	static async getMailReset(email) {
+	static async getMailReset(email: string) {
 		return await NomorepartiesInstance.post(URL_FORGOT_PASSWORD, {
 			email: email
 		})
 	}
 
-	static async resetPassword(password, token) {
+	static async resetPassword(password: string, token: string) {
 		return await NomorepartiesInstance.post(URL_PASSWORD_RESET, {
 			password: password,
 			token: token
 		})
 	}
 
-	static async refreshToken(request) {
+	static async refreshToken(request: () => Promise<AxiosResponse<any>>) {
 		try {
 			const res = await this.refresh()
 			localStorage.setItem('refreshToken', res.data['refreshToken'])
@@ -72,9 +73,10 @@ export class AuthService {
 				data: data?.data
 			}
 		} catch (e) {
+			const error = e as AxiosError
 			return {
 				success: false,
-				error: e.message,
+				error: error.message,
 				data: {}
 			}
 		}

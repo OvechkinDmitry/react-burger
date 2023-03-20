@@ -1,18 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FC, ReactNode } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-export const GlobalDndProvider = props => {
-	return (
-		<DndProvider backend={HTML5Backend} key={1}>
-			{props.children}
-		</DndProvider>
-	)
+type TGlobalDndProvider = {
+	children: ReactNode
 }
 
-GlobalDndProvider.propTypes = {
-	children: PropTypes.node
+export const GlobalDndProvider: FC<TGlobalDndProvider> = ({ children }) => {
+	return (
+		<DndProvider backend={HTML5Backend} key={1}>
+			{children}
+		</DndProvider>
+	)
 }
 
 export default GlobalDndProvider
