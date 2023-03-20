@@ -11,8 +11,9 @@ const rootReducer = combineReducers({
 	authUserReducer
 })
 
-export const setupStore = () => {
-	return configureStore({
-		reducer: rootReducer
-	})
-}
+export const store = configureStore({
+	reducer: rootReducer
+})
+
+export type TRootState = ReturnType<typeof rootReducer>
+export type TRootDispatch = typeof store.dispatch

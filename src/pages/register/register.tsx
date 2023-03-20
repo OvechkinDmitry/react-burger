@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, SyntheticEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -7,19 +7,20 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../services/actions/register-user'
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../hooks/use-form'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
+import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
 
-const Register = () => {
-	const dispatch = useDispatch()
-	const { status } = useSelector(state => state.authUserReducer)
+const Register: FC = () => {
+	const dispatch = useTypedDispatch()
+	const { status } = useTypedSelector(state => state.authUserReducer)
 	const { values, handleChange } = useForm({
 		name: '',
 		email: '',
 		password: ''
 	})
-	const onSubmit = async e => {
+	const onSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault()
 		dispatch(registerUser(values))
 	}
@@ -44,7 +45,6 @@ const Register = () => {
 				value={values.email}
 				name={'email'}
 				onChange={handleChange}
-				errorText={'Ошибка'}
 				extraClass='mb-6'
 			/>
 			<PasswordInput
@@ -52,7 +52,6 @@ const Register = () => {
 				placeholder={'Пароль'}
 				onChange={handleChange}
 				name={'password'}
-				errorText={'Ошибка'}
 				extraClass='mb-6'
 			/>
 			<Button

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, SyntheticEvent, useState } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -7,20 +7,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../utils/auth-service'
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../hooks/use-form'
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
-	const [pageError, setPageError] = useState('')
-	const { values, handleChange } = useForm({ password: '', code: '' })
-	const onClick = async e => {
+	const [pageError, setPageError] = useState<string>('')
+	const { values, handleChange } = useForm({
+		password: '',
+		code: ''
+	})
+	const onClick = async (e: SyntheticEvent): Promise<void> => {
 		e.preventDefault()
 		try {
-			//навигации не произойдет, тк при впри возникновении ошибки
-			//содержимое try не пройдет дальше вызова асинхронной функции (await)
-
-			//введите неправильный код для ошибки и навигации не произойдет
 			await AuthService.resetPassword(values.password, values.code)
 			navigate('/login')
 		} catch (e) {
@@ -40,13 +39,12 @@ const ResetPassword = () => {
 				name={'password'}
 				value={values.password}
 				onChange={handleChange}
-				errorText={'Пароль слишком короткий'}
 				extraClass='mb-6'
 			/>
 			<Input
 				type={'text'}
 				placeholder={'Введите код из письма'}
-				icon={''}
+				icon={undefined}
 				value={values.code}
 				name={'code'}
 				error={false}

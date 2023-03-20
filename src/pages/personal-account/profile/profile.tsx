@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import styles from './profile.module.css'
 import {
 	Button,
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../../services/reducers/auth-user-slice'
 import WarnLog from '../../../components/ui/warn-log/warn-log'
 import { AuthService } from '../../../utils/auth-service'
 import { filterObject } from '../../../utils/filter-object'
-import { useForm } from '../../../hooks/useForm'
+import { useForm } from '../../../hooks/use-form'
+import { useTypedSelector } from '../../../hooks/use-typed-selector'
+import { useTypedDispatch } from '../../../hooks/use-typed-dispatch'
 
 const Profile = () => {
-	const dispatch = useDispatch()
-	const [pageError, setPageError] = useState('')
-	const { user } = useSelector(state => state.authUserReducer)
-	const [editFieldVisible, setEditFieldVisible] = useState(false)
+	const dispatch = useTypedDispatch()
+	const [pageError, setPageError] = useState<string>('')
+	const { user } = useTypedSelector(state => state.authUserReducer)
+	const [editFieldVisible, setEditFieldVisible] = useState<boolean>(false)
 	const initialStateForm = {
 		name: user.name,
 		email: user.email,
 		password: ''
 	}
 	const { values, handleChange, setValues } = useForm(initialStateForm)
-	const applyChanges = async e => {
+	const applyChanges = async (e: SyntheticEvent) => {
 		e.preventDefault()
 		try {
 			const filtObj = filterObject(values, el => el !== '')
@@ -50,7 +51,6 @@ const Profile = () => {
 				onChange={handleChange}
 				name={'name'}
 				isIcon={true}
-				error={false}
 				inputMode={'text'}
 				extraClass=''
 			/>
@@ -60,8 +60,6 @@ const Profile = () => {
 				onChange={handleChange}
 				name={'email'}
 				isIcon={true}
-				error={false}
-				errorText={'Ошибка'}
 				extraClass='mt-6 mb-6'
 			/>
 			<PasswordInput
@@ -70,7 +68,6 @@ const Profile = () => {
 				placeholder={'Пароль'}
 				icon={'EditIcon'}
 				name={'password'}
-				errorText={'Ошибка'}
 			/>
 			{editFieldVisible && (
 				<div className={`${styles.edit} mt-6`}>

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './personal-account.module.css'
 import { NavLink, Outlet } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { logoutUser } from '../../services/actions/logout-user'
+import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
 
 const routes = [
 	{
@@ -15,8 +15,8 @@ const routes = [
 	}
 ]
 
-const PersonalAccount = () => {
-	const dispatch = useDispatch()
+const PersonalAccount: FC = () => {
+	const dispatch = useTypedDispatch()
 	const exit = () => {
 		dispatch(logoutUser())
 	}

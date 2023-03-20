@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 
-const NomorepartiesAuth = axios.create({
+const NomorepartiesAuth: AxiosInstance = axios.create({
 	baseURL: 'https://norma.nomoreparties.space/api/',
 	headers: {
 		Accept: 'application/json'
