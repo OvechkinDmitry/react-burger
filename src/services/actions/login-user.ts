@@ -2,9 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AuthService } from '../../utils/auth-service'
 import { getAccessToken } from '../reducers/auth-user-slice'
 
+type TLoginForm = {
+	email: string
+	password: string
+}
 export const loginUser = createAsyncThunk(
 	'authUserSlice/loginUser',
-	async function (data, { rejectWithValue }) {
+	async function (data: TLoginForm, { rejectWithValue }) {
 		const { email, password } = data
 		try {
 			const res = await AuthService.login(email, password)

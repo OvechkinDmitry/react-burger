@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, SyntheticEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -6,18 +6,19 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../services/actions/login-user'
 import { useForm } from '../../hooks/use-form'
+import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
-const Login = () => {
-	const dispatch = useDispatch()
-	const { status } = useSelector(state => state.authUserReducer)
+const Login: FC = () => {
+	const dispatch = useTypedDispatch()
+	const { status } = useTypedSelector(state => state.authUserReducer)
 	const { values, handleChange } = useForm({
 		email: '',
 		password: ''
 	})
-	const onSubmit = e => {
+	const onSubmit = (e: SyntheticEvent) => {
 		e.preventDefault()
 		dispatch(loginUser(values))
 	}
@@ -40,7 +41,6 @@ const Login = () => {
 					value={values.password}
 					onChange={handleChange}
 					name={'password'}
-					errorText={'Ошибка'}
 					extraClass='mb-6'
 				/>
 				<Button htmlType='submit' type='primary' size='medium'>

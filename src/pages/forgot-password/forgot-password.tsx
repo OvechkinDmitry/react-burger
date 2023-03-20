@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, SyntheticEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -8,15 +8,13 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../utils/auth-service'
 import { useForm } from '../../hooks/use-form'
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const { values, handleChange } = useForm({ email: '' })
-	const onSubmit = async e => {
+	const onSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault()
 		try {
-			//навигации не произойдет, тк при впри возникновении ошибки
-			//содержимое try не пройдет дальше вызова асинхронной функции (await)
 			await AuthService.getMailReset(values.email)
 			navigate('/reset-password', {
 				replace: true,
@@ -32,7 +30,6 @@ const ForgotPassword = () => {
 			<EmailInput
 				value={values.email}
 				placeholder={'Укажите e-mail'}
-				errorText={'Введите правильный формат email'}
 				onChange={handleChange}
 				name={'email'}
 				extraClass='mb-6'
