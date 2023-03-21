@@ -1,21 +1,22 @@
-import React, { createRef, useMemo } from 'react'
+import React, { createRef, FC, useMemo } from 'react'
 import styles from './burger-ingredients.module.css'
 import IngredientSection from './ui/ingredient-section/ingredient-section'
 import Tabs from './ui/tabs/tabs'
-import { useSelector } from 'react-redux'
 import { processData } from '../../utils/process-data'
 import WarnLog from '../ui/warn-log/warn-log'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
-const BurgerIngredients = () => {
-	const getState = state => state.ingredientsReducer
-	const { isLoading, isError, ingredients } = useSelector(getState)
-	const sectionsRef = createRef()
+const BurgerIngredients: FC = () => {
+	const { isLoading, isError, ingredients } = useTypedSelector(
+		state => state.ingredientsReducer
+	)
+	const sectionsRef = createRef<HTMLDivElement>()
 	const ingredientsData = useMemo(() => processData(ingredients), [ingredients])
 	const { bun, main, sauce } = ingredientsData
 	const sectionsData = [
-		{ title: 'Булки', ref: createRef(), ingredients: bun },
-		{ title: 'Соусы', ref: createRef(), ingredients: sauce },
-		{ title: 'Начинки', ref: createRef(), ingredients: main }
+		{ title: 'Булки', ref: createRef<HTMLDivElement>(), ingredients: bun },
+		{ title: 'Соусы', ref: createRef<HTMLDivElement>(), ingredients: sauce },
+		{ title: 'Начинки', ref: createRef<HTMLDivElement>(), ingredients: main }
 	]
 	return (
 		<>

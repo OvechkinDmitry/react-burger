@@ -7,16 +7,18 @@ import {
 	calculateTotalPrice
 } from '../../../../services/reducers/burger-constructor-slice'
 import { useDrop } from 'react-dnd'
-import { useDispatch, useSelector } from 'react-redux'
 import styles from './result-list.module.css'
 import { v1 as uuid } from 'uuid'
+import { useTypedSelector } from '../../../../hooks/use-typed-selector'
+import { useTypedDispatch } from '../../../../hooks/use-typed-dispatch'
+import { TIngredient } from '../../../../utils/types/ingredient-type'
 
 const ResultList = () => {
-	const dispatch = useDispatch()
-	const { constructorElements, bun } = useSelector(
+	const dispatch = useTypedDispatch()
+	const { constructorElements, bun } = useTypedSelector(
 		state => state.burgerConstructorReducer
 	)
-	const onDropHandler = ingredient => {
+	const onDropHandler = (ingredient: TIngredient) => {
 		if (ingredient.type !== 'bun')
 			dispatch(
 				addConstructorElements({ ingredient: { ...ingredient, index: uuid() } })
@@ -27,7 +29,7 @@ const ResultList = () => {
 
 	const [, dropTarget] = useDrop({
 		accept: 'ingredient',
-		drop(ingredient) {
+		drop(ingredient: TIngredient) {
 			onDropHandler(ingredient)
 		}
 	})

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC } from 'react'
 import styles from './app-header.module.css'
 import {
 	Logo,
@@ -7,10 +7,10 @@ import {
 	ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavButton } from './ui/nav-button/nav-button'
-import { useSelector } from 'react-redux'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
-const AppHeader = () => {
-	const { user } = useSelector(state => state.authUserReducer)
+const AppHeader: FC = () => {
+	const { user } = useTypedSelector(state => state.authUserReducer)
 	return (
 		<header className={styles.header}>
 			<nav className={styles.headerContainer + ' pt-4 pb-4'}>

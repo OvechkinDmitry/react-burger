@@ -11,7 +11,6 @@ import ResetPassword from '../../pages/reset-password/reset-password'
 import Register from '../../pages/register/register'
 import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 import WarnLog from '../ui/warn-log/warn-log'
-import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../ui/loader/loader'
 import { checkUserWithTokens } from '../../services/actions/check-user-with-tokens'
 import IngredientDetails from '../ingredient-details/ingredient-details'
@@ -20,12 +19,14 @@ import { fetchIngredients } from '../../services/actions/fetch-ingredients'
 import { URL_INGREDIENTS } from '../../utils/constants/constants'
 import NotFound from '../../pages/not-found/not-found'
 import Profile from '../../pages/personal-account/profile/profile'
+import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
 function App() {
-	const dispatch = useDispatch()
+	const dispatch = useTypedDispatch()
 	const location = useLocation()
-	const { isChecking } = useSelector(state => state.authUserReducer)
-	const background = location.state && location.state.background
+	const { isChecking } = useTypedSelector(state => state.authUserReducer)
+	const background = location.state?.background
 	useEffect(() => {
 		dispatch(checkUserWithTokens())
 		dispatch(fetchIngredients(URL_INGREDIENTS))

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import styles from './ingredient-detailes.module.css'
 import IngredientInfo from './ui/ingredient-info/ingredient-info'
-import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
 function IngredientDetails() {
 	const location = useLocation()
@@ -10,7 +10,7 @@ function IngredientDetails() {
 	const containerClass = location.state?.background
 		? styles.inModal
 		: styles.withoutModal
-	const { ingredients, isLoading, isError } = useSelector(
+	const { ingredients, isLoading, isError } = useTypedSelector(
 		state => state.ingredientsReducer
 	)
 	const data = useMemo(
@@ -28,17 +28,23 @@ function IngredientDetails() {
 					) : null}
 					<img
 						className={'mb-4'}
-						src={data['image_large']}
-						alt={`изображение ${data.name}`}
+						src={data?.['image_large']}
+						alt={`изображение ${data?.name}`}
 					/>
 					<p className={`${styles.name} text text_type_main-medium mb-8`}>
-						{data.name}
+						{data?.name}
 					</p>
 					<div className={`${styles.info} pb-15`}>
-						<IngredientInfo title={'Калории,ккал'} amount={data.calories} />
-						<IngredientInfo title={'Белки, г'} amount={data.proteins} />
-						<IngredientInfo title={'Жиры, г'} amount={data.fat} />
-						<IngredientInfo title={'Углеводы, г'} amount={data.carbohydrates} />
+						<IngredientInfo
+							title={'Калории,ккал'}
+							amount={data?.calories || 0}
+						/>
+						<IngredientInfo title={'Белки, г'} amount={data?.proteins || 0} />
+						<IngredientInfo title={'Жиры, г'} amount={data?.fat || 0} />
+						<IngredientInfo
+							title={'Углеводы, г'}
+							amount={data?.carbohydrates || 0}
+						/>
 					</div>
 				</div>
 			)}

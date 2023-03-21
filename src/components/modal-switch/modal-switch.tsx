@@ -1,9 +1,21 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import React, { useCallback } from 'react'
+import React, { FC, useCallback } from 'react'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 
-export const ModalSwitch = ({ background }) => {
+//если пишешь не те поля не пишет ошибки
+type TBackground = {
+	pathname: string
+	search: string
+	hash: string
+	state: null
+	key: string
+}
+
+type TModalSwitch = {
+	background: TBackground | undefined
+}
+export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 	const navigate = useNavigate()
 	const handleClose = useCallback(() => {
 		navigate(-1)

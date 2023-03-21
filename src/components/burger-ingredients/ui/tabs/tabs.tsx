@@ -1,10 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { FC, RefObject, useEffect } from 'react'
 import styles from './tabs.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
-import { sectionsData } from '../../../../utils/global-prop-types'
+import { TIngredient } from '../../../../utils/types/ingredient-type'
 
-function Tabs({ sectionsData, sectionsRef }) {
+type TTabs = {
+	sectionsData: Array<{
+		title: string
+		ref: RefObject<HTMLDivElement>
+		ingredients: TIngredient[]
+	}>
+	sectionsRef: RefObject<HTMLDivElement>
+}
+
+const Tabs: FC<TTabs> = ({ sectionsData, sectionsRef }) => {
 	const [current, setCurrent] = React.useState('')
 	useEffect(() => {
 		const options = {
@@ -12,8 +20,8 @@ function Tabs({ sectionsData, sectionsRef }) {
 			rootMargin: '-110px'
 		}
 		const previousTabs = {}
-		const handleIntersection = entries => {
-			const tabs = entries.reduce((acc, entry) => {
+		const handleIntersection = (entries: Array<object>) => {
+			const tabs = entries.reduce((acc: any, entry: any) => {
 				acc[entry.target.id] = entry.isIntersecting
 				return acc
 			}, previousTabs)
@@ -26,12 +34,12 @@ function Tabs({ sectionsData, sectionsRef }) {
 		}
 		const observer = new IntersectionObserver(handleIntersection, options)
 		sectionsData.forEach(el => {
-			observer.observe(el['ref'].current)
+			observer.observe(el['ref'].current as HTMLDivElement)
 		})
 		return () => observer.disconnect()
 	}, [current, sectionsData, sectionsRef])
 
-	const handleClick = (title, anyRef) => {
+	const handleClick = (title: string, anyRef: RefObject<HTMLDivElement>) => {
 		anyRef.current?.scrollIntoView({ behavior: 'smooth' })
 		setCurrent(title)
 	}
@@ -49,11 +57,6 @@ function Tabs({ sectionsData, sectionsRef }) {
 			))}
 		</div>
 	)
-}
-
-Tabs.propTypes = {
-	sectionsData: sectionsData.isRequired,
-	sectionRef: PropTypes.object
 }
 
 export default Tabs

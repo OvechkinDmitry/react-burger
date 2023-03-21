@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import styles from './nav-button.module.css'
-import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
-export const NavButton = ({ text, children, link }) => {
+type TNavButton = {
+	text: string
+	children: ReactElement
+	link: string
+}
+
+export const NavButton: FC<TNavButton> = ({ text, children, link }) => {
 	return (
 		<NavLink to={link} className={`${styles.navBtn} pl-5 pt-4 pb-4 pr-5`}>
 			{({ isActive }) => (
@@ -22,11 +27,4 @@ export const NavButton = ({ text, children, link }) => {
 			)}
 		</NavLink>
 	)
-}
-
-NavButton.propType = {
-	text: PropTypes.string.isRequired,
-	active: PropTypes.bool.isRequired,
-	children: PropTypes.elementType.isRequired,
-	link: PropTypes.string.isRequired
 }

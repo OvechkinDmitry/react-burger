@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Reorder } from 'framer-motion'
 import style from './constuctor-list.module.css'
-import { useDispatch } from 'react-redux'
 import {
 	calculateTotalPrice,
 	deleteConstructorElement,
 	updateConstructorElements
 } from '../../../../services/reducers/burger-constructor-slice'
 import ConstructorUnit from '../constructor-unit/constructor-unit'
-import { ingredientArray } from '../../../../utils/global-prop-types'
 import IngredientPlaceholder from '../../../ui/ingredient-placeholder/ingredient-placeholder'
+import { TIngredient } from '../../../../utils/types/ingredient-type'
+import { useTypedDispatch } from '../../../../hooks/use-typed-dispatch'
 
-const ConstuctorList = ({ data }) => {
-	const dispatch = useDispatch()
-	const handleClose = index => {
+type TConstuctorList = {
+	data: Array<TIngredient & { index: number }>
+}
+
+const ConstuctorList: FC<TConstuctorList> = ({ data }) => {
+	const dispatch = useTypedDispatch()
+	const handleClose = (index: number) => {
 		dispatch(deleteConstructorElement({ index }))
 		dispatch(calculateTotalPrice())
 	}
-	const handleReorder = elements => {
+	const handleReorder = (elements: typeof data) => {
 		dispatch(updateConstructorElements({ ingredients: elements }))
 	}
 	return (
@@ -26,7 +30,6 @@ const ConstuctorList = ({ data }) => {
 				<Reorder.Group
 					className={style.constructorList}
 					values={data}
-					axys={'y'}
 					onReorder={handleReorder}
 				>
 					{data.map(el => (
@@ -45,8 +48,5 @@ const ConstuctorList = ({ data }) => {
 			)}
 		</>
 	)
-}
-ConstuctorList.propTypes = {
-	data: ingredientArray.isRequired
 }
 export default ConstuctorList

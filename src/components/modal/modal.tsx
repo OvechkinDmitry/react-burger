@@ -1,15 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { FC, ReactElement, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import styles from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import ModalOvrelay from '../modal-overlay/modal-ovrelay'
 
-const portal = document.getElementById('modal-portal')
+const portal = document.getElementById('modal-portal') as Element
 
-function Modal({ handleClose, optionalTitle, children }) {
+type TModal = {
+	handleClose: () => void
+	optionalTitle: string
+	children: ReactElement
+}
+
+const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	useEffect(() => {
-		const escClosing = e => (e.key === 'Escape' ? handleClose() : null)
+		const escClosing = (e: KeyboardEvent) =>
+			e.key === 'Escape' ? handleClose() : null
 		document.body.addEventListener('keydown', escClosing)
 		return () => document.body.removeEventListener('keydown', escClosing)
 	}, [handleClose])
@@ -28,12 +34,6 @@ function Modal({ handleClose, optionalTitle, children }) {
 		</div>,
 		portal
 	)
-}
-
-Modal.propTypes = {
-	handleClose: PropTypes.func.isRequired,
-	optionalTitle: PropTypes.string,
-	children: PropTypes.element.isRequired
 }
 
 export default Modal

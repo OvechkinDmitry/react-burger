@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './order-details.module.css'
 import Done from '../ui/done/done'
 import Loader from '../ui/loader/loader'
-import { useSelector } from 'react-redux'
 import WarnLog from '../ui/warn-log/warn-log'
+import { useTypedSelector } from '../../hooks/use-typed-selector'
 
-const OrderDetails = () => {
-	const getState = state => state.orderDetailsReducer
-	const { id, isError, isLoading } = useSelector(getState)
+const OrderDetails: FC = () => {
+	const { id, isError, isLoading } = useTypedSelector(
+		state => state.orderDetailsReducer
+	)
 	return (
 		<>
 			{isError && <WarnLog>Ошибка при выполнении заказа</WarnLog>}

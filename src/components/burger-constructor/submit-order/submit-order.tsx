@@ -1,22 +1,27 @@
-import React, { useCallback, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import styles from '../burger-constructor.module.css'
 import Price from '../../ui/price/price'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../../modal/modal'
 import OrderDetails from '../../order-details/order-details'
 import { postOrder } from '../../../utils/post-order'
-import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
 import { deleteId } from '../../../services/reducers/order-details-slice'
 import { useNavigate } from 'react-router-dom'
+import { useTypedSelector } from '../../../hooks/use-typed-selector'
+import { useTypedDispatch } from '../../../hooks/use-typed-dispatch'
 
-const SubmitOrder = ({ totalPrice, idS }) => {
-	const dispatch = useDispatch()
+type TSubmitOrder = {
+	totalPrice: number
+	idS: string[]
+}
+
+const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
+	const dispatch = useTypedDispatch()
 	const navigate = useNavigate()
-	const { user } = useSelector(state => state.authUserReducer)
-	const { isLoading } = useSelector(state => state.orderDetailsReducer)
-	const [isOpen, setOpen] = useState(false)
-	const handleClose = useCallback(() => {
+	const { user } = useTypedSelector(state => state.authUserReducer)
+	const { isLoading } = useTypedSelector(state => state.orderDetailsReducer)
+	const [isOpen, setOpen] = useState<boolean>(false)
+	const handleClose = useCallback<() => void>(() => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
@@ -32,7 +37,7 @@ const SubmitOrder = ({ totalPrice, idS }) => {
 	return (
 		<>
 			<div className={`${styles.submit} mt-10 mr-8`}>
-				<Price text={totalPrice} size={'medium'} extraClass={'mr-10'} />
+				<Price text={String(totalPrice)} size={'medium'} extraClass={'mr-10'} />
 				<Button
 					disabled={!totalPrice}
 					onClick={handleClick}
@@ -44,17 +49,12 @@ const SubmitOrder = ({ totalPrice, idS }) => {
 				</Button>
 			</div>
 			{isOpen && !isLoading && (
-				<Modal handleClose={handleClose}>
+				<Modal optionalTitle={''} handleClose={handleClose}>
 					<OrderDetails />
 				</Modal>
 			)}
 		</>
 	)
-}
-
-SubmitOrder.propTypes = {
-	totalPrice: PropTypes.number.isRequired,
-	idS: PropTypes.arrayOf(PropTypes.string)
 }
 
 export default SubmitOrder
