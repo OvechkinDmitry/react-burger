@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FC } from 'react'
 import styles from './ingredient-placeholder.module.css'
-const positionClass = position => {
+
+const positionClass = (position: string) => {
 	switch (position) {
 		case 'top':
 			return `${styles.topPlaceHolder} mb-4 mr-4`
@@ -14,18 +14,21 @@ const positionClass = position => {
 	}
 }
 
-const IngredientPlaceholder = ({ title, position }) => {
+type TIngredientPlaceholder = {
+	title: string
+	position: 'top' | 'bottom' | 'middle'
+}
+
+const IngredientPlaceholder: FC<TIngredientPlaceholder> = ({
+	title,
+	position
+}) => {
 	const extraClass = positionClass(position)
 	return (
 		<div className={`${styles.placeHolder} ${extraClass}`}>
 			<p className={'text text_type_main-default'}>{title}</p>
 		</div>
 	)
-}
-
-IngredientPlaceholder.propTypes = {
-	title: PropTypes.string.isRequired,
-	position: PropTypes.string.isRequired
 }
 
 export default IngredientPlaceholder

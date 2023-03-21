@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { Component, ErrorInfo, ReactNode } from 'react'
 import WarnLog from '../../components/ui/warn-log/warn-log'
-import PropTypes from 'prop-types'
 
-class ErrorBoundary extends React.Component {
-	constructor(props) {
+type TErrorBoundary = {
+	children: ReactNode
+}
+
+type TErrorBoundaryState = {
+	hasError: boolean
+}
+
+class ErrorBoundary extends Component<TErrorBoundary, TErrorBoundaryState> {
+	readonly state
+
+	constructor(props: TErrorBoundary) {
 		super(props)
 		this.state = { hasError: false }
 	}
@@ -12,7 +21,7 @@ class ErrorBoundary extends React.Component {
 		return { hasError: true }
 	}
 
-	componentDidCatch(error, errorInfo) {
+	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		console.log('Возникла ошибка: ', error, errorInfo)
 	}
 
@@ -20,10 +29,6 @@ class ErrorBoundary extends React.Component {
 		if (this.state.hasError) return <WarnLog>Ошибка</WarnLog>
 		return this.props.children
 	}
-}
-
-ErrorBoundary.propTypes = {
-	children: PropTypes.node.isRequired
 }
 
 export default ErrorBoundary
