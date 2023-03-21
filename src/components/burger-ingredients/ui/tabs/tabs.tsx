@@ -20,11 +20,14 @@ const Tabs: FC<TTabs> = ({ sectionsData, sectionsRef }) => {
 			rootMargin: '-110px'
 		}
 		const previousTabs = {}
-		const handleIntersection = (entries: Array<object>) => {
-			const tabs = entries.reduce((acc: any, entry: any) => {
-				acc[entry.target.id] = entry.isIntersecting
-				return acc
-			}, previousTabs)
+		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+			const tabs: { [key: string]: boolean } = entries.reduce(
+				(acc: { [key: string]: boolean }, entry: IntersectionObserverEntry) => {
+					acc[entry.target.id] = entry.isIntersecting
+					return acc
+				},
+				previousTabs
+			)
 			for (const name in tabs) {
 				if (tabs[name]) {
 					setCurrent(name)
