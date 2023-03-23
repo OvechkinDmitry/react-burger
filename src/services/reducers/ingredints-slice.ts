@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TIngredient } from '../../utils/types/ingredient-type'
 
 type TIngredientsState = {
@@ -20,7 +20,10 @@ const ingredientsSlice = createSlice({
 		dataFetching(state) {
 			state.isLoading = true
 		},
-		dataFetchingSuccess(state, action) {
+		dataFetchingSuccess(
+			state,
+			action: PayloadAction<{ ingredients: TIngredient[] }>
+		) {
 			state.ingredients = action.payload.ingredients
 			state.isLoading = false
 			state.isError = false

@@ -7,8 +7,8 @@ import {
 import { TIngredient } from '../../../../utils/types/ingredient-type'
 
 type TConstructorUnit = {
-	ingredient: TIngredient & { index: number }
-	handleClose: (index: number) => void
+	ingredient: TIngredient & { index: string }
+	handleClose: (index: string) => void
 }
 const ConstructorUnit = React.memo<TConstructorUnit>(
 	({ ingredient, handleClose }) => {

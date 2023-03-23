@@ -12,12 +12,13 @@ import { TIngredient } from '../../../../utils/types/ingredient-type'
 import { useTypedDispatch } from '../../../../hooks/use-typed-dispatch'
 
 type TConstuctorList = {
-	data: Array<TIngredient & { index: number }>
+	data: Array<TIngredient & { index: string }>
 }
 
 const ConstuctorList: FC<TConstuctorList> = ({ data }) => {
 	const dispatch = useTypedDispatch()
-	const handleClose = (index: number) => {
+	const handleClose = (index: string) => {
+		console.log(index)
 		dispatch(deleteConstructorElement({ index }))
 		dispatch(calculateTotalPrice())
 	}

@@ -1,9 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { calculatePrice } from '../../utils/calculate-price'
 import { TIngredient } from '../../utils/types/ingredient-type'
 
+type TConstructorElement = TIngredient & { index: string }
+
 type TBurgerConstructorState = {
-	constructorElements: (TIngredient & { index: number })[]
+	constructorElements: (TIngredient & { index: string })[]
 	bun: TIngredient
 	totalPrice: number
 }
@@ -18,21 +20,26 @@ const burgerConstructorSlice = createSlice({
 	name: 'burgerConstructorSlice',
 	initialState,
 	reducers: {
-		updateConstructorElements(state, action) {
-			const { ingredients } = action.payload
-			state.constructorElements = ingredients
+		updateConstructorElements(
+			state,
+			action: PayloadAction<{
+				ingredients: (TIngredient & { index: string })[]
+			}>
+		) {
+			state.constructorElements = action.payload.ingredients
 		},
-		addConstructorElements(state, action) {
-			const { ingredient } = action.payload
-			state.constructorElements = [...state.constructorElements, ingredient]
+		addConstructorElements(
+			state,
+			action: PayloadAction<{ ingredient: TIngredient & { index: string } }>
+		) {
+			state.constructorElements.push(action.payload.ingredient)
 		},
-		addBun(state, action) {
+		addBun(state, action: PayloadAction<{ ingredient: TIngredient }>) {
 			state.bun = action.payload.ingredient
 		},
-		deleteConstructorElement(state, action) {
-			const { index } = action.payload
+		deleteConstructorElement(state, action: PayloadAction<{ index: string }>) {
 			state.constructorElements = state.constructorElements.filter(
-				el => el.index !== index
+				el => el.index !== action.payload.index
 			)
 		},
 		calculateTotalPrice(state) {
