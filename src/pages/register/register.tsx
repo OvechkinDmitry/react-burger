@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from 'react'
+import React, { FC, FormEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -12,15 +12,21 @@ import { useForm } from '../../hooks/use-form'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
 import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
 
+type TRegisterForm = {
+	name: string
+	email: string
+	password: string
+}
+
 const Register: FC = () => {
 	const dispatch = useTypedDispatch()
 	const { status } = useTypedSelector(state => state.authUserReducer)
-	const { values, handleChange } = useForm({
+	const { values, handleChange } = useForm<TRegisterForm>({
 		name: '',
 		email: '',
 		password: ''
 	})
-	const onSubmit = async (e: SyntheticEvent) => {
+	const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault()
 		dispatch(registerUser(values))
 	}

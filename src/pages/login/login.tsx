@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from 'react'
+import React, { FC, FormEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -11,14 +11,19 @@ import { useForm } from '../../hooks/use-form'
 import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
 
+type TLoginForm = {
+	email: string
+	password: string
+}
+
 const Login: FC = () => {
 	const dispatch = useTypedDispatch()
 	const { status } = useTypedSelector(state => state.authUserReducer)
-	const { values, handleChange } = useForm({
+	const { values, handleChange } = useForm<TLoginForm>({
 		email: '',
 		password: ''
 	})
-	const onSubmit = (e: SyntheticEvent) => {
+	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		dispatch(loginUser(values))
 	}

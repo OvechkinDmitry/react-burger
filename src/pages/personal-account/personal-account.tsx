@@ -17,7 +17,7 @@ const routes = [
 
 const PersonalAccount: FC = () => {
 	const dispatch = useTypedDispatch()
-	const exit = () => {
+	const exit = (): void => {
 		dispatch(logoutUser())
 	}
 	return (

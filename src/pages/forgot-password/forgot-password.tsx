@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from 'react'
+import React, { FC, FormEvent } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -11,8 +11,10 @@ import { useForm } from '../../hooks/use-form'
 const ForgotPassword: FC = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
-	const { values, handleChange } = useForm({ email: '' })
-	const onSubmit = async (e: SyntheticEvent) => {
+	const { values, handleChange } = useForm<{ email: string }>({ email: '' })
+	const onSubmit = async (
+		e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+	) => {
 		e.preventDefault()
 		try {
 			await AuthService.getMailReset(values.email)
@@ -24,6 +26,7 @@ const ForgotPassword: FC = () => {
 			console.log(e)
 		}
 	}
+
 	return (
 		<form onSubmit={onSubmit} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`}>Восстановление пароля</p>
@@ -38,7 +41,7 @@ const ForgotPassword: FC = () => {
 				htmlType='submit'
 				type='primary'
 				size='medium'
-				onClick={onSubmit}
+				onClick={() => onSubmit}
 				extraClass={'mb-20'}
 			>
 				Восстановить

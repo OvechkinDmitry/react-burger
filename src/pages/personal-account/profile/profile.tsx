@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import styles from './profile.module.css'
 import {
 	Button,
@@ -13,19 +13,29 @@ import { useForm } from '../../../hooks/use-form'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import { useTypedDispatch } from '../../../hooks/use-typed-dispatch'
 
+type TProfileForm = {
+	name: string
+	email: string
+	password: string
+}
 const Profile = () => {
 	const dispatch = useTypedDispatch()
-	const [pageError, setPageError] = useState<string>('')
 	const { user } = useTypedSelector(state => state.authUserReducer)
+
+	const [pageError, setPageError] = useState<string>('')
 	const [editFieldVisible, setEditFieldVisible] = useState<boolean>(false)
+
 	const initialStateForm = {
 		name: user.name,
 		email: user.email,
 		password: ''
 	}
-	const { values, handleChange, setValues } = useForm(initialStateForm)
-	const applyChanges = async (e: SyntheticEvent) => {
+	const { values, handleChange, setValues } =
+		useForm<TProfileForm>(initialStateForm)
+
+	const applyChanges = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		try {
 			const filtObj = filterObject(values, el => el !== '')
 			await AuthService.patchUser(filtObj)
@@ -36,6 +46,7 @@ const Profile = () => {
 			setPageError('Ошибка на сервере')
 		}
 	}
+
 	useEffect(() => {
 		setEditFieldVisible(
 			JSON.stringify(initialStateForm) !== JSON.stringify(values)
