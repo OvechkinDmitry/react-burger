@@ -5,7 +5,7 @@ import { TIngredient } from '../../utils/types/ingredient-type'
 type TConstructorElement = TIngredient & { index: string }
 
 type TBurgerConstructorState = {
-	constructorElements: (TIngredient & { index: string })[]
+	constructorElements: TConstructorElement[]
 	bun: TIngredient
 	totalPrice: number
 }
@@ -23,14 +23,14 @@ const burgerConstructorSlice = createSlice({
 		updateConstructorElements(
 			state,
 			action: PayloadAction<{
-				ingredients: (TIngredient & { index: string })[]
+				ingredients: TConstructorElement[]
 			}>
 		) {
 			state.constructorElements = action.payload.ingredients
 		},
 		addConstructorElements(
 			state,
-			action: PayloadAction<{ ingredient: TIngredient & { index: string } }>
+			action: PayloadAction<{ ingredient: TConstructorElement }>
 		) {
 			state.constructorElements.push(action.payload.ingredient)
 		},

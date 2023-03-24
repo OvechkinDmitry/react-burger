@@ -1,10 +1,10 @@
-import { NomorepartiesInstance } from '../../utils/constants/constants'
+import { NomorepartiesInstance } from '../../../../utils/constants/constants'
 import {
 	dataFetching,
 	dataFetchingError,
 	dataFetchingSuccess
-} from '../reducers/ingredints-slice'
-import { TRootDispatch } from '../index'
+} from '../../../reducers/ingredints-slice'
+import { TRootDispatch } from '../../../index'
 
 export const fetchIngredients =
 	(URL: string) => async (dispatch: TRootDispatch) => {

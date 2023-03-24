@@ -1,12 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { logoutUser } from '../actions/logout-user'
-import { registerUser } from '../actions/register-user'
-import { loginUser } from '../actions/login-user'
-import { checkUserWithTokens } from '../actions/check-user-with-tokens'
+import { logoutUser } from '../actions/logout-user/lib/logout-user'
+import { registerUser } from '../actions/register-user/lib/register-user'
+import { loginUser } from '../actions/login-user/lib/login-user'
+import { checkUserWithTokens } from '../actions/check-user-with-token/lib/check-user-with-tokens'
 
-export const getAccessToken = accessToken => accessToken.split('Bearer ')[1]
+export const getAccessToken = (accessToken: string) =>
+	accessToken.split('Bearer ')[1]
 
-const initialState = {
+type TAuthState = {
+	user: {
+		name: string
+		email: string
+	}
+	isChecking: boolean
+	status: {
+		isError: boolean
+		isLoading: boolean
+		error: string
+	}
+}
+
+const initialState: TAuthState = {
 	user: {
 		name: '',
 		email: ''
@@ -19,7 +33,7 @@ const initialState = {
 	}
 }
 
-const setLoading = state => {
+const setLoading = (state: TAuthState) => {
 	state.status.isLoading = true
 	state.status.isError = false
 	state.status.error = ''
@@ -60,23 +74,24 @@ const authUserSlice = createSlice({
 				state.status.isLoading = false
 				state.status.isError = false
 				state.isChecking = false
-				state.user = { ...state.user, ...action.payload }
+				state.user = action.payload || initialState.user
 			})
 			.addCase(checkUserWithTokens.rejected, (state, action) => {
-				const { data, success } = action.payload
 				state.status.isLoading = false
-				state.status.isError = !success
-				state.user = success ? data.user : initialState.user
+				state.status.isError = !action.payload?.success
+				state.user = action.payload?.success
+					? action.payload?.data.user
+					: initialState.user
 				state.isChecking = false
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.user = { ...state.user, ...action.payload }
+				state.user = action.payload
 			})
 			.addCase(loginUser.pending, setLoading)
 			.addCase(loginUser.rejected, (state, action) => {
 				state.status.isLoading = false
 				state.status.isError = true
-				state.status.error = action.payload
+				state.status.error = action.payload || 'bad request'
 			})
 			.addCase(registerUser.pending, setLoading)
 			.addCase(registerUser.fulfilled, state => {
@@ -86,7 +101,7 @@ const authUserSlice = createSlice({
 			.addCase(registerUser.rejected, (state, action) => {
 				state.status.isLoading = false
 				state.status.isError = true
-				state.status.error = action.payload
+				state.status.error = action.payload || 'bad request'
 			})
 	}
 })

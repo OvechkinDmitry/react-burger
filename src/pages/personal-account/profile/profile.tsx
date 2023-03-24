@@ -40,7 +40,7 @@ const Profile = () => {
 		setEditFieldVisible(
 			JSON.stringify(initialStateForm) !== JSON.stringify(values)
 		)
-	}, [JSON.stringify(values), initialStateForm])
+	}, [JSON.stringify(values), JSON.stringify(initialStateForm)])
 
 	return (
 		<form onSubmit={applyChanges} className={styles.inputs}>

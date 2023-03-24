@@ -7,7 +7,7 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom'
-import { registerUser } from '../../services/actions/register-user'
+import { registerUser } from '../../services/actions/register-user/lib/register-user'
 import { useForm } from '../../hooks/use-form'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
 import { useTypedDispatch } from '../../hooks/use-typed-dispatch'

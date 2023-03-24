@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AuthService } from '../../utils/auth-service'
-import { exitUser } from '../reducers/auth-user-slice'
+import { AuthService } from '../../../../utils/auth-service'
+import { exitUser } from '../../../reducers/auth-user-slice'
 import { AxiosError } from 'axios'
 
-export const logoutUser = createAsyncThunk(
+export const logoutUser = createAsyncThunk<undefined, undefined>(
 	'authUserSlice/logoutUser',
 	async function (_, { rejectWithValue, dispatch }) {
 		try {

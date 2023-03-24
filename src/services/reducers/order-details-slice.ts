@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type TOrderDetailsState = {
-	id: string
+	id: number
 	isLoading: boolean
 	isError: boolean
 }
 
 const initialState: TOrderDetailsState = {
-	id: '',
+	id: 0,
 	isLoading: false,
 	isError: false
 }
@@ -24,7 +24,7 @@ export const orderDetailsSlice = createSlice({
 			state.isError = true
 			state = initialState
 		},
-		updateId(state, action) {
+		updateId(state, action: PayloadAction<{ id: number }>) {
 			state.id = action.payload.id
 			state.isLoading = false
 			state.isError = false

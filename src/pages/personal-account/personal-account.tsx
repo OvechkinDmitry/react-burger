@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styles from './personal-account.module.css'
 import { NavLink, Outlet } from 'react-router-dom'
-import { logoutUser } from '../../services/actions/logout-user'
+import { logoutUser } from '../../services/actions/logout-user/lib/logout-user'
 import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
 
 const routes = [

@@ -14,8 +14,8 @@ export const postOrder =
 			const res = await NomorepartiesAuth.post(URL_ORDER, {
 				ingredients: idS
 			})
-			const { name, order } = res.data
-			dispatch(updateId({ name, id: order.number }))
+			const { order } = res.data
+			dispatch(updateId({ id: order.number }))
 		} catch (e) {
 			dispatch(dataFetchingError())
 		}
