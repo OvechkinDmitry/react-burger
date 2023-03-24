@@ -18,7 +18,7 @@ const ResultList = () => {
 	const { constructorElements, bun } = useTypedSelector(
 		state => state.burgerConstructorReducer
 	)
-	const onDropHandler = (ingredient: TIngredient) => {
+	const onDropHandler = (ingredient: TIngredient): void => {
 		if (ingredient.type !== 'bun')
 			dispatch(
 				addConstructorElements({ ingredient: { ...ingredient, index: uuid() } })

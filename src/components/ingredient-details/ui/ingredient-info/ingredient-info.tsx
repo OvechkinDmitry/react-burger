@@ -6,7 +6,7 @@ type TIngredientInfo = {
 	amount: number
 }
 
-const IngredientInfo: FC<TIngredientInfo> = ({ title, amount }) => {
+export const IngredientInfo: FC<TIngredientInfo> = ({ title, amount }) => {
 	return (
 		<div className={styles.infoCart}>
 			<p className='text text_type_main-default text_color_inactive'>{title}</p>
@@ -16,4 +16,3 @@ const IngredientInfo: FC<TIngredientInfo> = ({ title, amount }) => {
 		</div>
 	)
 }
-export default IngredientInfo

@@ -4,7 +4,7 @@ import styles from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOvrelay from '../modal-overlay/modal-ovrelay'
 
-const portal = document.getElementById('modal-portal') as Element
+const portal = document.getElementById('portal') as Element
 
 type TModal = {
 	handleClose: () => void
@@ -19,6 +19,7 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 		document.body.addEventListener('keydown', escClosing)
 		return () => document.body.removeEventListener('keydown', escClosing)
 	}, [handleClose])
+
 	return createPortal(
 		<div>
 			<ModalOvrelay handleClose={handleClose} />

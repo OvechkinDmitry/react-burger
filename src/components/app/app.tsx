@@ -13,7 +13,7 @@ import { ProtectedRouteElement } from '../protectedRoute/protected-route-element
 import WarnLog from '../ui/warn-log/warn-log'
 import Loader from '../ui/loader/loader'
 import { checkUserWithTokens } from '../../services/actions/check-user-with-token/lib/check-user-with-tokens'
-import IngredientDetails from '../ingredient-details/ingredient-details'
+import { IngredientDetails } from '../ingredient-details/ingredient-details'
 import { ModalSwitch } from '../modal-switch/modal-switch'
 import { fetchIngredients } from '../../services/actions/fetch-ingredients/lib/fetch-ingredients'
 import { URL_INGREDIENTS } from '../../utils/constants/constants'
@@ -27,10 +27,12 @@ function App() {
 	const location = useLocation()
 	const { isChecking } = useTypedSelector(state => state.authUserReducer)
 	const background = location.state?.background
+
 	useEffect(() => {
 		dispatch(checkUserWithTokens())
 		dispatch(fetchIngredients(URL_INGREDIENTS))
 	}, [dispatch])
+
 	return (
 		<ErrorBoundary>
 			<AppHeader />

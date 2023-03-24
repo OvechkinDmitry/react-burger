@@ -5,11 +5,11 @@ import ResultList from './ui/result-list/result-list'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
 import { TIngredient } from '../../utils/types/ingredient-type'
 
-const BurgerConstructor: FC = React.memo(() => {
+export const BurgerConstructor: FC = React.memo(() => {
 	const { totalPrice, bun, constructorElements } = useTypedSelector(
 		state => state.burgerConstructorReducer
 	)
-	const orderElementsIdS = useMemo(() => {
+	const orderElementsIdS = useMemo<string[]>(() => {
 		const ingredients = [bun, ...constructorElements] as TIngredient[]
 		return ingredients.map(el => el._id).filter(el => el)
 	}, [bun, constructorElements])
@@ -20,5 +20,3 @@ const BurgerConstructor: FC = React.memo(() => {
 		</div>
 	)
 })
-
-export default BurgerConstructor

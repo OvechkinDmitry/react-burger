@@ -2,22 +2,39 @@ import React, { createRef, FC, useMemo } from 'react'
 import styles from './burger-ingredients.module.css'
 import IngredientSection from './ui/ingredient-section/ingredient-section'
 import Tabs from './ui/tabs/tabs'
-import { processData } from '../../utils/process-data'
+import { processWithType } from '../../utils/process-with-type'
 import WarnLog from '../ui/warn-log/warn-log'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
+import { TIngredient } from '../../utils/types/ingredient-type'
 
 const BurgerIngredients: FC = () => {
 	const { isLoading, isError, ingredients } = useTypedSelector(
 		state => state.ingredientsReducer
 	)
 	const sectionsRef = createRef<HTMLDivElement>()
-	const ingredientsData = useMemo(() => processData(ingredients), [ingredients])
-	const { bun, main, sauce } = ingredientsData
+
+	const ingredientsData = useMemo<{ [type: string]: TIngredient[] }>(
+		() => processWithType(ingredients),
+		[ingredients]
+	)
 	const sectionsData = [
-		{ title: 'Булки', ref: createRef<HTMLDivElement>(), ingredients: bun },
-		{ title: 'Соусы', ref: createRef<HTMLDivElement>(), ingredients: sauce },
-		{ title: 'Начинки', ref: createRef<HTMLDivElement>(), ingredients: main }
+		{
+			title: 'Булки',
+			ref: createRef<HTMLDivElement>(),
+			ingredients: ingredientsData.bun
+		},
+		{
+			title: 'Соусы',
+			ref: createRef<HTMLDivElement>(),
+			ingredients: ingredientsData.sauce
+		},
+		{
+			title: 'Начинки',
+			ref: createRef<HTMLDivElement>(),
+			ingredients: ingredientsData.main
+		}
 	]
+
 	return (
 		<>
 			{isLoading && <WarnLog>Загрузка...</WarnLog>}

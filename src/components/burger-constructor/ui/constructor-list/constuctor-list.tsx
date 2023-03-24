@@ -17,14 +17,16 @@ type TConstuctorList = {
 
 const ConstuctorList: FC<TConstuctorList> = ({ data }) => {
 	const dispatch = useTypedDispatch()
-	const handleClose = (index: string) => {
-		console.log(index)
+
+	const handleClose = (index: string): void => {
 		dispatch(deleteConstructorElement({ index }))
 		dispatch(calculateTotalPrice())
 	}
-	const handleReorder = (elements: typeof data) => {
+
+	const handleReorder = (elements: typeof data): void => {
 		dispatch(updateConstructorElements({ ingredients: elements }))
 	}
+
 	return (
 		<>
 			{!!data.length ? (

@@ -25,6 +25,7 @@ const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
 		dispatch(deleteId())
 		setOpen(false)
 	}, [dispatch])
+
 	const handleClick = async () => {
 		if (!user.email) {
 			navigate('/login')
@@ -33,7 +34,6 @@ const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
 		setOpen(true)
 		dispatch(postOrder(idS))
 	}
-	//todo:
 	return (
 		<>
 			<div className={`${styles.submit} mt-10 mr-8`}>

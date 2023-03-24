@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import styles from './ingredient-detailes.module.css'
-import IngredientInfo from './ui/ingredient-info/ingredient-info'
 import { useLocation, useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
+import { TIngredient } from '../../utils/types/ingredient-type'
+import { IngredientInfo } from './ui/ingredient-info/ingredient-info'
 
-function IngredientDetails() {
+export const IngredientDetails: FC = () => {
 	const location = useLocation()
 	const { ingredientId } = useParams()
 	const containerClass = location.state?.background
@@ -13,7 +14,7 @@ function IngredientDetails() {
 	const { ingredients, isLoading, isError } = useTypedSelector(
 		state => state.ingredientsReducer
 	)
-	const data = useMemo(
+	const data = useMemo<TIngredient | undefined>(
 		() => ingredients.find(el => el._id === ingredientId),
 		[ingredients, ingredientId]
 	)
@@ -51,5 +52,3 @@ function IngredientDetails() {
 		</>
 	)
 }
-
-export default IngredientDetails

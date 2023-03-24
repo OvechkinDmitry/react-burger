@@ -1,6 +1,6 @@
 import { TIngredient } from './types/ingredient-type'
 
-export const processData = (
+export const processWithType = (
 	data: Array<TIngredient>
 ): { [key: string]: Array<TIngredient> } => {
 	if (data.length)
