@@ -23,6 +23,11 @@ export type TRefreshToken = {
 	data: { data: object }
 }
 
+export type TMailReset = {
+	success: boolean
+	message: string
+}
+
 export class AuthService {
 	static async login(email: string, password: string) {
 		return await NomorepartiesInstance.post<TAuthData>(URL_LOGIN, {
@@ -59,13 +64,13 @@ export class AuthService {
 		})
 	}
 	static async getMailReset(email: string) {
-		return await NomorepartiesInstance.post(URL_FORGOT_PASSWORD, {
+		return await NomorepartiesInstance.post<TMailReset>(URL_FORGOT_PASSWORD, {
 			email: email
 		})
 	}
 
 	static async resetPassword(password: string, token: string) {
-		return await NomorepartiesInstance.post(URL_PASSWORD_RESET, {
+		return await NomorepartiesInstance.post<TMailReset>(URL_PASSWORD_RESET, {
 			password: password,
 			token: token
 		})

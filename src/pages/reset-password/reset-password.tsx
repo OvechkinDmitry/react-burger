@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useState } from 'react'
+import React, { FC, FormEvent, SyntheticEvent, useState } from 'react'
 import styles from '../access-pages.module.css'
 import {
 	Button,
@@ -9,15 +9,20 @@ import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthService } from '../../utils/auth-service/lib/auth-service'
 import { useForm } from '../../hooks/use-form'
 
+type TForm = {
+	password: string
+	code: string
+}
+
 const ResetPassword: FC = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [pageError, setPageError] = useState<string>('')
-	const { values, handleChange } = useForm({
+	const { values, handleChange } = useForm<TForm>({
 		password: '',
 		code: ''
 	})
-	const onClick = async (e: SyntheticEvent): Promise<void> => {
+	const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault()
 		try {
 			await AuthService.resetPassword(values.password, values.code)
@@ -29,7 +34,7 @@ const ResetPassword: FC = () => {
 	if (location.state?.from !== '/forgot-password')
 		return <Navigate replace to={'/forgot-password'} />
 	return (
-		<form onSubmit={onClick} className={`${styles.container}`}>
+		<form onSubmit={onSubmit} className={`${styles.container}`}>
 			<p className={`text text_type_main-medium mb-6`} style={{ color: 'red' }}>
 				{pageError}
 			</p>

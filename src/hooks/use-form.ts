@@ -1,9 +1,11 @@
-import { SyntheticEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
-export const useForm = <T extends object = {}>(inputValues: T) => {
+export const useForm = <T extends object>(inputValues: T) => {
 	const [values, setValues] = useState<T>(inputValues)
-	const handleChange = (e: SyntheticEvent) => {
-		const { value, name } = e.target as HTMLInputElement
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		const { value, name } = e.target
 		setValues({ ...values, [name]: value })
 	}
 	return { values, handleChange, setValues }

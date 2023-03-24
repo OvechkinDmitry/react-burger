@@ -30,7 +30,7 @@ const Profile = () => {
 			const filtObj = filterObject(values, el => el !== '')
 			await AuthService.patchUser(filtObj)
 			dispatch(updateUser(filtObj))
-		} catch (e) {
+		} catch (error) {
 			setEditFieldVisible(false)
 			setValues(initialStateForm)
 			setPageError('Ошибка на сервере')
