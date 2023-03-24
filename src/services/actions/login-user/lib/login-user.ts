@@ -1,16 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AuthService } from '../../../../utils/auth-service'
-import { getAccessToken } from '../../../reducers/auth-user-slice'
+import { AuthService } from '../../../../utils/auth-service/lib/auth-service'
+import { getAccessToken } from '../../../reducers/auth-user/lib/auth-user-slice'
+import { TLoginForm, TUserData } from '../model/types'
 
-type TLoginForm = {
-	email: string
-	password: string
-}
-
-type TUserData = {
-	email: string
-	name: string
-}
 export const loginUser = createAsyncThunk<
 	TUserData,
 	TLoginForm,

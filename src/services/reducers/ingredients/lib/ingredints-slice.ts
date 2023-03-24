@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TIngredient } from '../../utils/types/ingredient-type'
-
-type TIngredientsState = {
-	ingredients: TIngredient[]
-	isLoading: boolean
-	isError: boolean
-}
+import { TIngredient } from '../../../../utils/types/ingredient-type'
+import { TIngredientsState } from '../model/types'
 
 const initialState: TIngredientsState = {
 	ingredients: [],

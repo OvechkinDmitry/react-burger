@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AuthService } from '../../../../utils/auth-service'
-import { updateUser } from '../../../reducers/auth-user-slice'
-
-type TForm = { email: string; password: string; name: string }
+import { AuthService } from '../../../../utils/auth-service/lib/auth-service'
+import { updateUser } from '../../../reducers/auth-user/lib/auth-user-slice'
+import { TForm } from '../model/types'
 
 export const registerUser = createAsyncThunk<
 	undefined,

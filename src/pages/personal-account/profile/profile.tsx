@@ -5,9 +5,9 @@ import {
 	EmailInput,
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { updateUser } from '../../../services/reducers/auth-user-slice'
+import { updateUser } from '../../../services/reducers/auth-user/lib/auth-user-slice'
 import WarnLog from '../../../components/ui/warn-log/warn-log'
-import { AuthService } from '../../../utils/auth-service'
+import { AuthService } from '../../../utils/auth-service/lib/auth-service'
 import { filterObject } from '../../../utils/filter-object'
 import { useForm } from '../../../hooks/use-form'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'

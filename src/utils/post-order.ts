@@ -3,7 +3,7 @@ import {
 	dataFetching,
 	dataFetchingError,
 	updateId
-} from '../services/reducers/order-details-slice'
+} from '../services/reducers/order-details/lib/order-details-slice'
 import NomorepartiesAuth from './constants/axios-auth'
 import { TRootDispatch } from '../services'
 

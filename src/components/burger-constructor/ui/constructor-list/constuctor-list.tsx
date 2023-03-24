@@ -5,7 +5,7 @@ import {
 	calculateTotalPrice,
 	deleteConstructorElement,
 	updateConstructorElements
-} from '../../../../services/reducers/burger-constructor-slice'
+} from '../../../../services/reducers/burger-constructor/lib/burger-constructor-slice'
 import ConstructorUnit from '../constructor-unit/constructor-unit'
 import IngredientPlaceholder from '../../../ui/ingredient-placeholder/ingredient-placeholder'
 import { TIngredient } from '../../../../utils/types/ingredient-type'

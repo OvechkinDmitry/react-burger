@@ -1,14 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { calculatePrice } from '../../utils/calculate-price'
-import { TIngredient } from '../../utils/types/ingredient-type'
-
-type TConstructorElement = TIngredient & { index: string }
-
-type TBurgerConstructorState = {
-	constructorElements: TConstructorElement[]
-	bun: TIngredient
-	totalPrice: number
-}
+import { calculatePrice } from '../../../../utils/calculate-price'
+import { TIngredient } from '../../../../utils/types/ingredient-type'
+import { TBurgerConstructorState, TConstructorElement } from '../model/types'
 
 const initialState: TBurgerConstructorState = {
 	constructorElements: [],

@@ -6,7 +6,7 @@ import {
 	PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { AuthService } from '../../utils/auth-service'
+import { AuthService } from '../../utils/auth-service/lib/auth-service'
 import { useForm } from '../../hooks/use-form'
 
 const ResetPassword: FC = () => {

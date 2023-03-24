@@ -1,15 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AuthService } from '../../../../utils/auth-service'
-import { exitUser } from '../../../reducers/auth-user-slice'
+import { AuthService } from '../../../../utils/auth-service/lib/auth-service'
+import { exitUser } from '../../../reducers/auth-user/lib/auth-user-slice'
+import { TRejectValue, TUser } from '../model/types'
 
-export type TUser = {
-	email: string
-	name: string
-}
-export type TRejectValue = {
-	data: { user: TUser }
-	success: boolean
-}
 export const checkUserWithTokens = createAsyncThunk<
 	TUser | undefined,
 	undefined,

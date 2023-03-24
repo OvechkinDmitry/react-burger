@@ -7,20 +7,32 @@ import {
 	URL_REGISTER,
 	URL_TOKEN,
 	URL_USER
-} from './constants/constants'
-import NomorepartiesAuth from './constants/axios-auth'
+} from '../../constants/constants'
+import NomorepartiesAuth from '../../constants/axios-auth'
 import { AxiosError, AxiosResponse } from 'axios'
+import { TAuthData, TLogout, TUserData } from '../model/types'
+
+export type TRefreshData = {
+	success: boolean
+	refreshToken: string
+	accessToken: string
+}
+
+export type TRefreshToken = {
+	success: boolean
+	data: { data: object }
+}
 
 export class AuthService {
 	static async login(email: string, password: string) {
-		return await NomorepartiesInstance.post(URL_LOGIN, {
+		return await NomorepartiesInstance.post<TAuthData>(URL_LOGIN, {
 			email: email,
 			password: password
 		})
 	}
 
 	static async register(email: string, password: string, name: string) {
-		return await NomorepartiesInstance.post(URL_REGISTER, {
+		return await NomorepartiesInstance.post<TAuthData>(URL_REGISTER, {
 			email: email,
 			password: password,
 			name: name
@@ -28,21 +40,21 @@ export class AuthService {
 	}
 
 	static async logout() {
-		return await NomorepartiesAuth.post(URL_LOGOUT, {
+		return await NomorepartiesAuth.post<TLogout>(URL_LOGOUT, {
 			token: localStorage.getItem('refreshToken')
 		})
 	}
 
 	static async getUserData() {
-		return await NomorepartiesAuth.get(URL_USER)
+		return await NomorepartiesAuth.get<TUserData>(URL_USER)
 	}
 
 	static async patchUser(form: { [key: string]: string }) {
-		return await NomorepartiesAuth.patch(URL_USER, { ...form })
+		return await NomorepartiesAuth.patch<TUserData>(URL_USER, { ...form })
 	}
 
 	static async refresh() {
-		return await NomorepartiesInstance.post(URL_TOKEN, {
+		return await NomorepartiesInstance.post<TRefreshData>(URL_TOKEN, {
 			token: localStorage.getItem('refreshToken')
 		})
 	}
@@ -59,7 +71,7 @@ export class AuthService {
 		})
 	}
 
-	static async refreshToken(request: () => Promise<AxiosResponse<any>>) {
+	static async refreshToken(request: () => Promise<AxiosResponse<TUserData>>) {
 		try {
 			const res = await this.refresh()
 			localStorage.setItem('refreshToken', res.data['refreshToken'])
@@ -77,7 +89,7 @@ export class AuthService {
 			return {
 				success: false,
 				error: error.message,
-				data: {}
+				data: {} as TUserData
 			}
 		}
 	}

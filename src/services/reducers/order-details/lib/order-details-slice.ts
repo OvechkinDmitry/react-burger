@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-type TOrderDetailsState = {
-	id: number
-	isLoading: boolean
-	isError: boolean
-}
+import { TOrderDetailsState } from '../model/types'
 
 const initialState: TOrderDetailsState = {
 	id: 0,

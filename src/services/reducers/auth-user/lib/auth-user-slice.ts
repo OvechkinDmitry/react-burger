@@ -1,24 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { logoutUser } from '../actions/logout-user/lib/logout-user'
-import { registerUser } from '../actions/register-user/lib/register-user'
-import { loginUser } from '../actions/login-user/lib/login-user'
-import { checkUserWithTokens } from '../actions/check-user-with-token/lib/check-user-with-tokens'
+import { logoutUser } from '../../../actions/logout-user/lib/logout-user'
+import { registerUser } from '../../../actions/register-user/lib/register-user'
+import { loginUser } from '../../../actions/login-user/lib/login-user'
+import { checkUserWithTokens } from '../../../actions/check-user-with-token/lib/check-user-with-tokens'
+import { TAuthState } from '../model/types'
 
 export const getAccessToken = (accessToken: string) =>
 	accessToken.split('Bearer ')[1]
-
-type TAuthState = {
-	user: {
-		name: string
-		email: string
-	}
-	isChecking: boolean
-	status: {
-		isError: boolean
-		isLoading: boolean
-		error: string
-	}
-}
 
 const initialState: TAuthState = {
 	user: {

@@ -5,7 +5,7 @@ import {
 	addBun,
 	addConstructorElements,
 	calculateTotalPrice
-} from '../../../../services/reducers/burger-constructor-slice'
+} from '../../../../services/reducers/burger-constructor/lib/burger-constructor-slice'
 import { useDrop } from 'react-dnd'
 import styles from './result-list.module.css'
 import { v1 as uuid } from 'uuid'

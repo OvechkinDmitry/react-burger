@@ -3,7 +3,7 @@ import {
 	dataFetching,
 	dataFetchingError,
 	dataFetchingSuccess
-} from '../../../reducers/ingredints-slice'
+} from '../../../reducers/ingredients/lib/ingredints-slice'
 import { TRootDispatch } from '../../../index'
 
 export const fetchIngredients =

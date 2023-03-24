@@ -5,7 +5,7 @@ import {
 	EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { AuthService } from '../../utils/auth-service'
+import { AuthService } from '../../utils/auth-service/lib/auth-service'
 import { useForm } from '../../hooks/use-form'
 
 const ForgotPassword: FC = () => {
