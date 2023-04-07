@@ -9,7 +9,7 @@ type TRoundIngredient = {
 
 export const RoundIngredient: FC<TRoundIngredient> = ({
 	src,
-	count = 2,
+	count = 0,
 	extraClass
 }) => {
 	return (

@@ -22,6 +22,8 @@ import Profile from '../pages/personal-account/profile/profile'
 import { useTypedDispatch } from '../hooks/use-typed-dispatch'
 import { useTypedSelector } from '../hooks/use-typed-selector'
 import { Feed } from '../pages/feed/feed'
+import { OrderInfo } from '../components/order-info/order-info'
+import { ProfileOrders } from '../pages/personal-account/profile-orders/profile-orders'
 
 function App() {
 	const dispatch = useTypedDispatch()
@@ -60,10 +62,7 @@ function App() {
 							element={<ProtectedRouteElement element={<PersonalAccount />} />}
 						>
 							<Route index element={<Profile />} />
-							<Route
-								path={'orders'}
-								element={<WarnLog>working on it</WarnLog>}
-							/>
+							<Route path={'orders'} element={<ProfileOrders />} />
 						</Route>
 						<Route
 							path={'/reset-password'}
@@ -80,6 +79,7 @@ function App() {
 							path={'/ingredients/:ingredientId'}
 							element={<IngredientDetails />}
 						/>
+						<Route path={'/feed/id'} element={<OrderInfo />} />
 					</Routes>
 					<ModalSwitch background={background} />
 				</main>
