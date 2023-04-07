@@ -1,0 +1,30 @@
+.container {
+	width: 100%;
+	max-width: 584px;
+	background: #1c1c21;
+	border-radius: 40px;
+	padding: 24px;
+}
+.ingredients {
+	max-width: 435px;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	margin-left: 15px;
+	row-gap: 3px;
+}
+.ingredient {
+	margin-left: -15px;
+}
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
