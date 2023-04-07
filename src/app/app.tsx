@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react'
 import styles from './app.module.css'
-import AppHeader from '../app-header/app-header'
-import ErrorBoundary from '../../hocs/error-boundary/error-boundary'
-import Constructor from '../../pages/constructor/constructor'
+import AppHeader from '../components/app-header/app-header'
+import ErrorBoundary from '../hocs/error-boundary/error-boundary'
+import Constructor from '../pages/constructor/constructor'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import PersonalAccount from '../../pages/personal-account/personal-account'
-import Login from '../../pages/login/login'
-import ForgotPassword from '../../pages/forgot-password/forgot-password'
-import ResetPassword from '../../pages/reset-password/reset-password'
-import Register from '../../pages/register/register'
-import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
-import WarnLog from '../ui/warn-log/warn-log'
-import Loader from '../ui/loader/loader'
-import { checkUserWithTokens } from '../../services/actions/check-user-with-token/lib/check-user-with-tokens'
-import { IngredientDetails } from '../ingredient-details/ingredient-details'
-import { ModalSwitch } from '../modal-switch/modal-switch'
-import { fetchIngredients } from '../../services/actions/fetch-ingredients/lib/fetch-ingredients'
-import { URL_INGREDIENTS } from '../../utils/constants/constants'
-import NotFound from '../../pages/not-found/not-found'
-import Profile from '../../pages/personal-account/profile/profile'
-import { useTypedDispatch } from '../../hooks/use-typed-dispatch'
-import { useTypedSelector } from '../../hooks/use-typed-selector'
+import PersonalAccount from '../pages/personal-account/personal-account'
+import Login from '../pages/login/login'
+import ForgotPassword from '../pages/forgot-password/forgot-password'
+import ResetPassword from '../pages/reset-password/reset-password'
+import Register from '../pages/register/register'
+import { ProtectedRouteElement } from '../components/protectedRoute/protected-route-element'
+import WarnLog from '../components/ui/warn-log/warn-log'
+import Loader from '../components/ui/loader/loader'
+import { checkUserWithTokens } from '../services/actions/check-user-with-token/lib/check-user-with-tokens'
+import { IngredientDetails } from '../components/ingredient-details/ingredient-details'
+import { ModalSwitch } from '../components/modal-switch/modal-switch'
+import { fetchIngredients } from '../services/actions/fetch-ingredients/lib/fetch-ingredients'
+import { URL_INGREDIENTS } from '../utils/constants/constants'
+import NotFound from '../pages/not-found/not-found'
+import Profile from '../pages/personal-account/profile/profile'
+import { useTypedDispatch } from '../hooks/use-typed-dispatch'
+import { useTypedSelector } from '../hooks/use-typed-selector'
+import { Feed } from '../pages/feed/feed'
 
 function App() {
 	const dispatch = useTypedDispatch()
@@ -41,12 +42,8 @@ function App() {
 					<Routes location={background || location}>
 						<Route path={'/'} element={<Constructor />} />
 						<Route
-							path={'/orders'}
-							element={
-								<ProtectedRouteElement
-									element={<WarnLog>working on it</WarnLog>}
-								/>
-							}
+							path={'/feed'}
+							element={<ProtectedRouteElement element={<Feed />} />}
 						/>
 						<Route
 							path={'/login'}

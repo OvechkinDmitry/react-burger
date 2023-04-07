@@ -17,7 +17,7 @@ const AppHeader: FC = () => {
 				<NavButton text={'Конструктор'} link={'/'}>
 					<BurgerIcon type='primary' />
 				</NavButton>
-				<NavButton text={'Лента заказов'} link={'/orders'}>
+				<NavButton text={'Лента заказов'} link={'/feed'}>
 					<ListIcon type='primary' />
 				</NavButton>
 				<div className={styles.logo}>
