@@ -11,19 +11,31 @@ import {
 
 type TFeed = {}
 
+const getCropped = (orders: any, status: string) => {
+	return orders
+		.filter((order: any) => order.status === status)
+		.slice(0, 20)
+		.map((order: any) => (
+			<li key={order._id} className='text text_type_digits-default'>
+				{order.number}
+			</li>
+		))
+}
+
 export const Feed: FC<TFeed> = () => {
 	const dispatch = useTypedDispatch()
 	const { wsConnected, orders } = useTypedSelector(
 		state => state.websoketReducer
 	)
 	const { isLoading } = useTypedSelector(state => state.ingredientsReducer)
-
 	useEffect(() => {
 		dispatch(wsStart('wss://norma.nomoreparties.space/orders/all'))
+
 		return () => {
 			dispatch(wsDisconnect())
 		}
 	}, [dispatch])
+
 	return wsConnected && Object.keys(orders).length && !isLoading ? (
 		<div className={styles.container}>
 			<p className={`${styles.title} text text_type_main-large`}>
@@ -40,21 +52,13 @@ export const Feed: FC<TFeed> = () => {
 						<div className={styles.status}>
 							<p className={'text text_type_main-medium mb-6'}>Готовы:</p>
 							<ul className={styles.ready}>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
+								{getCropped(orders.orders, 'done')}
 							</ul>
 						</div>
 						<div className={styles.status}>
 							<p className={'text text_type_main-medium mb-6'}>В работе:</p>
 							<ul className={styles.pending}>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
-								<li className='text text_type_digits-default'>034533</li>
+								{getCropped(orders.orders, 'pending')}
 							</ul>
 						</div>
 					</div>
