@@ -30,6 +30,7 @@ aside {
 }
 ::-webkit-scrollbar {
 	display: block;
+	width: 0;
 }
 html,
 body {

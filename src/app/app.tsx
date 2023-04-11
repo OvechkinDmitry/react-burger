@@ -43,10 +43,7 @@ function App() {
 				<main className={styles.container}>
 					<Routes location={background || location}>
 						<Route path={'/'} element={<Constructor />} />
-						<Route
-							path={'/feed'}
-							element={<ProtectedRouteElement element={<Feed />} />}
-						/>
+						<Route path={'/feed'} element={<Feed />} />
 						<Route
 							path={'/login'}
 							element={<ProtectedRouteElement guest element={<Login />} />}
