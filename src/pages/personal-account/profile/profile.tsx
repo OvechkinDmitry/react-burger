@@ -35,7 +35,6 @@ const Profile = () => {
 
 	const applyChanges = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-
 		try {
 			const filtObj = filterObject(values, el => el !== '')
 			await AuthService.patchUser(filtObj)

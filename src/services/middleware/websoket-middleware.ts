@@ -31,6 +31,7 @@ export const websoketMiddleware =
 				onError
 			} = wsActions
 			if (wsInit.match(action)) {
+				console.log('connect', wsInit.match(action), action.payload)
 				soket = new WebSocket(action.payload)
 			}
 			if (soket) {
@@ -47,9 +48,12 @@ export const websoketMiddleware =
 					console.log(JSON.parse(event.data))
 					dispatch(onMessage(JSON.parse(event.data)))
 				}
-				if (wsSendMessage?.match(action))
+				if (wsSendMessage?.match(action)) {
+					console.log(wsSendMessage, action)
 					soket.send(JSON.stringify(action.payload))
+				}
 				if (wsClose.match(action)) {
+					console.log(wsClose.match(action))
 					soket.close()
 					dispatch(onClose())
 				}

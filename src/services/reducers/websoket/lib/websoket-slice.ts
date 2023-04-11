@@ -26,6 +26,7 @@ const websoketSlice = createSlice({
 		wsClose(state) {
 			state.wsConnected = false
 			state.error = false
+			state.orders = {}
 		},
 		wsMessage(state, action) {
 			state.orders = action.payload

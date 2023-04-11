@@ -34,7 +34,7 @@ export const Feed: FC<TFeed> = () => {
 		return () => {
 			dispatch(wsDisconnect())
 		}
-	}, [dispatch])
+	}, [])
 
 	return wsConnected && Object.keys(orders).length && !isLoading ? (
 		<div className={styles.container}>
