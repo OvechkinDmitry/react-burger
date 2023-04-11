@@ -40,6 +40,7 @@ export const websoketMiddleware =
 				}
 				soket.onclose = event => {
 					dispatch(onClose())
+					soket = null
 				}
 				soket.onerror = event => {
 					dispatch(onError())

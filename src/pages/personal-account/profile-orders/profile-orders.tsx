@@ -19,7 +19,7 @@ export const ProfileOrders: FC<TProfileOrders> = ({}) => {
 	useEffect(() => {
 		dispatch(
 			wsStart(
-				`wss://norma.nomoreparties.space/orders/?token=${localStorage.getItem(
+				`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem(
 					'accessToken'
 				)}`
 			)
@@ -33,9 +33,9 @@ export const ProfileOrders: FC<TProfileOrders> = ({}) => {
 	return wsConnected ? (
 		<div className={`${styles.orders} mt-20`}>
 			{orders?.orders?.length
-				? orders.orders.map((order: any) => (
-						<OrderItem order={order} key={order._id} />
-				  ))
+				? orders.orders
+						.map((order: any) => <OrderItem order={order} key={order._id} />)
+						.reverse()
 				: null}
 		</div>
 	) : (
