@@ -8,7 +8,7 @@ const portal = document.getElementById('portal') as Element
 
 type TModal = {
 	handleClose: () => void
-	optionalTitle: string
+	optionalTitle?: string
 	children: ReactElement
 }
 

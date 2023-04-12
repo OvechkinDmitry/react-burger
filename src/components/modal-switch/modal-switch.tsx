@@ -34,6 +34,14 @@ export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 							</Modal>
 						}
 					></Route>
+					<Route
+						path={'/feed/:id'}
+						element={
+							<Modal handleClose={handleClose}>
+								<IngredientDetails />
+							</Modal>
+						}
+					></Route>
 				</Routes>
 			)}
 		</>

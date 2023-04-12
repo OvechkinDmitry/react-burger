@@ -29,13 +29,13 @@ function App() {
 	const dispatch = useTypedDispatch()
 	const location = useLocation()
 	const { isChecking } = useTypedSelector(state => state.authUserReducer)
-	const background = location.state?.background
+	const background = location.state && location.state?.background
 
 	useEffect(() => {
 		dispatch(checkUserWithTokens())
 		dispatch(fetchIngredients(URL_INGREDIENTS))
 	}, [dispatch])
-
+	console.log(background, location)
 	return (
 		<ErrorBoundary>
 			<AppHeader />
@@ -71,12 +71,12 @@ function App() {
 							path={'/register'}
 							element={<ProtectedRouteElement guest element={<Register />} />}
 						/>
-						<Route path={'/*'} element={<NotFound />} />
+						<Route path={'*'} element={<NotFound />} />
 						<Route
 							path={'/ingredients/:ingredientId'}
 							element={<IngredientDetails />}
 						/>
-						<Route path={'/feed/id'} element={<OrderInfo />} />
+						<Route path={'/feed/:id'} element={<OrderInfo />} />
 					</Routes>
 					<ModalSwitch background={background} />
 				</main>

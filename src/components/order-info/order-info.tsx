@@ -2,19 +2,16 @@ import React, { FC } from 'react'
 import styles from './order-info.module.css'
 import Price from '../ui/price/price'
 import { OrderIngredient } from './ui/order-ingredient/order-ingredient'
+import { useLocation, useParams } from 'react-router-dom'
 
 type TOrderInfo = {
-	id: string
 	title: string
 	status: string
 	date: string
 }
-export const OrderInfo: FC<Partial<TOrderInfo>> = ({
-	id,
-	title,
-	status,
-	date
-}) => {
+export const OrderInfo: FC<Partial<TOrderInfo>> = ({ title, status, date }) => {
+	const location = useLocation()
+	const { id } = useParams()
 	return (
 		<div className={styles.body}>
 			<center>
