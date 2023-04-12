@@ -8,14 +8,14 @@ import {
 } from '../../../services/actions/wsActions/lib/ws-actions'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import Loader from '../../../components/ui/loader/loader'
+import WarnLog from '../../../components/ui/warn-log/warn-log'
 
-type TProfileOrders = {}
-
-export const ProfileOrders: FC<TProfileOrders> = ({}) => {
+export const ProfileOrders: FC = () => {
 	const dispatch = useTypedDispatch()
-	const { wsConnected, orders } = useTypedSelector(
+	const { wsConnected, orders, error } = useTypedSelector(
 		state => state.websoketReducer
 	)
+
 	useEffect(() => {
 		dispatch(
 			wsStart(
@@ -29,16 +29,15 @@ export const ProfileOrders: FC<TProfileOrders> = ({}) => {
 		}
 	}, [])
 
-	console.log(orders)
-	return wsConnected ? (
-		<div className={`${styles.orders} mt-20`}>
-			{orders?.orders?.length
-				? orders.orders
-						.map((order: any) => <OrderItem order={order} key={order._id} />)
-						.reverse()
-				: null}
-		</div>
-	) : (
-		<Loader />
-	)
+	if (!wsConnected) return <Loader />
+	else
+		return (
+			<div className={`${styles.orders} mt-20`}>
+				{orders?.orders?.length
+					? orders.orders
+							.map((order: any) => <OrderItem order={order} key={order._id} />)
+							.reverse()
+					: null}
+			</div>
+		)
 }

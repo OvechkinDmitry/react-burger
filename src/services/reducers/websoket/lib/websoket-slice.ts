@@ -18,14 +18,15 @@ const websoketSlice = createSlice({
 	reducers: {
 		wsSuccess(state) {
 			state.wsConnected = true
+			state.error = false
 		},
 		wsError(state) {
 			state.wsConnected = false
 			state.error = true
 		},
-		wsClose(state) {
+		wsClose(state, action) {
 			state.wsConnected = false
-			state.error = false
+			state.error = !action.payload
 			state.orders = {}
 		},
 		wsMessage(state, action) {

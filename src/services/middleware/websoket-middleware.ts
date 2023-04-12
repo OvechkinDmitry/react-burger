@@ -10,7 +10,7 @@ export type TwsActionsTypes = {
 	wsClose: ActionCreatorWithoutPayload
 	wsSendMessage?: ActionCreatorWithPayload<any>
 	onOpen: ActionCreatorWithoutPayload
-	onClose: ActionCreatorWithoutPayload
+	onClose: ActionCreatorWithPayload<any>
 	onError: ActionCreatorWithoutPayload
 	onMessage: ActionCreatorWithPayload<any>
 }
@@ -36,27 +36,33 @@ export const websoketMiddleware =
 			}
 			if (soket) {
 				soket.onopen = event => {
+					console.log('open')
 					dispatch(onOpen())
 				}
 				soket.onclose = event => {
-					dispatch(onClose())
+					console.log(event)
+					dispatch(onClose(event.wasClean))
 					soket = null
 				}
 				soket.onerror = event => {
+					console.log('error')
+					console.log(event)
 					dispatch(onError())
 				}
 				soket.onmessage = event => {
-					console.log(JSON.parse(event.data))
-					dispatch(onMessage(JSON.parse(event.data)))
+					console.log('message')
+					const data = JSON.parse(event.data)
+					console.log(data)
+					if (data.success) dispatch(onMessage(data))
+					else dispatch(onError())
 				}
 				if (wsSendMessage?.match(action)) {
 					console.log(wsSendMessage, action)
 					soket.send(JSON.stringify(action.payload))
 				}
 				if (wsClose.match(action)) {
-					console.log(wsClose.match(action))
 					soket.close()
-					dispatch(onClose())
+					// dispatch(onClose())
 				}
 			}
 			next(action)
