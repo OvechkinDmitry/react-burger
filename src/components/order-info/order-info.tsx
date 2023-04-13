@@ -14,6 +14,7 @@ import Loader from '../ui/loader/loader'
 import { WS_ALL, WS_USER } from '../../services/middleware/constants'
 import { processOrder } from '../../utils/process-orders'
 import { TIngredient } from '../../utils/types/ingredient-type'
+import { TOrderItem } from '../../services/middleware/types'
 
 export const OrderInfo: FC = () => {
 	const location = useLocation()
@@ -35,11 +36,29 @@ export const OrderInfo: FC = () => {
 		}
 	}, [dispatch])
 
-	const currentOrder = orders?.orders
-		? orders.orders.find((el: any) => el._id === id)
-		: null
+	const currentOrder = useMemo<TOrderItem | null>(
+		() =>
+			orders?.orders
+				? orders.orders.find((el: TOrderItem) => el._id === id) || null
+				: null,
+		[id, orders]
+	)
 
-	const orderPrice = useMemo(
+	const processedOrder = useMemo<[TIngredient, number][]>(
+		() =>
+			!currentOrder
+				? []
+				: processOrder(currentOrder?.ingredients).map(
+						el =>
+							[ingredients.find(ing => ing._id === el[0]), el[1]] as [
+								TIngredient,
+								number
+							]
+				  ),
+		[currentOrder, ingredients]
+	)
+
+	const orderPrice = useMemo<number>(
 		() =>
 			currentOrder
 				? currentOrder.ingredients.reduce((acc: number, id: string) => {
@@ -68,23 +87,15 @@ export const OrderInfo: FC = () => {
 					</p>
 					<p className='text text_type_main-medium mb-6'>Состав:</p>
 					<div className={styles.ingredients}>
-						{processOrder(currentOrder?.ingredients)
-							.map(
-								el =>
-									[ingredients.find(ing => ing._id === el[0]), el[1]] as [
-										TIngredient,
-										number
-									]
-							)
-							.map((ing, i) => (
-								<OrderIngredient
-									key={i}
-									image={ing[0].image_mobile}
-									count={ing[1]}
-									name={ing[0].name}
-									price={ing[0].price}
-								/>
-							))}
+						{processedOrder.map((ing, i) => (
+							<OrderIngredient
+								key={i}
+								image={ing[0].image_mobile}
+								count={ing[1]}
+								name={ing[0].name}
+								price={ing[0].price}
+							/>
+						))}
 					</div>
 					<div className={`${styles.footer} mt-10`}>
 						<span className={'text text_type_main-default text_color_inactive'}>
