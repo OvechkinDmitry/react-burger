@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react'
+import React, { FC, ReactElement, useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import styles from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -19,13 +19,13 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	const { orders } = useTypedSelector(state => state.websoketReducer)
 	const orderNumber = useMemo(
 		() =>
-			orders?.orders?.length
+			orders
 				? `#${
 						orders.orders.find((order: any) => order._id === id)?.number ||
 						'00000'
 				  }`
-				: '#00000',
-		[id, orders.orders]
+				: '',
+		[id, orders?.orders]
 	)
 
 	useEffect(() => {
@@ -40,13 +40,13 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 			<ModalOvrelay handleClose={handleClose} />
 			<div
 				className={`${styles.modal} ${
-					orderNumber && styles.orderBody
+					orders && styles.orderBody
 				} pt-10 pl-10 pr-10 pb-10`}
 			>
 				<div className={styles.header}>
 					<p
 						className={
-							!orderNumber
+							!orders
 								? 'text text_type_main-large'
 								: 'text text_type_digits-medium'
 						}

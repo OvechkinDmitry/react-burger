@@ -9,8 +9,6 @@ import {
 	wsStart
 } from '../../services/actions/wsActions/lib/ws-actions'
 
-type TFeed = {}
-
 const getCropped = (orders: any, status: string) => {
 	return orders
 		.filter((order: any) => order.status === status)
@@ -22,7 +20,7 @@ const getCropped = (orders: any, status: string) => {
 		))
 }
 
-export const Feed: FC<TFeed> = () => {
+export const Feed: FC = () => {
 	const dispatch = useTypedDispatch()
 	const { wsConnected, orders } = useTypedSelector(
 		state => state.websoketReducer
@@ -35,7 +33,7 @@ export const Feed: FC<TFeed> = () => {
 		}
 	}, [])
 
-	return wsConnected && Object.keys(orders).length && !isLoading ? (
+	return wsConnected && orders && !isLoading ? (
 		<div className={styles.container}>
 			<p className={`${styles.title} text text_type_main-large`}>
 				Лента заказов

@@ -10,7 +10,6 @@ import ForgotPassword from '../pages/forgot-password/forgot-password'
 import ResetPassword from '../pages/reset-password/reset-password'
 import Register from '../pages/register/register'
 import { ProtectedRouteElement } from '../components/protectedRoute/protected-route-element'
-import WarnLog from '../components/ui/warn-log/warn-log'
 import Loader from '../components/ui/loader/loader'
 import { checkUserWithTokens } from '../services/actions/check-user-with-token/lib/check-user-with-tokens'
 import { IngredientDetails } from '../components/ingredient-details/ingredient-details'
@@ -75,7 +74,10 @@ function App() {
 							path={'/ingredients/:ingredientId'}
 							element={<IngredientDetails />}
 						/>
-						<Route path={'/profile/orders/:id'} element={<OrderInfo />} />
+						<Route
+							path={'/profile/orders/:id'}
+							element={<ProtectedRouteElement element={<OrderInfo />} />}
+						/>
 						<Route path={'/feed/:id'} element={<OrderInfo />} />
 					</Routes>
 					<ModalSwitch background={background} />

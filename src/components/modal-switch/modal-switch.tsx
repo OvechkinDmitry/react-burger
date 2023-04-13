@@ -3,6 +3,7 @@ import React, { FC, useCallback } from 'react'
 import Modal from '../modal/modal'
 import { IngredientDetails } from '../ingredient-details/ingredient-details'
 import { OrderInfo } from '../order-info/order-info'
+import { ProtectedRouteElement } from '../protectedRoute/protected-route-element'
 
 type TBackground = {
 	pathname: string
@@ -47,7 +48,7 @@ export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 						path={'/profile/orders/:id'}
 						element={
 							<Modal handleClose={handleClose}>
-								<OrderInfo />
+								<ProtectedRouteElement element={<OrderInfo />} />
 							</Modal>
 						}
 					></Route>

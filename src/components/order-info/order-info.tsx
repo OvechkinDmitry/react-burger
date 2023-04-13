@@ -11,62 +11,53 @@ import {
 	wsStart
 } from '../../services/actions/wsActions/lib/ws-actions'
 import Loader from '../ui/loader/loader'
-
-const processOrder = (order: string[]): [string, number][] => {
-	const counted = order.reduce((acc: any, v: string) => {
-		return { ...acc, [v]: (acc[v] || 0) + 1 }
-	}, {})
-	return Object.entries(counted)
-}
+import { WS_ALL, WS_USER } from '../../services/middleware/constants'
+import { processOrder } from '../../utils/process-orders'
 
 export const OrderInfo: FC = () => {
 	const location = useLocation()
 	const { id } = useParams()
-	const { wsConnected, orders } = useTypedSelector(
-		state => state.websoketReducer
-	)
+	const { orders } = useTypedSelector(state => state.websoketReducer)
+	const { ingredients } = useTypedSelector(state => state.ingredientsReducer)
 	const dispatch = useTypedDispatch()
 
+	const background = location.state?.background
+
 	useEffect(() => {
-		if (!orders?.orders?.length)
-			dispatch(wsStart('wss://norma.nomoreparties.space/orders/all'))
+		if (!background && !orders?.orders?.length) {
+			!location.pathname.startsWith('/profile/orders')
+				? dispatch(wsStart(WS_ALL))
+				: dispatch(wsStart(WS_USER))
+		}
 		return () => {
-			if (!location.state?.background) dispatch(wsDisconnect())
+			if (!background) dispatch(wsDisconnect())
 		}
 	}, [dispatch])
 
-	const { ingredients } = useTypedSelector(state => state.ingredientsReducer)
-
 	const currentOrder = orders?.orders
 		? orders.orders.find((el: any) => el._id === id)
-		: {}
-	const orderPrice =
-		currentOrder && currentOrder?.ingredients
-			? currentOrder.ingredients.reduce((acc: number, id: string) => {
-					return acc + (ingredients.find(el => el._id === id)?.price || 0)
-			  }, 0)
-			: 0
+		: null
 
-	const processedOrder = processOrder(
-		(currentOrder && currentOrder?.ingredients) || []
+	const orderPrice = useMemo(
+		() =>
+			currentOrder
+				? currentOrder.ingredients.reduce((acc: number, id: string) => {
+						return acc + (ingredients.find(el => el._id === id)?.price || 0)
+				  }, 0)
+				: 0,
+		[currentOrder, ingredients]
 	)
-	console.log(currentOrder)
+
 	return (
-		<div
-			className={
-				location.state?.background ? styles.bodyModal : styles.bodyPage
-			}
-		>
+		<div className={background ? styles.bodyModal : styles.bodyPage}>
 			<center>
-				{!location.state?.background && (
+				{!background && (
 					<p className={'text text_type_digits-default mb-10'}>
-						{currentOrder && currentOrder?.number
-							? `#${currentOrder?.number}`
-							: '#00000'}
+						{currentOrder && `#${currentOrder?.number || '00000'}`}
 					</p>
 				)}
 			</center>
-			{currentOrder && Object.keys(currentOrder).length ? (
+			{currentOrder ? (
 				<>
 					<p className={`text text_type_main-medium mt-5`}>
 						{currentOrder?.name || 'Unknown'}
@@ -76,19 +67,13 @@ export const OrderInfo: FC = () => {
 					</p>
 					<p className='text text_type_main-medium mb-6'>Состав:</p>
 					<div className={styles.ingredients}>
-						{processedOrder.map((ing, i) => (
+						{processOrder(currentOrder?.ingredients).map((ing, i) => (
 							<OrderIngredient key={i} id={ing[0]} count={ing[1]} />
 						))}
 					</div>
 					<div className={`${styles.footer} mt-10`}>
 						<span className={'text text_type_main-default text_color_inactive'}>
-							<FormattedDate
-								date={
-									wsConnected && orders?.orders?.length
-										? new Date(currentOrder.createdAt)
-										: new Date()
-								}
-							/>
+							<FormattedDate date={new Date(currentOrder?.createdAt || '')} />
 						</span>
 						<Price text={`${orderPrice}`} size={'default'} />
 					</div>

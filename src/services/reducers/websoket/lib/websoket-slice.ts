@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 type TWebsoketState = {
 	wsConnected: boolean
-	orders: any
+	orders: any | null
 	error: boolean
 }
 
 const initialState: TWebsoketState = {
 	wsConnected: false,
-	orders: {},
+	orders: null,
 	error: false
 }
 
@@ -27,7 +27,7 @@ const websoketSlice = createSlice({
 		wsClose(state, action) {
 			state.wsConnected = false
 			state.error = !action.payload
-			state.orders = {}
+			state.orders = null
 		},
 		wsMessage(state, action) {
 			state.orders = action.payload
