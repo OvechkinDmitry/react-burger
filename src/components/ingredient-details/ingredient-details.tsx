@@ -20,6 +20,7 @@ export const IngredientDetails: FC = () => {
 	)
 	return (
 		<>
+			<p className={` text text_type_main-large`}>{'Детали ингредиента'}</p>
 			{!isLoading && !isError && (
 				<div className={containerClass}>
 					{!location.state?.background ? (

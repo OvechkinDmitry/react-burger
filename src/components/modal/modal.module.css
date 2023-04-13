@@ -13,6 +13,9 @@
 	animation-duration: 0.4s;
 }
 .closeBtn {
+	position: absolute;
+	top: 49px;
+	right: 46px;
 	cursor: pointer;
 }
 @keyframes changeOpacity {

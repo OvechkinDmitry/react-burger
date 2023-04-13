@@ -38,9 +38,7 @@ export const OrderInfo: FC = () => {
 
 	const currentOrder = useMemo<TOrderItem | null>(
 		() =>
-			orders?.orders
-				? orders.orders.find((el: TOrderItem) => el._id === id) || null
-				: null,
+			orders?.orders ? orders.orders.find(el => el._id === id) || null : null,
 		[id, orders]
 	)
 
@@ -61,7 +59,7 @@ export const OrderInfo: FC = () => {
 	const orderPrice = useMemo<number>(
 		() =>
 			currentOrder
-				? currentOrder.ingredients.reduce((acc: number, id: string) => {
+				? currentOrder.ingredients.reduce((acc, id) => {
 						return acc + (ingredients.find(el => el._id === id)?.price || 0)
 				  }, 0)
 				: 0,

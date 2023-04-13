@@ -8,6 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavButton } from './ui/nav-button/nav-button'
 import { useTypedSelector } from '../../hooks/use-typed-selector'
+import { NavLink } from 'react-router-dom'
 
 const AppHeader: FC = () => {
 	const { user } = useTypedSelector(state => state.authUserReducer)
@@ -20,9 +21,10 @@ const AppHeader: FC = () => {
 				<NavButton text={'Лента заказов'} link={'/feed'}>
 					<ListIcon type='primary' />
 				</NavButton>
-				<div className={styles.logo}>
+
+				<NavLink to={'/'} className={styles.logo}>
 					<Logo />
-				</div>
+				</NavLink>
 				<NavButton text={user.name || 'Личный кабинет'} link={'/profile'}>
 					<ProfileIcon type='primary' />
 				</NavButton>

@@ -20,8 +20,7 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 
 	const orderNumber = useMemo<string | boolean>(
 		() =>
-			!!orders &&
-			`#${orders.orders.find((order: any) => order._id === id)?.number}`,
+			!!orders && `#${orders.orders.find(order => order._id === id)?.number}`,
 		[id, orders]
 	)
 
@@ -40,19 +39,8 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 					orders && styles.orderBody
 				} pt-10 pl-10 pr-10 pb-10`}
 			>
-				<div className={styles.header}>
-					<p
-						className={
-							!orders
-								? 'text text_type_main-large'
-								: 'text text_type_digits-medium'
-						}
-					>
-						{orderNumber || optionalTitle}
-					</p>
-					<div className={styles.closeBtn}>
-						<CloseIcon onClick={handleClose} type='primary' />
-					</div>
+				<div className={styles.closeBtn}>
+					<CloseIcon onClick={handleClose} type='primary' />
 				</div>
 				<div className={`${styles.body}`}>{children}</div>
 			</div>

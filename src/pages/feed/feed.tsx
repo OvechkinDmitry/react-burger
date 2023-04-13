@@ -11,11 +11,11 @@ import {
 import { WS_ALL } from '../../services/middleware/constants'
 import { TOrderItem } from '../../services/middleware/model/types'
 
-const getFilteredOrders = (orders: any, status: string) => {
+const getFilteredOrders = (orders: TOrderItem[], status: string) => {
 	return orders
-		.filter((order: any) => order.status === status)
+		.filter(order => order.status === status)
 		.slice(0, 20)
-		.map((order: any) => (
+		.map(order => (
 			<li key={order._id} className='text text_type_digits-default'>
 				{order.number}
 			</li>
@@ -41,7 +41,7 @@ export const Feed: FC = () => {
 			</p>
 			<div className={`${styles.body}`}>
 				<div className={styles.orders}>
-					{orders.orders.map((order: TOrderItem, i: number) => {
+					{orders.orders.map((order, i) => {
 						return <OrderItem key={i} order={order} />
 					})}
 				</div>

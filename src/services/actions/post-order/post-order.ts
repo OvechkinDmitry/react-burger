@@ -1,11 +1,11 @@
-import { URL_ORDER } from './constants/constants'
+import { URL_ORDER } from '../../../utils/constants/constants'
 import {
 	dataFetching,
 	dataFetchingError,
 	updateId
-} from '../services/reducers/order-details/lib/order-details-slice'
-import NomorepartiesAuth from './constants/axios-auth'
-import { TRootDispatch } from '../services'
+} from '../../reducers/order-details/lib/order-details-slice'
+import NomorepartiesAuth from '../../../utils/constants/axios-auth'
+import { TRootDispatch } from '../../index'
 
 export const postOrder =
 	(idS: Array<string>) => async (dispatch: TRootDispatch) => {
