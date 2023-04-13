@@ -10,7 +10,7 @@ const OrderDetails: FC = () => {
 		state => state.orderDetailsReducer
 	)
 	return (
-		<>
+		<div className={styles.body}>
 			{isError && <WarnLog>Ошибка при выполнении заказа</WarnLog>}
 			{isLoading && <Loader />}
 			{!isError && !isLoading && (
@@ -23,10 +23,10 @@ const OrderDetails: FC = () => {
 			<p className='text text_type_main-small mt-15'>
 				{!isError ? 'Ваш заказ начали готовить' : 'Ошибка'}
 			</p>
-			<p className='text text_type_main-small text_color_inactive mt-2 pb-30'>
+			<p className='text text_type_main-small text_color_inactive mt-2 pb-25'>
 				Дождитесь готовности на орбитальной станции
 			</p>
-		</>
+		</div>
 	)
 }
 

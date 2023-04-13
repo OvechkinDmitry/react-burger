@@ -4,21 +4,23 @@ import { useTypedSelector } from '../../../hooks/use-typed-selector'
 
 type TRoundIngredient = {
 	ingredient: any
-	extraClass: string
+	extraClass?: string
+	count?: number
 }
 
 export const RoundIngredient: FC<TRoundIngredient> = ({
 	ingredient,
-	extraClass
+	extraClass,
+	count = 1
 }) => {
 	const { ingredients } = useTypedSelector(state => state.ingredientsReducer)
-	const ing = ingredients.find(el => el._id === ingredient[0])
+	const ing = ingredients.find(el => el._id === ingredient)
 	return ing ? (
 		<div className={`${styles.body} ${extraClass}`}>
 			<img src={ing.image_mobile} alt={'ингредиент'} />
-			{ingredient[1] > 1 && (
+			{count > 1 && (
 				<div className={`${styles.count} text text_type_digits-default`}>
-					+{ingredient[1]}
+					+{count}
 				</div>
 			)}
 		</div>

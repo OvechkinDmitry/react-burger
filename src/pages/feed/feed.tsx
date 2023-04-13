@@ -30,7 +30,6 @@ export const Feed: FC<TFeed> = () => {
 	const { isLoading } = useTypedSelector(state => state.ingredientsReducer)
 	useEffect(() => {
 		dispatch(wsStart('wss://norma.nomoreparties.space/orders/all'))
-
 		return () => {
 			dispatch(wsDisconnect())
 		}

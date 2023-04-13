@@ -1,5 +1,7 @@
 .inModal {
 	width: 100%;
+	margin: 0 auto;
+	max-width: 520px;
 }
 .withoutModal {
 	max-width: 520px;

@@ -35,7 +35,7 @@ export const IngredientDetails: FC = () => {
 					<p className={`${styles.name} text text_type_main-medium mb-8`}>
 						{data?.name}
 					</p>
-					<div className={`${styles.info} pb-15`}>
+					<div className={`${styles.info}`}>
 						<IngredientInfo
 							title={'Калории,ккал'}
 							amount={data?.calories || 0}

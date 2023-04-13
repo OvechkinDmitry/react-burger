@@ -19,7 +19,7 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	const { orders } = useTypedSelector(state => state.websoketReducer)
 	const orderNumber = useMemo(
 		() =>
-			id && orders.orders.length
+			id && orders?.orders?.length
 				? `#${orders.orders.find((order: any) => order._id === id).number}`
 				: '',
 		[id, orders.orders]
@@ -35,9 +35,19 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	return createPortal(
 		<div>
 			<ModalOvrelay handleClose={handleClose} />
-			<div className={`${styles.modal} pt-10 pl-10 pr-10`}>
+			<div
+				className={`${styles.modal} ${
+					orderNumber && styles.orderBody
+				} pt-10 pl-10 pr-10 pb-10`}
+			>
 				<div className={styles.header}>
-					<p className='text text_type_main-large'>
+					<p
+						className={
+							!orderNumber
+								? 'text text_type_main-large'
+								: 'text text_type_digits-medium'
+						}
+					>
 						{orderNumber || optionalTitle}
 					</p>
 					<div className={styles.closeBtn}>

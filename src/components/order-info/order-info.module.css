@@ -1,8 +1,15 @@
-.body {
+.bodyModal {
 	max-width: 640px;
+	width: 100%;
+	/*margin-inline: auto;*/
+	/*margin-top: 122px;*/
+}
+.bodyPage {
 	margin-inline: auto;
 	margin-top: 122px;
+	max-width: 640px;
 }
+
 .ingredients {
 	display: flex;
 	flex-direction: column;
@@ -27,4 +34,5 @@
 }
 .status {
 	color: #00cccc;
+	margin-bottom: 60px;
 }

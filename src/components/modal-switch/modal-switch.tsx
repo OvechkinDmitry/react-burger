@@ -1,14 +1,8 @@
-import {
-	Route,
-	Routes,
-	useLocation,
-	useNavigate,
-	useParams
-} from 'react-router-dom'
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import React, { FC, useCallback } from 'react'
 import Modal from '../modal/modal'
 import { IngredientDetails } from '../ingredient-details/ingredient-details'
-import { useTypedSelector } from '../../hooks/use-typed-selector'
+import { OrderInfo } from '../order-info/order-info'
 
 type TBackground = {
 	pathname: string
@@ -45,7 +39,7 @@ export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 						path={'/feed/:id'}
 						element={
 							<Modal handleClose={handleClose}>
-								<IngredientDetails />
+								<OrderInfo />
 							</Modal>
 						}
 					></Route>

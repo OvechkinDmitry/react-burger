@@ -50,7 +50,8 @@ export const OrderItem: FC<Partial<TOrderItem>> = ({ order }) => {
 						{countedItems.map((ingredient: any, i) => (
 							<RoundIngredient
 								key={i}
-								ingredient={ingredient}
+								ingredient={ingredient[0]}
+								count={ingredient[1]}
 								extraClass={styles.ingredient}
 							/>
 						))}

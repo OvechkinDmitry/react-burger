@@ -35,7 +35,6 @@ function App() {
 		dispatch(checkUserWithTokens())
 		dispatch(fetchIngredients(URL_INGREDIENTS))
 	}, [dispatch])
-	console.log(background, location)
 	return (
 		<ErrorBoundary>
 			<AppHeader />
