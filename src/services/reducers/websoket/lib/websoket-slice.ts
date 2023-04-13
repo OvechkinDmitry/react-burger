@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { TOrders } from '../../../middleware/types'
 
 type TWebsoketState = {
 	wsConnected: boolean
-	orders: any | null
+	orders: TOrders | null
 	error: boolean
 }
 

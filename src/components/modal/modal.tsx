@@ -20,7 +20,7 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 
 	const orderNumber = useMemo<string | boolean>(
 		() =>
-			orders &&
+			!!orders &&
 			`#${orders.orders.find((order: any) => order._id === id)?.number}`,
 		[id, orders]
 	)
