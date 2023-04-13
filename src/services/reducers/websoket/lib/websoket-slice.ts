@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TOrders } from '../../../middleware/types'
+import { TOrders } from '../../../middleware/model/types'
 
 type TWebsoketState = {
 	wsConnected: boolean

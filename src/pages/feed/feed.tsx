@@ -9,7 +9,7 @@ import {
 	wsStart
 } from '../../services/actions/wsActions/lib/ws-actions'
 import { WS_ALL } from '../../services/middleware/constants'
-import { TOrderItem } from '../../services/middleware/types'
+import { TOrderItem } from '../../services/middleware/model/types'
 
 const getFilteredOrders = (orders: any, status: string) => {
 	return orders

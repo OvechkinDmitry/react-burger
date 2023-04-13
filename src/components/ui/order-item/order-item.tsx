@@ -6,7 +6,7 @@ import { RoundIngredient } from '../rounded-ingredient/round-ingredient'
 import { TIngredient } from '../../../utils/types/ingredient-type'
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
-import { TOrderItem } from '../../../services/middleware/types'
+import { TOrderItem } from '../../../services/middleware/model/types'
 
 type TOrderElement = {
 	order: TOrderItem

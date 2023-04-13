@@ -1,19 +1,6 @@
 import { Middleware } from 'redux'
-import { TRootState } from '../index'
-import {
-	ActionCreatorWithoutPayload,
-	ActionCreatorWithPayload
-} from '@reduxjs/toolkit'
-
-export type TwsActionsTypes = {
-	wsInit: ActionCreatorWithPayload<string>
-	wsClose: ActionCreatorWithoutPayload
-	wsSendMessage?: ActionCreatorWithPayload<any>
-	onOpen: ActionCreatorWithoutPayload
-	onClose: ActionCreatorWithPayload<any>
-	onError: ActionCreatorWithoutPayload
-	onMessage: ActionCreatorWithPayload<any>
-}
+import { TRootState } from '../../index'
+import { TwsActionsTypes } from '../model/types'
 
 export const websoketMiddleware =
 	(wsActions: TwsActionsTypes): Middleware<{}, TRootState> =>

@@ -9,7 +9,7 @@ import websoketReducer, {
 	wsMessage,
 	wsSuccess
 } from './reducers/websoket/lib/websoket-slice'
-import { websoketMiddleware } from './middleware/websoket-middleware'
+import { websoketMiddleware } from './middleware/lib/websoket-middleware'
 import {
 	wsDisconnect,
 	wsSendMessage,

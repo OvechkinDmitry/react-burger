@@ -14,7 +14,7 @@ import Loader from '../ui/loader/loader'
 import { WS_ALL, WS_USER } from '../../services/middleware/constants'
 import { processOrder } from '../../utils/process-orders'
 import { TIngredient } from '../../utils/types/ingredient-type'
-import { TOrderItem } from '../../services/middleware/types'
+import { TOrderItem } from '../../services/middleware/model/types'
 
 export const OrderInfo: FC = () => {
 	const location = useLocation()

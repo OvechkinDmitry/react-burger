@@ -8,7 +8,7 @@ import {
 } from '../../../services/actions/wsActions/lib/ws-actions'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import Loader from '../../../components/ui/loader/loader'
-import { TOrderItem } from '../../../services/middleware/types'
+import { TOrderItem } from '../../../services/middleware/model/types'
 
 export const ProfileOrders: FC = () => {
 	const dispatch = useTypedDispatch()
