@@ -8,8 +8,9 @@ import {
 	wsDisconnect,
 	wsStart
 } from '../../services/actions/wsActions/lib/ws-actions'
+import { WS_ALL } from '../../services/middleware/constants'
 
-const getCropped = (orders: any, status: string) => {
+const getFilteredOrders = (orders: any, status: string) => {
 	return orders
 		.filter((order: any) => order.status === status)
 		.slice(0, 20)
@@ -22,18 +23,17 @@ const getCropped = (orders: any, status: string) => {
 
 export const Feed: FC = () => {
 	const dispatch = useTypedDispatch()
-	const { wsConnected, orders } = useTypedSelector(
-		state => state.websoketReducer
-	)
+	const { orders } = useTypedSelector(state => state.websoketReducer)
 	const { isLoading } = useTypedSelector(state => state.ingredientsReducer)
+
 	useEffect(() => {
-		dispatch(wsStart('wss://norma.nomoreparties.space/orders/all'))
+		dispatch(wsStart(WS_ALL))
 		return () => {
 			dispatch(wsDisconnect())
 		}
-	}, [])
+	}, [dispatch])
 
-	return wsConnected && orders && !isLoading ? (
+	return orders && !isLoading ? (
 		<div className={styles.container}>
 			<p className={`${styles.title} text text_type_main-large`}>
 				Лента заказов
@@ -49,13 +49,13 @@ export const Feed: FC = () => {
 						<div className={styles.status}>
 							<p className={'text text_type_main-medium mb-6'}>Готовы:</p>
 							<ul className={styles.ready}>
-								{getCropped(orders.orders, 'done')}
+								{getFilteredOrders(orders.orders, 'done')}
 							</ul>
 						</div>
 						<div className={styles.status}>
 							<p className={'text text_type_main-medium mb-6'}>В работе:</p>
 							<ul className={styles.pending}>
-								{getCropped(orders.orders, 'pending')}
+								{getFilteredOrders(orders.orders, 'pending')}
 							</ul>
 						</div>
 					</div>
