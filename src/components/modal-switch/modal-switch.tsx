@@ -43,6 +43,14 @@ export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 							</Modal>
 						}
 					></Route>
+					<Route
+						path={'/profile/orders/:id'}
+						element={
+							<Modal handleClose={handleClose}>
+								<OrderInfo />
+							</Modal>
+						}
+					></Route>
 				</Routes>
 			)}
 		</>

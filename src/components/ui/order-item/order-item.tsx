@@ -34,7 +34,7 @@ export const OrderItem: FC<Partial<TOrderItem>> = ({ order }) => {
 	const location = useLocation()
 	const id = order._id
 	return (
-		<Link to={`/feed/${id}`} state={{ background: location }}>
+		<Link to={`${location.pathname}/${id}`} state={{ background: location }}>
 			<div className={styles.container}>
 				<div className={`${styles.head} mb-6`}>
 					<span className={'text text_type_digits-default'}>

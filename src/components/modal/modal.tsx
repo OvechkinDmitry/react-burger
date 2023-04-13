@@ -19,9 +19,12 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	const { orders } = useTypedSelector(state => state.websoketReducer)
 	const orderNumber = useMemo(
 		() =>
-			id && orders?.orders?.length
-				? `#${orders.orders.find((order: any) => order._id === id).number}`
-				: '',
+			orders?.orders?.length
+				? `#${
+						orders.orders.find((order: any) => order._id === id)?.number ||
+						'00000'
+				  }`
+				: '#00000',
 		[id, orders.orders]
 	)
 

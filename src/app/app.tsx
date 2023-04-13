@@ -75,6 +75,7 @@ function App() {
 							path={'/ingredients/:ingredientId'}
 							element={<IngredientDetails />}
 						/>
+						<Route path={'/profile/orders/:id'} element={<OrderInfo />} />
 						<Route path={'/feed/:id'} element={<OrderInfo />} />
 					</Routes>
 					<ModalSwitch background={background} />

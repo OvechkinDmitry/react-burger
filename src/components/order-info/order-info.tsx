@@ -40,15 +40,17 @@ export const OrderInfo: FC = () => {
 	const currentOrder = orders?.orders
 		? orders.orders.find((el: any) => el._id === id)
 		: {}
+	const orderPrice =
+		currentOrder && currentOrder?.ingredients
+			? currentOrder.ingredients.reduce((acc: number, id: string) => {
+					return acc + (ingredients.find(el => el._id === id)?.price || 0)
+			  }, 0)
+			: 0
 
-	const orderPrice = currentOrder?.ingredients
-		? currentOrder.ingredients.reduce((acc: number, id: string) => {
-				return acc + (ingredients.find(el => el._id === id)?.price || 0)
-		  }, 0)
-		: 0
-
-	const processedOrder = processOrder(currentOrder?.ingredients || [])
-
+	const processedOrder = processOrder(
+		(currentOrder && currentOrder?.ingredients) || []
+	)
+	console.log(currentOrder)
 	return (
 		<div
 			className={
@@ -58,11 +60,13 @@ export const OrderInfo: FC = () => {
 			<center>
 				{!location.state?.background && (
 					<p className={'text text_type_digits-default mb-10'}>
-						{currentOrder?.number ? `#${currentOrder?.number}` : '#00000'}
+						{currentOrder && currentOrder?.number
+							? `#${currentOrder?.number}`
+							: '#00000'}
 					</p>
 				)}
 			</center>
-			{Object.keys(currentOrder).length ? (
+			{currentOrder && Object.keys(currentOrder).length ? (
 				<>
 					<p className={`text text_type_main-medium mt-5`}>
 						{currentOrder?.name || 'Unknown'}
@@ -92,31 +96,6 @@ export const OrderInfo: FC = () => {
 			) : (
 				<Loader />
 			)}
-
-			{/*<p className={`text text_type_main-medium mt-5`}>*/}
-			{/*	{currentOrder?.name || 'Unknown'}*/}
-			{/*</p>*/}
-			{/*<p className={`${styles.status} text text_type_main-default mt-4`}>*/}
-			{/*	Выполнен*/}
-			{/*</p>*/}
-			{/*<p className='text text_type_main-medium mb-6'>Состав:</p>*/}
-			{/*<div className={styles.ingredients}>*/}
-			{/*	{processedOrder.map(ing => (*/}
-			{/*		<OrderIngredient id={ing[0]} count={ing[1]} />*/}
-			{/*	))}*/}
-			{/*</div>*/}
-			{/*<div className={`${styles.footer} mt-10`}>*/}
-			{/*	<span className={'text text_type_main-default text_color_inactive'}>*/}
-			{/*		<FormattedDate*/}
-			{/*			date={*/}
-			{/*				wsConnected && orders?.orders?.length*/}
-			{/*					? new Date(currentOrder.createdAt)*/}
-			{/*					: new Date()*/}
-			{/*			}*/}
-			{/*		/>*/}
-			{/*	</span>*/}
-			{/*	<Price text={`${orderPrice}`} size={'default'} />*/}
-			{/*</div>*/}
 		</div>
 	)
 }
