@@ -17,15 +17,12 @@ type TModal = {
 const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	const { id } = useParams()
 	const { orders } = useTypedSelector(state => state.websoketReducer)
-	const orderNumber = useMemo(
+
+	const orderNumber = useMemo<string | boolean>(
 		() =>
-			orders
-				? `#${
-						orders.orders.find((order: any) => order._id === id)?.number ||
-						'00000'
-				  }`
-				: '',
-		[id, orders?.orders]
+			orders &&
+			`#${orders.orders.find((order: any) => order._id === id)?.number}`,
+		[id, orders]
 	)
 
 	useEffect(() => {
