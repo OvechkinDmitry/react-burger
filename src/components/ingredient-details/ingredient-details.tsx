@@ -7,6 +7,7 @@ import { IngredientInfo } from './ui/ingredient-info/ingredient-info'
 
 export const IngredientDetails: FC = () => {
 	const location = useLocation()
+	const background = location.state?.background
 	const { ingredientId } = useParams()
 	const containerClass = location.state?.background
 		? styles.inModal
@@ -20,10 +21,12 @@ export const IngredientDetails: FC = () => {
 	)
 	return (
 		<>
-			<p className={` text text_type_main-large`}>{'Детали ингредиента'}</p>
+			{background && (
+				<p className={` text text_type_main-large`}>{'Детали ингредиента'}</p>
+			)}
 			{!isLoading && !isError && (
 				<div className={containerClass}>
-					{!location.state?.background ? (
+					{!background ? (
 						<p className={`${styles.name} text text_type_main-large`}>
 							{'Детали ингредиента'}
 						</p>

@@ -28,10 +28,7 @@ export const ModalSwitch: FC<TModalSwitch> = ({ background }) => {
 					<Route
 						path={'/ingredients/:ingredientId'}
 						element={
-							<Modal
-								optionalTitle={'Детали ингредиента'}
-								handleClose={handleClose}
-							>
+							<Modal handleClose={handleClose}>
 								<IngredientDetails />
 							</Modal>
 						}

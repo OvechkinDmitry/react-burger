@@ -9,6 +9,7 @@ import { deleteId } from '../../../services/reducers/order-details/lib/order-det
 import { useNavigate } from 'react-router-dom'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import { useTypedDispatch } from '../../../hooks/use-typed-dispatch'
+import { resetConstructor } from '../../../services/reducers/burger-constructor/lib/burger-constructor-slice'
 
 type TSubmitOrder = {
 	totalPrice: number
@@ -32,6 +33,7 @@ const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
 			return
 		}
 		setOpen(true)
+		dispatch(resetConstructor())
 		dispatch(postOrder(idS))
 	}
 	return (

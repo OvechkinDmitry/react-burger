@@ -67,44 +67,53 @@ export const OrderInfo: FC = () => {
 	)
 
 	return (
-		<div className={background ? styles.bodyModal : styles.bodyPage}>
-			<center>
-				{!background && (
-					<p className={'text text_type_digits-default mb-10'}>
-						{currentOrder && `#${currentOrder?.number || '00000'}`}
-					</p>
-				)}
-			</center>
-			{currentOrder ? (
-				<>
-					<p className={`text text_type_main-medium mt-5`}>
-						{currentOrder?.name || 'Unknown'}
-					</p>
-					<p className={`${styles.status} text text_type_main-default mt-4`}>
-						Выполнен
-					</p>
-					<p className='text text_type_main-medium mb-6'>Состав:</p>
-					<div className={styles.ingredients}>
-						{processedOrder.map((ing, i) => (
-							<OrderIngredient
-								key={i}
-								image={ing[0].image_mobile}
-								count={ing[1]}
-								name={ing[0].name}
-								price={ing[0].price}
-							/>
-						))}
-					</div>
-					<div className={`${styles.footer} mt-10`}>
-						<span className={'text text_type_main-default text_color_inactive'}>
-							<FormattedDate date={new Date(currentOrder?.createdAt || '')} />
-						</span>
-						<Price text={`${orderPrice}`} size={'default'} />
-					</div>
-				</>
-			) : (
-				<Loader />
+		<>
+			{background && (
+				<p className={` text text_type_digits-default mb-4 mt-2`}>
+					{currentOrder && `#${currentOrder?.number || '00000'}`}
+				</p>
 			)}
-		</div>
+			<div className={background ? styles.bodyModal : styles.bodyPage}>
+				<center>
+					{!background && (
+						<p className={'text text_type_digits-default mb-10'}>
+							{currentOrder && `#${currentOrder?.number || '00000'}`}
+						</p>
+					)}
+				</center>
+				{currentOrder ? (
+					<>
+						<p className={`text text_type_main-medium mt-5`}>
+							{currentOrder?.name || 'Unknown'}
+						</p>
+						<p className={`${styles.status} text text_type_main-default mt-4`}>
+							Выполнен
+						</p>
+						<p className='text text_type_main-medium mb-6'>Состав:</p>
+						<div className={styles.ingredients}>
+							{processedOrder.map((ing, i) => (
+								<OrderIngredient
+									key={i}
+									image={ing[0].image_mobile}
+									count={ing[1]}
+									name={ing[0].name}
+									price={ing[0].price}
+								/>
+							))}
+						</div>
+						<div className={`${styles.footer} mt-10`}>
+							<span
+								className={'text text_type_main-default text_color_inactive'}
+							>
+								<FormattedDate date={new Date(currentOrder?.createdAt || '')} />
+							</span>
+							<Price text={`${orderPrice}`} size={'default'} />
+						</div>
+					</>
+				) : (
+					<Loader />
+				)}
+			</div>
+		</>
 	)
 }
