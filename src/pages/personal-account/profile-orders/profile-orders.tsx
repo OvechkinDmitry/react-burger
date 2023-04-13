@@ -8,11 +8,11 @@ import {
 } from '../../../services/actions/wsActions/lib/ws-actions'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import Loader from '../../../components/ui/loader/loader'
-import WarnLog from '../../../components/ui/warn-log/warn-log'
+import { TOrderItem } from '../../../services/middleware/types'
 
 export const ProfileOrders: FC = () => {
 	const dispatch = useTypedDispatch()
-	const { wsConnected, orders, error } = useTypedSelector(
+	const { wsConnected, orders } = useTypedSelector(
 		state => state.websoketReducer
 	)
 
@@ -35,7 +35,9 @@ export const ProfileOrders: FC = () => {
 			<div className={`${styles.orders} mt-20`}>
 				{orders?.orders?.length
 					? orders.orders
-							.map((order: any) => <OrderItem order={order} key={order._id} />)
+							.map((order: TOrderItem) => (
+								<OrderItem order={order} key={order._id} />
+							))
 							.reverse()
 					: null}
 			</div>

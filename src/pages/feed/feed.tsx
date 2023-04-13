@@ -9,6 +9,7 @@ import {
 	wsStart
 } from '../../services/actions/wsActions/lib/ws-actions'
 import { WS_ALL } from '../../services/middleware/constants'
+import { TOrderItem } from '../../services/middleware/types'
 
 const getFilteredOrders = (orders: any, status: string) => {
 	return orders
@@ -40,7 +41,7 @@ export const Feed: FC = () => {
 			</p>
 			<div className={`${styles.body}`}>
 				<div className={styles.orders}>
-					{orders.orders.map((order: any, i: number) => {
+					{orders.orders.map((order: TOrderItem, i: number) => {
 						return <OrderItem key={i} order={order} />
 					})}
 				</div>
