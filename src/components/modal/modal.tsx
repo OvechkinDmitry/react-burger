@@ -8,11 +8,11 @@ const portal = document.getElementById('portal') as Element
 
 type TModal = {
 	handleClose: () => void
-	optionalTitle: string
+	optionalTitle?: string
 	children: ReactElement
 }
 
-const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
+const Modal: FC<TModal> = ({ handleClose, children }) => {
 	useEffect(() => {
 		const escClosing = (e: KeyboardEvent) =>
 			e.key === 'Escape' ? handleClose() : null
@@ -23,12 +23,9 @@ const Modal: FC<TModal> = ({ handleClose, optionalTitle, children }) => {
 	return createPortal(
 		<div>
 			<ModalOvrelay handleClose={handleClose} />
-			<div className={`${styles.modal} pt-10 pl-10 pr-10`}>
-				<div className={styles.header}>
-					<p className='text text_type_main-large'>{optionalTitle}</p>
-					<div className={styles.closeBtn}>
-						<CloseIcon onClick={handleClose} type='primary' />
-					</div>
+			<div className={`${styles.modal} pt-10 pl-10 pr-10 pb-10`}>
+				<div className={styles.closeBtn}>
+					<CloseIcon onClick={handleClose} type='primary' />
 				</div>
 				<div className={`${styles.body}`}>{children}</div>
 			</div>

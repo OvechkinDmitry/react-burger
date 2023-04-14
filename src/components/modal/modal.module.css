@@ -13,6 +13,9 @@
 	animation-duration: 0.4s;
 }
 .closeBtn {
+	position: absolute;
+	top: 49px;
+	right: 46px;
 	cursor: pointer;
 }
 @keyframes changeOpacity {
@@ -34,14 +37,19 @@
 	align-items: center;
 }
 .header p {
-	margin-right: 203px;
+	margin-right: auto;
 }
 .body {
-	max-width: 520px;
-	margin: 0 auto;
+	/*max-width: 520px;*/
+	width: 100%;
+	/*margin: 0 auto;*/
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
+	/*align-items: center;*/
+}
+
+.body .orderBody {
 }
 
 .overlay {

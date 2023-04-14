@@ -28,7 +28,10 @@ header,
 aside {
 	display: block;
 }
-
+::-webkit-scrollbar {
+	display: block;
+	width: 0;
+}
 html,
 body {
 	height: 100%;

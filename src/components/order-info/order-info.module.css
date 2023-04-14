@@ -1,0 +1,38 @@
+.bodyModal {
+	max-width: 640px;
+	width: 100%;
+	/*margin-inline: auto;*/
+	/*margin-top: 122px;*/
+}
+.bodyPage {
+	margin-inline: auto;
+	margin-top: 122px;
+	max-width: 640px;
+}
+
+.ingredients {
+	display: flex;
+	flex-direction: column;
+	row-gap: 16px;
+	max-height: 312px;
+	overflow: auto;
+	padding-right: 24px;
+}
+.ingredients::-webkit-scrollbar {
+	width: 8px;
+	background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+	background: #8585ad;
+}
+
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.status {
+	color: #00cccc;
+	margin-bottom: 60px;
+}

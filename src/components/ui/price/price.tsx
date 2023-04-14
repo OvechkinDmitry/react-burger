@@ -6,10 +6,14 @@ type TPrice = {
 	text: string
 	size: 'default' | 'medium'
 	extraClass?: string
+	count?: number
 }
-const Price: FC<TPrice> = ({ text, size, extraClass }) => {
+const Price: FC<TPrice> = ({ text, size, extraClass, count }) => {
 	return (
 		<div className={`${styles.price} ${extraClass}`}>
+			{count && (
+				<span className={`text text_type_digits-${size}`}>{count} X</span>
+			)}
 			<span className={`text text_type_digits-${size}`}>{text}</span>
 			<CurrencyIcon type='primary' />
 		</div>

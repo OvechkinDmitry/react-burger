@@ -40,6 +40,11 @@ const burgerConstructorSlice = createSlice({
 				state.bun,
 				...state.constructorElements
 			])
+		},
+		resetConstructor(state) {
+			state.bun = initialState.bun
+			state.constructorElements = initialState.constructorElements
+			state.totalPrice = initialState.totalPrice
 		}
 	}
 })
@@ -50,5 +55,6 @@ export const {
 	deleteConstructorElement,
 	addBun,
 	updateConstructorElements,
-	calculateTotalPrice
+	calculateTotalPrice,
+	resetConstructor
 } = burgerConstructorSlice.actions

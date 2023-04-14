@@ -7,6 +7,7 @@ import { IngredientInfo } from './ui/ingredient-info/ingredient-info'
 
 export const IngredientDetails: FC = () => {
 	const location = useLocation()
+	const background = location.state?.background
 	const { ingredientId } = useParams()
 	const containerClass = location.state?.background
 		? styles.inModal
@@ -20,9 +21,12 @@ export const IngredientDetails: FC = () => {
 	)
 	return (
 		<>
+			{background && (
+				<p className={` text text_type_main-large`}>{'Детали ингредиента'}</p>
+			)}
 			{!isLoading && !isError && (
 				<div className={containerClass}>
-					{!location.state?.background ? (
+					{!background ? (
 						<p className={`${styles.name} text text_type_main-large`}>
 							{'Детали ингредиента'}
 						</p>
@@ -35,7 +39,7 @@ export const IngredientDetails: FC = () => {
 					<p className={`${styles.name} text text_type_main-medium mb-8`}>
 						{data?.name}
 					</p>
-					<div className={`${styles.info} pb-15`}>
+					<div className={`${styles.info}`}>
 						<IngredientInfo
 							title={'Калории,ккал'}
 							amount={data?.calories || 0}

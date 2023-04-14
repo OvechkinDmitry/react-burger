@@ -4,11 +4,12 @@ import Price from '../../ui/price/price'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../../modal/modal'
 import OrderDetails from '../../order-details/order-details'
-import { postOrder } from '../../../utils/post-order'
+import { postOrder } from '../../../services/actions/post-order/post-order'
 import { deleteId } from '../../../services/reducers/order-details/lib/order-details-slice'
 import { useNavigate } from 'react-router-dom'
 import { useTypedSelector } from '../../../hooks/use-typed-selector'
 import { useTypedDispatch } from '../../../hooks/use-typed-dispatch'
+import { resetConstructor } from '../../../services/reducers/burger-constructor/lib/burger-constructor-slice'
 
 type TSubmitOrder = {
 	totalPrice: number
@@ -32,6 +33,7 @@ const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
 			return
 		}
 		setOpen(true)
+		dispatch(resetConstructor())
 		dispatch(postOrder(idS))
 	}
 	return (

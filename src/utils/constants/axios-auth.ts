@@ -9,6 +9,7 @@ const NomorepartiesAuth: AxiosInstance = axios.create({
 })
 
 NomorepartiesAuth.interceptors.request.use(config => {
+	// здесь висист interceptor у обычного экземпляра не вешается поле Authorization
 	config.headers.Authorization =
 		'Bearer ' + (localStorage.getItem('accessToken') || ' ')
 	return config

@@ -22,11 +22,9 @@ const IngredientCart = React.memo<TIngredientCart>(({ ingredient }) => {
 		state => state.burgerConstructorReducer
 	)
 	const count = useMemo(() => {
-		//заглушка от начального типа {}
 		const ingredients = [...constructorElements, bun, bun] as TIngredient[]
 		return ingredients.filter(el => el._id === ingredient._id).length
 	}, [ingredient, constructorElements, bun])
-
 	return (
 		<Link
 			key={ingredient._id}
