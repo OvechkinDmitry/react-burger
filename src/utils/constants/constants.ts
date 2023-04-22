@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+
 export const URL_INGREDIENTS = '/ingredients'
 export const URL_ORDER = '/orders'
 export const URL_FORGOT_PASSWORD = '/password-reset'

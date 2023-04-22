@@ -53,6 +53,7 @@ const authUserSlice = createSlice({
 				state.status.isLoading = false
 				state.status.isError = true
 			})
+
 			.addCase(checkUserWithTokens.pending, state => {
 				state.status.isLoading = true
 				state.status.isError = false
