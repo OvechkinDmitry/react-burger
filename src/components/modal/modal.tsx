@@ -24,7 +24,7 @@ const Modal: FC<TModal> = ({ handleClose, children }) => {
 		<div>
 			<ModalOvrelay handleClose={handleClose} />
 			<div className={`${styles.modal} pt-10 pl-10 pr-10 pb-10`}>
-				<div className={styles.closeBtn}>
+				<div data-cy={'close-modal'} className={styles.closeBtn}>
 					<CloseIcon onClick={handleClose} type='primary' />
 				</div>
 				<div className={`${styles.body}`}>{children}</div>

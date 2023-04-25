@@ -30,6 +30,7 @@ const IngredientCart = React.memo<TIngredientCart>(({ ingredient }) => {
 			key={ingredient._id}
 			to={`/ingredients/${ingredientId}`}
 			state={{ background: location }}
+			data-cy={'ingredient'}
 		>
 			<li ref={dragRef} className={styles.cart}>
 				{count > 0 && <Counter count={count} size='default' extraClass='m-1' />}
