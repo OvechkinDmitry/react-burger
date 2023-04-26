@@ -35,6 +35,7 @@ const Login: FC = () => {
 			<p className={`text text_type_main-medium mb-6`}>Вход</p>
 			<form onSubmit={onSubmit}>
 				<EmailInput
+					data-cy={'login-email'}
 					placeholder={'E-mail'}
 					value={values.email}
 					onChange={handleChange}
@@ -42,13 +43,19 @@ const Login: FC = () => {
 					extraClass='mb-6'
 				/>
 				<PasswordInput
+					data-cy={'login-password'}
 					placeholder={'Пароль'}
 					value={values.password}
 					onChange={handleChange}
 					name={'password'}
 					extraClass='mb-6'
 				/>
-				<Button htmlType='submit' type='primary' size='medium'>
+				<Button
+					data-cy={'login-button'}
+					htmlType='submit'
+					type='primary'
+					size='medium'
+				>
 					Войти
 				</Button>
 			</form>

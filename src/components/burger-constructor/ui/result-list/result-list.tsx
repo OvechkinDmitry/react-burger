@@ -34,7 +34,11 @@ const ResultList = () => {
 		}
 	})
 	return (
-		<div ref={dropTarget} className={`${styles.resultList}`}>
+		<div
+			data-cy={'drop-area'}
+			ref={dropTarget}
+			className={`${styles.resultList}`}
+		>
 			<Bun isLocked={true} type={'top'} data={bun} />
 			<ConstuctorList data={[...constructorElements]} />
 			<Bun isLocked={true} type={'bottom'} data={bun} />

@@ -14,18 +14,16 @@ export const orderDetailsSlice = createSlice({
 		dataFetching(state) {
 			state.isLoading = true
 		},
-		dataFetchingError(state) {
-			state.isLoading = false
-			state.isError = true
-			state = initialState
+		dataFetchingError() {
+			return { ...initialState, isError: true }
 		},
 		updateId(state, action: PayloadAction<{ id: number }>) {
 			state.id = action.payload.id
 			state.isLoading = false
 			state.isError = false
 		},
-		deleteId(state) {
-			state = initialState
+		deleteId() {
+			return initialState
 		}
 	}
 })

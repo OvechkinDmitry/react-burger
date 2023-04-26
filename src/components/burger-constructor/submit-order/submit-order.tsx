@@ -41,6 +41,7 @@ const SubmitOrder: FC<TSubmitOrder> = ({ totalPrice, idS }) => {
 			<div className={`${styles.submit} mt-10 mr-8`}>
 				<Price text={String(totalPrice)} size={'medium'} extraClass={'mr-10'} />
 				<Button
+					data-cy={'order-button'}
 					disabled={!totalPrice}
 					onClick={handleClick}
 					htmlType='button'

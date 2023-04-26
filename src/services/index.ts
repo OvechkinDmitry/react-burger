@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
 	websoketReducer
 })
 
-const wsActions = {
+export const wsActions = {
 	wsInit: wsStart,
 	wsClose: wsDisconnect,
 	wsSendMessage: wsSendMessage,

@@ -10,7 +10,7 @@ const OrderDetails: FC = () => {
 		state => state.orderDetailsReducer
 	)
 	return (
-		<div className={styles.body}>
+		<div data-cy={'order-details'} className={styles.body}>
 			{isError && <WarnLog>Ошибка при выполнении заказа</WarnLog>}
 			{isLoading && <Loader />}
 			{!isError && !isLoading && (

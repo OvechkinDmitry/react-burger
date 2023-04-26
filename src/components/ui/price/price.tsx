@@ -14,7 +14,9 @@ const Price: FC<TPrice> = ({ text, size, extraClass, count }) => {
 			{count && (
 				<span className={`text text_type_digits-${size}`}>{count} X</span>
 			)}
-			<span className={`text text_type_digits-${size}`}>{text}</span>
+			<span data-cy={'order-price'} className={`text text_type_digits-${size}`}>
+				{text}
+			</span>
 			<CurrencyIcon type='primary' />
 		</div>
 	)
