@@ -32,7 +32,7 @@
     "start": "react-scripts start",
     "deploy-script": "npm run build && scp -r ./build/* ovechkin@51.250.71.213:/home/ovechkin/stellar-frontend",
     "cypress:open": "cypress open",
-    "build": "react-scripts build",
+    "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
