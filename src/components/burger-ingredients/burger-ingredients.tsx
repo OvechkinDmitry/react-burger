@@ -42,7 +42,7 @@ const BurgerIngredients: FC = () => {
 			{!isError && !isLoading && !!Object.keys(ingredients).length && (
 				<div className={styles.container}>
 					<p className='text text_type_main-large mt-10 mb-5'>
-						Соберите бургер
+						Соберите ваш бургер
 					</p>
 					<Tabs sectionsData={sectionsData} sectionsRef={sectionsRef} />
 					<div ref={sectionsRef} className={`${styles.ingredients} mt-10`}>
