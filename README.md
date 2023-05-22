@@ -1,1 +1,12 @@
-# Деплой <a href="https://react.burger.students.nomoredomains.monster/">тут</a>
+# <a href="https://react.burger.students.nomoredomains.monster/">"Stellar-Burger"- интернет магазин бургерной</a>
+ <b>Космобургерная</b>, дает возможность делать заказы, отслеживать их готовность <b>в реальном времени</b> с помощью websoket соединения, а также конечно же регестрироваться и следить за историей своих заказов в <b>личном кабинете</b>
+<h2>Использованные технологии</h2>
+
+![My Skills](https://skillicons.dev/icons?i=ts,react,jest,redux)
+
+Чтобы начать работу с проектом:
+</br>
+- Установите Node.js
+- Напишите ```npm install```
+- Далее команду ```npm start```
+- Приложение будет запущено локально по адресу ```http://localhost:3000```
